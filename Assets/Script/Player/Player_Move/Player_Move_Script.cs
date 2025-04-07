@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem; // 새 Input System 패키지 사용
-// 집가면 리팩토링 시도함
+
 public class Player_Move_Script : MonoBehaviour
 {
     [Header("이동 설정")]
@@ -8,11 +8,18 @@ public class Player_Move_Script : MonoBehaviour
     [SerializeField] private bool faceDirectionOfMovement = true; // 이동 방향에 따라 캐릭터 회전 여부
     [SerializeField] private float gravityMultiplier = 1f; // 중력 배율
     [SerializeField] private Transform cameraTransform; // 메인 카메라 참조
+    
+    [Header("애니메이션 설정")]
+    [SerializeField] private Animator animator; // 애니메이터 참조
+    [SerializeField] private string runParameterName = "isRunning"; // 애니메이터 파라미터 이름
 
     private Rigidbody rb;
     private float moveDirection = 0f;
     private bool isGrounded;
     private float gravity;
+    
+    // 애니메이션 관련 변수
+    private bool isRunning = false;
     
     // 키보드 입력을 위한 참조
     private Keyboard keyboard;
@@ -38,6 +45,20 @@ public class Player_Move_Script : MonoBehaviour
             else
             {
                 Debug.LogWarning("메인 카메라를 찾을 수 없습니다. 카메라 기준 이동이 작동하지 않을 수 있습니다.");
+            }
+        }
+        
+        // 애니메이터 참조 가져오기 (지정되지 않은 경우)
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+            if (animator == null)
+            {
+                animator = GetComponentInChildren<Animator>();
+                if (animator == null)
+                {
+                    Debug.LogWarning("애니메이터 컴포넌트를 찾을 수 없습니다. 애니메이션이 작동하지 않을 수 있습니다.");
+                }
             }
         }
         
@@ -85,18 +106,32 @@ public class Player_Move_Script : MonoBehaviour
         // 키 입력 감지
         moveDirection = 0f;
         
+        // 이전 isRunning 상태 저장
+        bool wasRunning = isRunning;
+        // 기본적으로 달리지 않는 상태로 설정
+        isRunning = false;
+        
         // 왼쪽 이동 (A 키)
-        if (keyboard.aKey.isPressed)
+        if (keyboard.aKey.isPressed && rb.isKinematic == false)
         {
             moveDirection = -1f;
-            Debug.Log("왼쪽 이동 키 입력됨");
+            isRunning = true; // 달리기 상태로 설정
+            //Debug.Log("왼쪽 이동 키 입력됨");
         }
         
         // 오른쪽 이동 (D 키)
-        if (keyboard.dKey.isPressed)
+        if (keyboard.dKey.isPressed && rb.isKinematic == false)
         {
             moveDirection = 1f;
-            Debug.Log("오른쪽 이동 키 입력됨");
+            isRunning = true; // 달리기 상태로 설정
+            //Debug.Log("오른쪽 이동 키 입력됨");
+        }
+        
+        // 애니메이션 상태 업데이트 (상태가 변경된 경우에만)
+        if (wasRunning != isRunning && animator != null)
+        {
+            animator.SetBool(runParameterName, isRunning);
+            Debug.Log($"애니메이션 상태 변경: isRunning = {isRunning}");
         }
         
         // 바닥 체크
@@ -163,5 +198,16 @@ public class Player_Move_Script : MonoBehaviour
         
         // 회전 적용
         transform.rotation = Quaternion.Euler(0, characterRotation, 0);
+    }
+    
+    // 테스트용 - 애니메이션 수동 전환 메서드
+    public void ToggleRunningAnimation()
+    {
+        if (animator != null)
+        {
+            isRunning = !isRunning;
+            animator.SetBool(runParameterName, isRunning);
+            Debug.Log($"애니메이션 수동 전환: isRunning = {isRunning}");
+        }
     }
 }
