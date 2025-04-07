@@ -32,7 +32,7 @@ public class CharacterFollowMapRotation : MonoBehaviour
         physicsHandler = new RotationPhysicsHandler(rb);
         
         // 이벤트 구독
-        collisionDetector.OnNewBlockDetected += block => Debug.Log($"[회전 맵] 새 블록 감지: {block.name}");
+        //collisionDetector.OnNewBlockDetected += block => Debug.Log($"[회전 맵] 새 블록 감지: {block.name}");
     }
     
     void Update()
@@ -63,6 +63,6 @@ public class CharacterFollowMapRotation : MonoBehaviour
     
     private void OnDisable()
     {
-        collisionDetector.Reset();
+        if(collisionDetector !=null)collisionDetector.Reset();
     }
 }
