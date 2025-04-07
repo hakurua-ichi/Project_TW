@@ -25,7 +25,6 @@ public class PlayerPhysicsSetup : MonoBehaviour
         }
         
         // Rigidbody 물리 특성 조정
-        rb.freezeRotation = true;
         rb.constraints = RigidbodyConstraints.FreezePositionZ | 
                         RigidbodyConstraints.FreezeRotationX | 
                         RigidbodyConstraints.FreezeRotationY | 
