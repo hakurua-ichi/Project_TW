@@ -109,7 +109,7 @@ namespace UnityChan
 				else if (Input.GetKey(KeyCode.LeftAlt))
 				{
 					if (diff.magnitude > Vector3.kEpsilon)
-						this.cameraRotate(new Vector3(diff.y, diff.x, 0.0f));
+						this.CameraRotate(new Vector3(diff.y, diff.x, 0.0f));
 				}
 				//Only "LMB Drag" is no action.
 			}
@@ -123,7 +123,7 @@ namespace UnityChan
 			else if (Input.GetMouseButton((int)MouseButtonDown.MBD_RIGHT))
 			{
 				if (diff.magnitude > Vector3.kEpsilon)
-					this.cameraRotate(new Vector3(diff.y, diff.x, 0.0f));
+					this.CameraRotate(new Vector3(diff.y, diff.x, 0.0f));
 			}
 				
 			this.oldPos = mousePos;	
@@ -158,7 +158,7 @@ namespace UnityChan
 			return;
 		}
 
-		public void cameraRotate(Vector3 eulerAngle)
+		public void CameraRotate(Vector3 eulerAngle)
 		{
 			//Use Quaternion to prevent rotation flips on XY plane
 			Quaternion q = Quaternion.identity;
