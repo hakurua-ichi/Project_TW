@@ -23,7 +23,6 @@ public class BlockPositionCalculator
         
         Vector3 blockCenter = block.position;
         float blockHeight = 1.0f;
-        float topYPosition;
         
         // 콜라이더로 높이 계산
         Collider blockCollider = block.GetComponent<Collider>();

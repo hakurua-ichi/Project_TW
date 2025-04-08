@@ -49,11 +49,12 @@ public class PlayerMovementController : MonoBehaviour
         Vector3 velocity = rb.linearVelocity;
         
         // 계산된 방향으로 이동 (Y속도는 유지하여 중력 적용)
-        velocity.x = moveVector.x;
-        velocity.z = moveVector.z;
         if(!rb.isKinematic)
+        {
+            velocity.x = moveVector.x;
+            velocity.z = moveVector.z;
             rb.linearVelocity = velocity;
-        
+        }
     }
 
     private Vector3 CalculateMoveVector(float moveDirection)
