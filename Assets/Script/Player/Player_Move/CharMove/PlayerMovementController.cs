@@ -50,7 +50,7 @@ public class PlayerMovementController : MonoBehaviour
         Vector3 velocity = rb.linearVelocity;
         
         // 계산된 방향으로 이동 (Y속도는 유지하여 중력 적용)
-        if(!isGrounded)
+        if(!isGrounded && !rb.isKinematic)
         {
             velocity.x = velocity.x * (1 - airControl) + moveVector.x * airControl;
             velocity.z = velocity.z * (1 - airControl) + moveVector.z * airControl;
