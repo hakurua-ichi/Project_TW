@@ -59,7 +59,7 @@ public class RotateMap : MonoBehaviour
             
             for (int i = 0; i < childCount; i++)
             {
-                Debug.Log($"[회전 맵] 자식 {i}: {transform.GetChild(i).name}");
+                //Debug.Log($"[회전 맵] 자식 {i}: {transform.GetChild(i).name}");
             }
         }
     }
@@ -80,14 +80,12 @@ public class RotateMap : MonoBehaviour
         {
             targetRotation = currentRotation - 90f;
             isRotating = true;
-            if (showDebugInfo) Debug.Log("[회전 맵] 왼쪽 회전 시작. 목표 각도: " + targetRotation);
         }
         // 오른쪽 회전
         else if (rightKeyDown && !isRotating)
         {
             targetRotation = currentRotation + 90f;
             isRotating = true;
-            if (showDebugInfo) Debug.Log("[회전 맵] 오른쪽 회전 시작. 목표 각도: " + targetRotation);
         }
         
         // 회전 처리
@@ -103,7 +101,6 @@ public class RotateMap : MonoBehaviour
             if (Mathf.Approximately(currentRotation, targetRotation))
             {
                 isRotating = false;
-                if (showDebugInfo) Debug.Log("[회전 맵] 회전 완료. 현재 각도: " + currentRotation);
             }
         }
     }
@@ -123,20 +120,5 @@ public class RotateMap : MonoBehaviour
     public bool IsRotating()
     {
         return isRotating;
-    }
-    
-    // 테스트용 메서드
-    public void TestRotateLeft()
-    {
-        targetRotation = currentRotation - 90f;
-        isRotating = true;
-        Debug.Log("[회전 맵] 테스트 왼쪽 회전 시작");
-    }
-    
-    public void TestRotateRight()
-    {
-        targetRotation = currentRotation + 90f;
-        isRotating = true;
-        Debug.Log("[회전 맵] 테스트 오른쪽 회전 시작");
     }
 }

@@ -5,7 +5,7 @@ public class CameraFollow : MonoBehaviour
     // 따라갈 플레이어의 Transform을 지정하세요.
     public Transform player;
     // 카메라가 따라가는 속도 (부드러움 조절)
-    public float followSpeed = 2f;
+    public float followSpeed = 4f;
     // 플레이어와 카메라 간의 x, y 임계치. 이 범위를 벗어나면 카메라가 따라감.
     public Vector2 offsetThreshold = new Vector2(2f, 1f);
 
