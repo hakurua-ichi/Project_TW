@@ -7,6 +7,7 @@ public class PlayerMovementController : MonoBehaviour
     
     private Rigidbody rb;
     private bool isGrounded;
+    private float airControl = 0.3f;
 
     void Start()
     {
@@ -49,12 +50,19 @@ public class PlayerMovementController : MonoBehaviour
         Vector3 velocity = rb.linearVelocity;
         
         // 계산된 방향으로 이동 (Y속도는 유지하여 중력 적용)
-        if(!rb.isKinematic)
+        if(!isGrounded)
+        {
+            velocity.x = velocity.x * (1 - airControl) + moveVector.x * airControl;
+            velocity.z = velocity.z * (1 - airControl) + moveVector.z * airControl;
+            rb.linearVelocity = velocity;
+        }
+        if(!rb.isKinematic && isGrounded)
         {
             velocity.x = moveVector.x;
             velocity.z = moveVector.z;
             rb.linearVelocity = velocity;
         }
+        
     }
 
     private Vector3 CalculateMoveVector(float moveDirection)

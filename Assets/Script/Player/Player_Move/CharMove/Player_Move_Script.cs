@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem; // 새 Input System 패키지 사용
-
+// Old code , 이코드는 더이상 사용되지 않음.
+// 참조목적으로 보관중.
 public class Player_Move_Script : MonoBehaviour
 {
     [Header("이동 설정")]

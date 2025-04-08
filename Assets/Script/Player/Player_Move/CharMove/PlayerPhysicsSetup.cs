@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class PlayerPhysicsSetup : MonoBehaviour
 {
-    [SerializeField] private float gravityMultiplier = 1f;
-    
     private Rigidbody rb;
 
     void Start()

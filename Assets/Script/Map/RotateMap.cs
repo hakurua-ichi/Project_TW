@@ -59,7 +59,7 @@ public class RotateMap : MonoBehaviour
             
             for (int i = 0; i < childCount; i++)
             {
-                Debug.Log($"[회전 맵] 자식 {i}: {transform.GetChild(i).name}");
+                //Debug.Log($"[회전 맵] 자식 {i}: {transform.GetChild(i).name}");
             }
         }
     }
