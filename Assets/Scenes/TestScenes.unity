@@ -624,6 +624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7104de7d8d7a4449ab27d2ae933aea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotateMap: {fileID: 0}
 --- !u!65 &126362462
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -653,12 +654,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 126362460}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4, z: -10}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3, y: 6.5, z: 14.594648}
   m_LocalScale: {x: 6, y: 8, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 367605645}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &126362464
 MonoBehaviour:
@@ -2169,6 +2170,18 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1378284802084290154, guid: 77b88a865b1e89140955b029867b2880, type: 3}
       insertIndex: -1
       addedObject: {fileID: 290649190}
+    - targetCorrespondingSourceObject: {fileID: 1378284802084290154, guid: 77b88a865b1e89140955b029867b2880, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 419846708}
+    - targetCorrespondingSourceObject: {fileID: 1378284802084290154, guid: 77b88a865b1e89140955b029867b2880, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1294747919}
+    - targetCorrespondingSourceObject: {fileID: 1378284802084290154, guid: 77b88a865b1e89140955b029867b2880, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1088280737}
+    - targetCorrespondingSourceObject: {fileID: 1378284802084290154, guid: 77b88a865b1e89140955b029867b2880, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 126362463}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1759629912005534928, guid: 77b88a865b1e89140955b029867b2880, type: 3}
       insertIndex: -1
@@ -2364,12 +2377,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 419846703}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.7, y: 0.6, z: -9.87}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.7, y: 3.1, z: 14.724648}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 367605645}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &419846709
 MonoBehaviour:
@@ -2395,6 +2408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7104de7d8d7a4449ab27d2ae933aea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotateMap: {fileID: 0}
 --- !u!1001 &420545759
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5518,13 +5532,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1088280732}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4, z: -12}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -17.53, y: 6.5, z: 12.594648}
   m_LocalScale: {x: 0.2, y: 8, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 868328725}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 367605645}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1088280739
 MonoBehaviour:
@@ -6321,7 +6335,7 @@ Transform:
   m_GameObject: {fileID: 1227744681}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 4.92, y: 3.96, z: 11.39}
+  m_LocalPosition: {x: 10.02, y: 3.96, z: 11.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6928,12 +6942,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1294747913}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.77, y: 5.3362813, z: -12.04}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.77, y: 7.8362813, z: 12.554648}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 367605645}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1294747920
 MonoBehaviour:
@@ -9198,7 +9212,3 @@ SceneRoots:
   - {fileID: 874961134}
   - {fileID: 1139192505}
   - {fileID: 1043081937}
-  - {fileID: 419846708}
-  - {fileID: 1294747919}
-  - {fileID: 1088280737}
-  - {fileID: 126362463}
