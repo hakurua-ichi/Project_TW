@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class RotateMap : MonoBehaviour
+public class RotateMap : MonoBehaviour, IGimmickObserver
 {
     [SerializeField] private float rotationSpeed = 90f;
     [SerializeField] private string leftKeyBinding = "<Keyboard>/q"; // 문자열 기반 키 바인딩
@@ -104,6 +104,17 @@ public class RotateMap : MonoBehaviour
             }
         }
     }
+
+    public void OnGimmickTriggered()
+    {
+        // 회전 시작
+        if (!isRotating)
+        {
+            targetRotation = currentRotation + 90f;
+            isRotating = true;
+        }
+    }
+
     // Getters
     public float GettargetRotation()
     {
