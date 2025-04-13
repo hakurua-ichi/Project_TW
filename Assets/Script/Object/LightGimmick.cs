@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class LightGimmick : MonoBehaviour, IGimmickObserver
 {
+    [SerializeField] private GimmickSubject TriggerObject;
+    [SerializeField] private Light targetLight;
+
     private GimmickContext context;
 
-    [SerializeField] private Light targetLight;
-    [SerializeField] private GimmickSubject subjectOn; // Subject 연결 필드
-    [SerializeField] private GimmickSubject subjectOff; // Subject 연결 필드
 
     private void Start()
     {
@@ -17,24 +17,16 @@ public class LightGimmick : MonoBehaviour, IGimmickObserver
         context.SetAction(new LightToggleAction(targetLight));
 
         // 옵저버 등록
-        if (subjectOn != null)
+        //var subject = GetComponent<GimmickSubject>();
+        if (TriggerObject != null)
         {
-            Debug.Log("불켜기 옵저버 등록 성공");
-            subjectOn.AddObserver(this); // 여기서 옵저버 등록
+            Debug.Log("Light 옵저버 등록 성공");
+            TriggerObject.AddObserverEnter(this); // 불 켜기
+            TriggerObject.AddObserverExit(new ExitObserver(context)); // 불 끄기
         }
         else
         {
-            Debug.LogWarning("불켜기 옵저버 등록 실패");
-        }
-
-        if (subjectOff != null)
-        {
-            Debug.Log("불끄기 옵저버 등록 성공");
-            subjectOff.AddObserver(new ExitObserver(context)); // 여기서 옵저버 등록
-        }
-        else
-        {
-            Debug.LogWarning("불끄기 옵저버 등록 실패");
+            Debug.LogWarning("GimmickSubject가 Light 오브젝트에 없습니다.");
         }
     }
 
