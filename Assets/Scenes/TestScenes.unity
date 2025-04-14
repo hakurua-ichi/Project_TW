@@ -6195,7 +6195,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1227744681}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ade7e6d1d74a6604e8e6a26bd297fe85, type: 3}
+  m_Script: {fileID: 11500000, guid: 9496bb0f7b2ad6047b6f48ab0b6ee513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1171025812}
@@ -6205,11 +6205,11 @@ MonoBehaviour:
     m_Bits: 8
   transparentMaterial: {fileID: 2100000, guid: 795fb0de8e737c643b1780df0f63baf7, type: 2}
   transparentZonePrefab: {fileID: 2098980915132036065, guid: 7d2452e94150f664f82ec72d52c8739c, type: 3}
+  zoneDistanceOffset: -9
   zoneHeightFactor: 0.25
   zoneWidthFactor: 1.2
   visualizeZone: 1
-  zoneColor: {r: 0, g: 1, b: 1, a: 0.2}
-  visualizeKey: 36
+  zoneColor: {r: 1, g: 0, b: 0, a: 0.5}
 --- !u!1001 &1231807814
 PrefabInstance:
   m_ObjectHideFlags: 0
