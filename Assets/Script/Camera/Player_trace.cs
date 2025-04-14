@@ -30,7 +30,7 @@ public class CameraFollow : MonoBehaviour
             newCameraPos.x = Mathf.Lerp(cameraPos.x, playerPos.x, followSpeed * Time.deltaTime);
         }
         // 수직(세로) 방향 임계치 확인
-        if (Mathf.Abs(playerPos.y - cameraPos.y) > offsetThreshold.y)
+        if (Mathf.Abs(playerPos.y + 2f - cameraPos.y) > offsetThreshold.y)
         {
             newCameraPos.y = Mathf.Lerp(cameraPos.y, playerPos.y, followSpeed * Time.deltaTime);
         }
