@@ -80,7 +80,7 @@ public class TransparentZoneManager
         );
         
         // 디버그 로그 추가
-        Debug.Log($"TransparentZone 업데이트: 위치={transparentZone.transform.position}, 크기={transparentZone.transform.localScale}");
+        //Debug.Log($"TransparentZone 업데이트: 위치={transparentZone.transform.position}, 크기={transparentZone.transform.localScale}");
     }
 
     private float CalculateCameraWidthAtDistance(Camera cam, float distance)

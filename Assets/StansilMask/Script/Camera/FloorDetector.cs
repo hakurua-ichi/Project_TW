@@ -40,8 +40,8 @@ public class FloorDetector
                 minDistance = Mathf.Min(minDistance, dist);
                 
                 // 디버그 정보
-                Debug.DrawLine(player.position, hit.point, Color.red, 0.1f);
-                Debug.Log($"바닥 감지: 거리={dist}, 방향={dir}");
+                //Debug.DrawLine(player.position, hit.point, Color.red, 0.1f);
+                //Debug.Log($"바닥 감지: 거리={dist}, 방향={dir}");
             }
         }
 
