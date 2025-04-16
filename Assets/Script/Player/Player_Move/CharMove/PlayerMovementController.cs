@@ -4,6 +4,7 @@ public class PlayerMovementController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private Transform cameraTransform;
+    [SerializeField] private float rotationSpeed = 10f; // 회전 속도 추가
     
     private Rigidbody rb;
     private bool isGrounded;
@@ -43,8 +44,14 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (rb == null) return;
         
-        // 카메라 기준으로 이동 방향 계산
-        Vector3 moveVector = CalculateMoveVector(horizontalInput, verticalInput);
+        // 수직 입력(W/S)이 있으면 회전만 처리
+        if (verticalInput != 0)
+        {
+            RotateTowardCamera(verticalInput);
+        }
+        
+        // 수평 입력(A/D)으로만 이동 계산
+        Vector3 moveVector = CalculateMoveVector(horizontalInput, 0); // 수직 입력은 0으로 전달
         
         // 현재 속도 가져오기
         Vector3 velocity = rb.linearVelocity;
@@ -62,7 +69,33 @@ public class PlayerMovementController : MonoBehaviour
             velocity.z = moveVector.z;
             rb.linearVelocity = velocity;
         }
+    }
+    
+    // 카메라 방향으로 회전하는 메서드 추가
+    private void RotateTowardCamera(float verticalInput)
+    {
+        if (cameraTransform == null) return;
         
+        // 카메라의 방향 벡터
+        Vector3 cameraForward = cameraTransform.forward;
+        cameraForward.y = 0; // Y축 영향 제거
+        cameraForward.Normalize();
+        
+        // W키는 카메라 방향으로, S키는 카메라 반대 방향으로 회전
+        Vector3 targetDirection = (verticalInput > 0) ? cameraForward : -cameraForward;
+        
+        if (targetDirection.sqrMagnitude > 0.001f)
+        {
+            // 목표 회전값 계산
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+            
+            // 부드럽게 회전
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation, 
+                targetRotation, 
+                rotationSpeed * Time.deltaTime
+            );
+        }
     }
 
     private Vector3 CalculateMoveVector(float horizontalInput, float verticalInput)

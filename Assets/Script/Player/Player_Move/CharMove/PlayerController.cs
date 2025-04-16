@@ -39,9 +39,10 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         float moveDirection = inputHandler.GetMoveDirection();
+        float verticalInput = Input.GetAxis("Vertical");  // W/S 입력 감지
         
         // 이동 처리
-        movementController.Move(moveDirection,0f);
+        movementController.Move(moveDirection, verticalInput);
         
         // 이동 방향에 따른 캐릭터 회전
         if (faceDirectionOfMovement && moveDirection != 0)
