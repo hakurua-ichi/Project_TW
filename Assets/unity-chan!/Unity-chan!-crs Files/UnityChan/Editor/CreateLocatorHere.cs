@@ -14,7 +14,7 @@ namespace UnityChan_CRS
 	public class CreateLocatorHere
 	{
 		// Add menu to the main menu
-		[MenuItem("GameObject/Create Locator Here")]
+		[MenuItem("GameObject/UnityChan-CRS/Create Locator Here")]
 		static void CreateGameObjectAsChild ()
 		{
 			GameObject go = new GameObject ("Locator_");
@@ -23,14 +23,14 @@ namespace UnityChan_CRS
 		}
 	
 		// The item will be disabled if no transform is selected.
-		[MenuItem("GameObject/Create Locator Here",true)]
+		[MenuItem("GameObject/UnityChan-CRS/Create Locator Here",true)]
 		static bool ValidateCreateGameObjectAsChild ()
 		{
 			return Selection.activeTransform != null;
 		}
 	
 		// Add context menu to Transform's context menu
-		[MenuItem("CONTEXT/Transform/Create Locator Here")]
+		[MenuItem("CONTEXT/Transform/UnityChan-CRS/Create Locator Here")]
 		static void CreateGameObjectAsChild (MenuCommand command)
 		{
 			Transform tr = (Transform)command.context;

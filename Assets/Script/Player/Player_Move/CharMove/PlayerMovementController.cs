@@ -39,12 +39,12 @@ public class PlayerMovementController : MonoBehaviour
         isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.1f);
     }
 
-    public void Move(float moveDirection)
+    public void Move(float horizontalInput, float verticalInput)
     {
         if (rb == null) return;
         
         // 카메라 기준으로 이동 방향 계산
-        Vector3 moveVector = CalculateMoveVector(moveDirection);
+        Vector3 moveVector = CalculateMoveVector(horizontalInput, verticalInput);
         
         // 현재 속도 가져오기
         Vector3 velocity = rb.linearVelocity;
@@ -65,20 +65,23 @@ public class PlayerMovementController : MonoBehaviour
         
     }
 
-    private Vector3 CalculateMoveVector(float moveDirection)
+    private Vector3 CalculateMoveVector(float horizontalInput, float verticalInput)
     {
-        if (moveDirection == 0 || cameraTransform == null)
+        if ((horizontalInput == 0 && verticalInput == 0) || cameraTransform == null)
             return Vector3.zero;
         
-        // 카메라의 오른쪽 벡터 (로컬 X축)를 기준으로 이동
+        // 카메라의 방향 벡터 가져오기
+        Vector3 cameraForward = cameraTransform.forward;
         Vector3 cameraRight = cameraTransform.right;
         
         // Y축 영향 제거 (수평 이동만)
+        cameraForward.y = 0;
         cameraRight.y = 0;
+        cameraForward.Normalize();
         cameraRight.Normalize();
         
         // 이동 벡터 계산
-        return cameraRight * moveDirection * moveSpeed;
+        return (cameraRight * horizontalInput + cameraForward * verticalInput) * moveSpeed;
     }
 
     public bool IsGrounded()

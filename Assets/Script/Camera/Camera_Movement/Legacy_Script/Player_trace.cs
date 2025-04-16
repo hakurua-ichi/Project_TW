@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    // 따라갈 플레이어의 Transform을 지정하세요.
+    //사용하지않는 레거시 스크립트. 추후에 참고할수도 있으니 삭제하지않고 보관함.
+    // Camera_Movement.cs로 통합됨.
     public Transform player;
     // 카메라가 따라가는 속도 (부드러움 조절)
     public float followSpeed = 4f;
     // 플레이어와 카메라 간의 x, y 임계치. 이 범위를 벗어나면 카메라가 따라감.
-    public Vector2 offsetThreshold = new Vector2(2f, 1f);
+    public Vector3 offsetThreshold = new Vector3(2f, 1f,2f);
 
     void Start()
     {
@@ -29,6 +30,10 @@ public class CameraFollow : MonoBehaviour
         {
             newCameraPos.x = Mathf.Lerp(cameraPos.x, playerPos.x, followSpeed * Time.deltaTime);
         }
+        // if (Mathf.Abs(playerPos.z - cameraPos.z) > offsetThreshold.z)
+        // {
+        //     newCameraPos.z = Mathf.Lerp(cameraPos.z, playerPos.z, followSpeed * Time.deltaTime);
+        // }
         // 수직(세로) 방향 임계치 확인
         if (Mathf.Abs(playerPos.y + 2f - cameraPos.y) > offsetThreshold.y)
         {
@@ -36,7 +41,7 @@ public class CameraFollow : MonoBehaviour
         }
         
         // z축은 카메라 고정 (원하는 경우 수정 가능)
-        newCameraPos.z = cameraPos.z;
+        // newCameraPos.z = cameraPos.z;
 
         transform.position = newCameraPos;
     }

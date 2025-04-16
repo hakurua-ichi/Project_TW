@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
         float moveDirection = inputHandler.GetMoveDirection();
         
         // 이동 처리
-        movementController.Move(moveDirection);
+        movementController.Move(moveDirection,0f);
         
         // 이동 방향에 따른 캐릭터 회전
         if (faceDirectionOfMovement && moveDirection != 0)
