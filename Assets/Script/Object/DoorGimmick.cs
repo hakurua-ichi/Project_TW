@@ -11,7 +11,7 @@ public class DoorGimmick : MonoBehaviour, IGimmickObserver
     void Start()
     {
         gimmickContext = new GimmickContext();
-        gimmickContext.SetAction(new OpenDoorAction(doorObject));
+        gimmickContext.SetAction(new OpenDoorAction(doorObject, GameObject.FindGameObjectWithTag("Player").transform));
 
         // 옵저버 등록
         if (TriggerObject != null)

@@ -5,6 +5,7 @@ public class GimmickContext
     public void SetAction(IGimmickAction action)
     {
         currentAction = action;
+        currentAction?.setup();
     }
 
     public void ExecuteAction()

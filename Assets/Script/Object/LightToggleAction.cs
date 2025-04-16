@@ -20,4 +20,9 @@ public class LightToggleAction : IGimmickAction
         Debug.Log("Light off");
         light.enabled = false;
     }
+
+    public void setup()
+    {
+        light.enabled = false; // 초기 상태를 꺼진 상태로 설정
+    }
 }
