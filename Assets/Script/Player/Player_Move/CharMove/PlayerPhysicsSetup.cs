@@ -23,10 +23,15 @@ public class PlayerPhysicsSetup : MonoBehaviour
         }
         
         // Rigidbody 물리 특성 조정
-        rb.constraints = RigidbodyConstraints.FreezePositionZ | 
+        rb.constraints =RigidbodyConstraints.FreezeRotationX | 
+                        RigidbodyConstraints.FreezeRotationY | 
+                        RigidbodyConstraints.FreezeRotationZ;
+        /*
+                rb.constraints = RigidbodyConstraints.FreezePositionZ | 
                         RigidbodyConstraints.FreezeRotationX | 
                         RigidbodyConstraints.FreezeRotationY | 
                         RigidbodyConstraints.FreezeRotationZ;
+        */
         
         // 물리 특성 조정으로 튀는 현상 방지
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
