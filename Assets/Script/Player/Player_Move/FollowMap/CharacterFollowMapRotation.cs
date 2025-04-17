@@ -9,6 +9,7 @@ public class CharacterFollowMapRotation : MonoBehaviour
     private BlockCollisionDetector collisionDetector;
     private BlockPositionCalculator positionCalculator;
     private RotationPhysicsHandler physicsHandler;
+    private RotationInterpolator cameraRotationInterpolator;
     
     // 현재 상호작용 중인 회전 맵
     private RotateMap currentRotationMap;
@@ -19,7 +20,11 @@ public class CharacterFollowMapRotation : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        
+        cameraRotationInterpolator = Camera.main.GetComponent<RotationInterpolator>();
+        if (rb == null)
+        {
+            rb = gameObject.AddComponent<Rigidbody>();
+        }
         // 유틸리티 클래스 초기화
         collisionDetector = new BlockCollisionDetector(blockTag);
         collisionDetector.OnNewBlockDetected += HandleNewBlockDetected;
@@ -66,7 +71,15 @@ public class CharacterFollowMapRotation : MonoBehaviour
             return;
         }
         
-        bool isRotating = currentRotationMap.IsRotating();
+        bool isRotating = false;
+        if (currentRotationMap.IsRotating() || cameraRotationInterpolator.IsRotating)
+        {
+            isRotating = true;
+        }
+        else
+        {
+            isRotating = false;
+        }
         
         // 맵 회전 시작/종료 감지 및 물리 처리
         physicsHandler.HandlePhysicsForRotation(isRotating);
