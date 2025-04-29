@@ -72,10 +72,6 @@ public class OpenDoorAction : IGimmickAction
 
     public void setup()
     {
-        // 문 열림 애니메이션 실행
-        animator.ResetTrigger("Close"); // 이전 트리거 초기화
-        animator.ResetTrigger("Open"); // 이전 트리거 초기화
-        animator.SetTrigger("Close");
         isOpen = false;
     }
 }
