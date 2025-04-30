@@ -11,6 +11,7 @@ public class ElevatorGimmickRegister : MonoBehaviour
         if (elevator != null)
         {
             subject.AddObserverEnter(elevator);
+
         }
     }
 }
