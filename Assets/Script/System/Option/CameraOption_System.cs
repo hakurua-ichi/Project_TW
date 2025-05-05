@@ -3,36 +3,31 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using System;
 using System.IO;
-
-[Serializable]
-public class CameraSettings
-{
-    public bool postProcessingEnabled = true;
-    public AntialiasingQuality antialiasingQuality = AntialiasingQuality.Medium;
-    public bool shadowsEnabled = true;
-    public bool occlusionCullingEnabled = true;
-    public float soundVolume = 1.0f;
-    public int antialiasingMode = 1; // 0: None, 1: FXAA, 2: SMAA, 3: TAA
-    public int shadowResolution = 1; // 0: Low, 1: Medium, 2: High
-}
-
-public enum AntialiasingQuality
-{
-    None,
-    Low,
-    Medium,
-    High
-}
+using DevProjectSettings.Camera.Option;
 
 /// <summary>
-/// 카메라 옵션 시스템 - 그래픽 및 카메라 설정을 관리합니다.
+/// 카메라 옵션 시스템 - 그래픽 및 카메라 설정 관리 클래스
 /// </summary>
+/// <remarks>
+/// 기능 목록:
+/// 1. 카메라 설정 관리 - 포스트 프로세싱, 안티앨리어싱, 그림자 등 그래픽 설정 제어
+/// 2. 설정 저장/로드 - 플레이어 설정을 JSON 파일로 저장하고 불러오기
+/// 3. 디버그 도구 지원 - 개발 중 설정 테스트를 위한 디버그 단축키 및 기능
+/// 
+/// 메서드:
+/// - InitializeSingleton(): 싱글톤 패턴 초기화 및 설정 로드
+/// - InitializeComponents(): 필요한 컴포넌트 및 매니저 초기화
+/// - ApplySettings(): 현재 설정을 카메라 및 렌더링 시스템에 적용
+/// - SaveSettings(): 현재 설정을 파일에 저장
+/// - LoadSettings(): 파일에서 설정 로드
+/// - ResetToDefaults(): 설정을 기본값으로 초기화
+/// - SetPostProcessing(), SetAntialiasingMode(), SetShadows() 등: 개별 설정 항목 제어 메서드
+/// - GetCurrentSettings(): 현재 설정 객체 반환
+/// - SetDebugMode(): 디버그 모드 설정
+/// </remarks>
 public class CameraOption_System : MonoBehaviour
 {
     #region 변수 선언
-    
-    private Camera mainCamera;
-    private Volume postProcessingVolume;
     
     [SerializeField]
     private CameraSettings settings = new CameraSettings();
@@ -40,7 +35,15 @@ public class CameraOption_System : MonoBehaviour
     // 싱글톤 인스턴스
     public static CameraOption_System Instance { get; private set; }
 
+    private UnityEngine.Camera mainCamera;
     private string settingsFilePath;
+    private bool settingsChanged = false; // 설정 변경 여부 추적
+
+    // 시스템 컴포넌트들
+    private CameraSettingsStorage settingsStorage;
+    private PostProcessingManager postProcessingManager;
+    private CameraQualityManager qualityManager;
+    private CameraDebugTools debugTools;
 
     [Header("디버그 옵션")]
     [SerializeField] private bool debugMode = false;
@@ -60,12 +63,15 @@ public class CameraOption_System : MonoBehaviour
     private void Start()
     {
         InitializeComponents();
-        ApplySettings();
+        // LoadSettings가 InitializeSingleton에서 이미 호출되었기 때문에 
+        // 여기서는 설정을 적용만 하고 중복 로드하지 않습니다.
+        ApplySettings(false);
     }
 
     private void Update()
     {
-        HandleDebugInputs();
+        // 디버그 입력 처리
+        debugTools.HandleDebugInputs(SaveSettings, LoadSettings, ResetToDefaults);
     }
 
     #endregion
@@ -79,6 +85,11 @@ public class CameraOption_System : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
             settingsFilePath = Path.Combine(Application.persistentDataPath, "cameraSettings.json");
+            
+            // 컴포넌트 생성
+            settingsStorage = new CameraSettingsStorage(settingsFilePath, debugMode);
+            debugTools = new CameraDebugTools(debugMode, saveSettingsKey, loadSettingsKey, resetSettingsKey);
+            
             LoadSettings();
         }
         else if (Instance != this)
@@ -91,60 +102,21 @@ public class CameraOption_System : MonoBehaviour
     private void InitializeComponents()
     {
         // 메인 카메라 초기화
-        InitializeMainCamera();
-        
-        // 포스트 프로세싱 볼륨 초기화
-        InitializePostProcessingVolume();
-    }
-    
-    private void InitializeMainCamera()
-    {
         mainCamera = Camera.main;
         if (mainCamera == null)
         {
             Debug.LogError("Main Camera not found. Please ensure there is a camera with the 'MainCamera' tag.");
-        }
-    }
-    
-    private void InitializePostProcessingVolume()
-    {
-        // 기존 볼륨 찾기
-        postProcessingVolume = FindFirstObjectByType<Volume>();
-        
-        // 볼륨이 없으면 생성
-        if (postProcessingVolume == null && mainCamera != null)
-        {
-            CreatePostProcessingVolume();
-        }
-    }
-    
-    private void CreatePostProcessingVolume()
-    {
-        postProcessingVolume = gameObject.AddComponent<Volume>();
-        postProcessingVolume.isGlobal = true;
-        postProcessingVolume.profile = ScriptableObject.CreateInstance<VolumeProfile>();
-        
-        if (settings.postProcessingEnabled)
-        {
-            AddDefaultPostProcessingEffects();
+            return;
         }
         
-        gameObject.name = "Camera Option System (with Post Processing)";
-        Debug.Log("Created Volume on CameraOption_System object with basic post-processing effects");
-    }
-    
-    private void AddDefaultPostProcessingEffects()
-    {
-        if (postProcessingVolume != null && postProcessingVolume.profile != null)
-        {
-            // 블룸 효과 추가
-            Bloom bloom = postProcessingVolume.profile.Add<Bloom>(true);
-            bloom.intensity.Override(0.5f);
-            
-            // 색상 조정 효과 추가
-            ColorAdjustments colorAdj = postProcessingVolume.profile.Add<ColorAdjustments>(true);
-            colorAdj.contrast.Override(10f);
-        }
+        // 매니저 초기화
+        postProcessingManager = new PostProcessingManager(mainCamera);
+        postProcessingManager.InitializeVolume(gameObject);
+        
+        qualityManager = new CameraQualityManager(mainCamera);
+        
+        // 디버그 도구에 참조 설정
+        debugTools.SetReferences(mainCamera, postProcessingManager.GetVolume(), settingsFilePath);
     }
 
     #endregion
@@ -154,97 +126,27 @@ public class CameraOption_System : MonoBehaviour
     /// <summary>
     /// 현재 설정을 카메라 및 렌더링 시스템에 적용합니다.
     /// </summary>
-    public void ApplySettings()
+    /// <param name="saveAfterApply">적용 후 설정을 저장할지 여부</param>
+    public void ApplySettings(bool saveAfterApply = true)
     {
         if (mainCamera == null)
         {
-            InitializeMainCamera();
+            mainCamera = Camera.main;
             if (mainCamera == null) return;
         }
 
-        ApplyPostProcessingSettings();
-        ConfigureAntialiasing();
-        ApplyShadowSettings();
-        ApplyOtherSettings();
-        
-        SaveSettings();
-    }
-    
-    private void ApplyPostProcessingSettings()
-    {
-        if (postProcessingVolume == null) return;
-        
-        // Volume 컴포넌트 활성화 여부 설정
-        postProcessingVolume.enabled = settings.postProcessingEnabled;
-        
-        // 카메라 포스트 프로세싱 설정
-        UniversalAdditionalCameraData cameraData = mainCamera.GetUniversalAdditionalCameraData();
-        if (cameraData != null)
-        {
-            cameraData.renderPostProcessing = settings.postProcessingEnabled;
-        }
-        
-        // Volume 프로필 없으면 생성
-        if (postProcessingVolume.profile == null)
-        {
-            postProcessingVolume.profile = ScriptableObject.CreateInstance<VolumeProfile>();
-        }
-        
-        // 기본 효과 추가 (없는 경우)
-        if (settings.postProcessingEnabled && !postProcessingVolume.profile.Has<Bloom>())
-        {
-            AddDefaultPostProcessingEffects();
-        }
-    }
-    
-    private void ApplyShadowSettings()
-    {
-        // 그림자 활성화 여부
-        QualitySettings.shadows = settings.shadowsEnabled 
-            ? UnityEngine.ShadowQuality.All 
-            : UnityEngine.ShadowQuality.Disable;
-        
-        // 그림자 해상도 설정
-        QualitySettings.shadowResolution = (UnityEngine.ShadowResolution)settings.shadowResolution;
-    }
-    
-    private void ApplyOtherSettings()
-    {
-        // 오클루전 컬링 설정
-        if (mainCamera != null)
-        {
-            mainCamera.useOcclusionCulling = settings.occlusionCullingEnabled;
-        }
+        postProcessingManager.ApplySettings(settings);
+        qualityManager.ConfigureAntialiasing(settings);
+        qualityManager.ApplyShadowSettings(settings);
+        qualityManager.ApplyOcclusionCulling(settings.occlusionCullingEnabled);
         
         // 사운드 볼륨 설정
         AudioListener.volume = settings.soundVolume;
-    }
-    
-    private void ConfigureAntialiasing()
-    {
-        if (mainCamera == null) return;
-
-        UniversalAdditionalCameraData cameraData = mainCamera.GetUniversalAdditionalCameraData();
-        if (cameraData != null)
+        
+        if (saveAfterApply && settingsChanged)
         {
-            // 안티앨리어싱 모드 설정
-            cameraData.antialiasing = (AntialiasingMode)settings.antialiasingMode;
-            
-            // 안티앨리어싱 품질 설정
-            AntialiasingQuality quality = settings.antialiasingQuality;
-            if (quality == AntialiasingQuality.None)
-            {
-                cameraData.antialiasing = AntialiasingMode.None;
-                cameraData.antialiasingQuality = UnityEngine.Rendering.Universal.AntialiasingQuality.Low;
-            }
-            else
-            {
-                cameraData.antialiasingQuality = (UnityEngine.Rendering.Universal.AntialiasingQuality)quality;
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Universal Additional Camera Data not found. Make sure you're using URP.");
+            SaveSettings();
+            settingsChanged = false;
         }
     }
 
@@ -257,20 +159,7 @@ public class CameraOption_System : MonoBehaviour
     /// </summary>
     public void SaveSettings()
     {
-        try
-        {
-            string json = JsonUtility.ToJson(settings, true);
-            File.WriteAllText(settingsFilePath, json);
-            
-            if (debugMode)
-            {
-                Debug.Log("Camera settings saved to: " + settingsFilePath);
-            }
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError("Error saving camera settings: " + e.Message);
-        }
+        settingsStorage.SaveSettings(settings);
     }
 
     /// <summary>
@@ -278,40 +167,15 @@ public class CameraOption_System : MonoBehaviour
     /// </summary>
     public void LoadSettings()
     {
-        if (File.Exists(settingsFilePath))
+        CameraSettings loadedSettings = settingsStorage.LoadSettings();
+        settings.CopyFrom(loadedSettings);
+        settingsChanged = true;
+        
+        // 이미 Start() 이후라면 설정을 적용
+        if (mainCamera != null)
         {
-            try 
-            {
-                string json = File.ReadAllText(settingsFilePath);
-                settings = JsonUtility.FromJson<CameraSettings>(json);
-                
-                if (debugMode)
-                {
-                    Debug.Log("Camera settings loaded from: " + settingsFilePath);
-                }
-                
-                ApplySettings();
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogError("Error loading camera settings: " + e.Message);
-                UseDefaultSettings();
-            }
+            ApplySettings();
         }
-        else
-        {
-            if (debugMode)
-            {
-                Debug.Log("Settings file not found. Using default settings.");
-            }
-            UseDefaultSettings();
-        }
-    }
-    
-    private void UseDefaultSettings()
-    {
-        settings = new CameraSettings();
-        ApplySettings();
     }
 
     /// <summary>
@@ -319,79 +183,113 @@ public class CameraOption_System : MonoBehaviour
     /// </summary>
     public void ResetToDefaults()
     {
-        UseDefaultSettings();
+        settings = CameraSettings.GetDefaultSettings();
+        settingsChanged = true;
+        ApplySettings();
     }
 
     #endregion
 
-    #region 디버그 메서드
-
-    private void HandleDebugInputs()
+    #region Public Setter 메서드
+    
+    public void SetPostProcessing(bool enabled)
     {
-        if (!debugMode) return;
-        
-        if (Input.GetKeyDown(saveSettingsKey))
+        if (settings.postProcessingEnabled != enabled)
         {
-            SaveSettings();
-            Debug.Log("[CameraOption_System] Settings saved manually with key: " + saveSettingsKey);
+            settings.postProcessingEnabled = enabled;
+            settingsChanged = true;
+            ApplySettings();
         }
-        
-        if (Input.GetKeyDown(loadSettingsKey))
+    }
+
+    public void SetAntialiasingMode(int mode)
+    {
+        int clampedMode = Mathf.Clamp(mode, 0, 3);
+        if (settings.antialiasingMode != clampedMode)
         {
-            LoadSettings();
-            Debug.Log("[CameraOption_System] Settings loaded manually with key: " + loadSettingsKey);
+            settings.antialiasingMode = clampedMode;
+            settingsChanged = true;
+            ApplySettings();
         }
-        
-        if (Input.GetKeyDown(resetSettingsKey))
+    }
+
+    public void SetAntialiasingQuality(DevProjectSettings.Camera.Option.AntialiasingQuality quality)
+    {
+        if (settings.antialiasingQuality != quality)
         {
-            ResetToDefaults();
-            Debug.Log("[CameraOption_System] Settings reset to defaults with key: " + resetSettingsKey);
+            settings.antialiasingQuality = quality;
+            settingsChanged = true;
+            ApplySettings();
         }
-        
-        if (Input.GetKeyDown(KeyCode.F1))
+    }
+
+    public void SetShadows(bool enabled)
+    {
+        if (settings.shadowsEnabled != enabled)
         {
-            PrintDebugInfo();
+            settings.shadowsEnabled = enabled;
+            settingsChanged = true;
+            ApplySettings();
+        }
+    }
+
+    public void SetShadowResolution(int resolution)
+    {
+        int clampedResolution = Mathf.Clamp(resolution, 0, 2);
+        if (settings.shadowResolution != clampedResolution)
+        {
+            settings.shadowResolution = clampedResolution;
+            settingsChanged = true;
+            ApplySettings();
+        }
+    }
+
+    public void SetOcclusionCulling(bool enabled)
+    {
+        if (settings.occlusionCullingEnabled != enabled)
+        {
+            settings.occlusionCullingEnabled = enabled;
+            settingsChanged = true;
+            ApplySettings();
+        }
+    }
+
+    public void SetSoundVolume(float volume)
+    {
+        float clampedVolume = Mathf.Clamp01(volume);
+        if (Mathf.Approximately(settings.soundVolume, clampedVolume) == false)
+        {
+            settings.soundVolume = clampedVolume;
+            settingsChanged = true;
+            ApplySettings();
+        }
+    }
+
+    /// <summary>
+    /// 현재 설정 객체를 반환합니다.
+    /// </summary>
+    public CameraSettings GetCurrentSettings()
+    {
+        return settings;
+    }
+    
+    /// <summary>
+    /// 디버그 모드를 설정합니다.
+    /// </summary>
+    public void SetDebugMode(bool enabled)
+    {
+        if (debugMode != enabled)
+        {
+            debugMode = enabled;
+            debugTools.SetDebugMode(enabled);
+            
+            // 새로 추가된 UpdateDebugMode 메서드 사용
+            if (settingsStorage != null)
+            {
+                settingsStorage.UpdateDebugMode(debugMode);
+            }
         }
     }
     
-    private void PrintDebugInfo()
-    {
-        Debug.Log("=== Camera Option System - Current Settings ===");
-        Debug.Log($"Post Processing: {settings.postProcessingEnabled}");
-        Debug.Log($"Antialiasing Mode: {(AntialiasingMode)settings.antialiasingMode}");
-        Debug.Log($"Antialiasing Quality: {settings.antialiasingQuality}");
-        Debug.Log($"Shadows Enabled: {settings.shadowsEnabled}");
-        Debug.Log($"Shadow Resolution: {(UnityEngine.ShadowResolution)settings.shadowResolution}");
-        Debug.Log($"Occlusion Culling: {settings.occlusionCullingEnabled}");
-        Debug.Log($"Sound Volume: {settings.soundVolume}");
-        Debug.Log($"Settings File Path: {settingsFilePath}");
-        
-        if (postProcessingVolume != null)
-        {
-            Debug.Log($"Volume Component: Active = {postProcessingVolume.enabled}, Profile = {(postProcessingVolume.profile != null ? postProcessingVolume.profile.name : "None")}");
-        }
-        else
-        {
-            Debug.Log("Volume Component: Not found");
-        }
-        
-        if (mainCamera != null)
-        {
-            Debug.Log($"Main Camera: {mainCamera.name}, Occlusion Culling = {mainCamera.useOcclusionCulling}");
-            
-            UniversalAdditionalCameraData cameraData = mainCamera.GetUniversalAdditionalCameraData();
-            if (cameraData != null)
-            {
-                Debug.Log($"URP Camera Data: Antialiasing = {cameraData.antialiasing}, Quality = {cameraData.antialiasingQuality}");
-            }
-        }
-        else
-        {
-            Debug.Log("Main Camera: Not found");
-        }
-        
-        Debug.Log("=== End of Debug Info ===");
-    }
-
     #endregion
 }
