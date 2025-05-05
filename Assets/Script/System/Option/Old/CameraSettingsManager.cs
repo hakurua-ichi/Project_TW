@@ -1,9 +1,9 @@
-// filepath: e:\Unity\Project_Git\Project_TW\Assets\Script\System\Option\CameraSettingsManager.cs
 using UnityEngine;
 using System.IO;
 using DevProjectSettings.Camera.Option;
 
 /// <summary>
+/// 구버전 코드.
 /// 카메라 설정 관리를 위한 정적 유틸리티 클래스
 /// </summary>
 /// <remarks>
