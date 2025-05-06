@@ -10,8 +10,6 @@ public class LightGimmick : MonoBehaviour, IGimmickObserver
 
     private void Start()
     {
-        targetLight.enabled = false;  // 시작할 때 꺼두기
-
         // 전략 세팅
         context = new GimmickContext();
         context.SetAction(new LightToggleAction(targetLight));
@@ -33,7 +31,7 @@ public class LightGimmick : MonoBehaviour, IGimmickObserver
     public void OnGimmickTriggered()
     {
         Debug.Log("Light기믹 실행");
-        context.ExecuteAction();
+        context.StartAction();
     }
 
     // 내부 클래스: Light 끄기 전용 옵저버
