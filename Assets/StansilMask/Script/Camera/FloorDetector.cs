@@ -19,6 +19,13 @@ public class FloorDetector
 
     public float CalculateFloorEdgeDistance()
     {
+        // null 체크 추가
+        if (player == null || cameraTransform == null)
+        {
+            Debug.LogError("FloorDetector: player 또는 cameraTransform이 null입니다.");
+            return 5f; // 기본값 반환
+        }
+
         float minDistance = 5f;
         
         // 더 다양한 방향으로 바닥 감지 시도

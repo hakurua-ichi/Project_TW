@@ -38,6 +38,39 @@ public class WallTransparencySystem : MonoBehaviour
 
     void Awake()
     {
+        // Player 참조 검사
+        if (player == null)
+        {
+            Debug.LogWarning("WallTransparencySystem: Player reference is not assigned. Trying to find it automatically.");
+            
+            // Player 태그를 가진 객체 검색
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null)
+            {
+                player = playerObj.transform;
+                Debug.Log($"WallTransparencySystem: Found player automatically: {player.name}");
+            }
+            else
+            {
+                Debug.LogError("WallTransparencySystem: Could not find player. Please assign it in the Inspector.");
+            }
+        }
+        
+        // Camera 참조 검사
+        if (cameraTrans == null)
+        {
+            Debug.LogWarning("WallTransparencySystem: Camera reference is not assigned. Using main camera.");
+            Camera mainCam = Camera.main;
+            if (mainCam != null)
+            {
+                cameraTrans = mainCam.transform;
+            }
+            else
+            {
+                Debug.LogError("WallTransparencySystem: Could not find main camera. Please assign camera in the Inspector.");
+            }
+        }
+
         // 서브시스템 초기화
         zoneManager = new TransparentZoneManager(cameraTrans, player, transparentZonePrefab, 
                                            zoneWidthFactor, zoneHeightFactor, zoneDistanceOffset);
@@ -59,6 +92,14 @@ public class WallTransparencySystem : MonoBehaviour
 
     void Update()
     {
+        // 필수 참조 체크
+        if (player == null || cameraTrans == null)
+        {
+            Debug.LogError("WallTransparencySystem: Required references are missing. System disabled.");
+            enabled = false;
+            return;
+        }
+        
         // 설정 변경 감지 및 업데이트
         UpdateSettingsIfChanged();
         
