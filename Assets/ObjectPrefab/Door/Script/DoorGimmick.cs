@@ -27,7 +27,7 @@ public class DoorGimmick : MonoBehaviour, IGimmickObserver
 
     public void OnGimmickTriggered()
     {
-        gimmickContext.ExecuteAction();
+        gimmickContext.StartAction();
     }
 
     // 내부 클래스: Light 끄기 전용 옵저버

@@ -16,6 +16,15 @@ public class PlayerElevatorDetector : MonoBehaviour
     {
         Vector3 delta = transform.position - lastPosition;
 
+        // 엘리베이터가 움직이는지 확인
+        bool isElevatorMoving = delta.sqrMagnitude > 0.0001f;
+
+        if (!isElevatorMoving)
+        {
+            lastPosition = transform.position;
+            return; // 움직이지 않으면 처리 안 함
+        }
+
         Collider[] hits = Physics.OverlapBox(transform.position + boxOffset, boxSize * 0.5f);
         foreach (Collider hit in hits)
         {
@@ -24,10 +33,7 @@ public class PlayerElevatorDetector : MonoBehaviour
                 Rigidbody rb = hit.attachedRigidbody;
                 if (rb != null)
                 {
-                    // �߷¿� ���� �ݹ� ����
-                    rb.linearVelocity = Vector3.zero;
-
-                    // �ε巴�� ���� �̵�
+                    // 움직이는 동안만 델타 적용
                     rb.MovePosition(rb.position + delta);
                 }
             }

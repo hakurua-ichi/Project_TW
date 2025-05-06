@@ -15,7 +15,7 @@ public class LightToggleAction : IGimmickAction
         light.enabled = true;
     }
 
-    public void Execute()
+    public void Exit()
     {
         Debug.Log("Light off");
         light.enabled = false;
