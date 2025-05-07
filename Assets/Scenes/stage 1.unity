@@ -28583,6 +28583,8 @@ MonoBehaviour:
   faceDirectionOfMovement: 1
   gravityMultiplier: 1
   cameraTransform: {fileID: 0}
+  animator: {fileID: 0}
+  runParameterName: isRunning
 --- !u!136 &741064843
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -28618,7 +28620,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a78665035d3bac48a94be0b08efe4fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationParent: {fileID: 2027224144}
   blockTag: RotatingBlock
 --- !u!1001 &749943719
 PrefabInstance:
@@ -32193,6 +32194,7 @@ GameObject:
   - component: {fileID: 831917199}
   - component: {fileID: 831917201}
   - component: {fileID: 831917200}
+  - component: {fileID: 831917202}
   m_Layer: 5
   m_Name: JoyStick-Lever
   m_TagString: Untagged
@@ -32258,6 +32260,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 831917198}
   m_CullTransparentMesh: 1
+--- !u!114 &831917202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 831917198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42efc31088015ec4ba97a6f75165110f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  background: {fileID: 831917199}
+  handle: {fileID: 855207798}
 --- !u!1001 &834400187
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50246,7 +50262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   followSpeed: 2
-  offsetThreshold: {x: 2, y: 1}
+  offsetThreshold: {x: 2, y: 1, z: 2}
 --- !u!1001 &1228636228
 PrefabInstance:
   m_ObjectHideFlags: 0
