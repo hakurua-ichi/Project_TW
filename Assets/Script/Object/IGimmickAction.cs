@@ -1,6 +1,6 @@
 public interface IGimmickAction
 {
     void Action();
-    void Execute();
+    void Exit();
     void setup();
 }

@@ -8,13 +8,13 @@ public class GimmickContext
         currentAction?.setup();
     }
 
-    public void ExecuteAction()
+    public void StartAction()
     {
         currentAction?.Action();
     }
 
     public void CancelAction()
     {
-        currentAction?.Execute();
+        currentAction?.Exit();
     }
 }

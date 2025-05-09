@@ -32,7 +32,7 @@ public class GimmickSubject : MonoBehaviour
 
     public void Notify()
     {
-        Debug.Log("Notify 角青");
+        Debug.Log("可历滚 角青");
         foreach (var observer in observersOn)
         {
             Debug.Log("Notifying observer: " + observer.GetType().Name);
@@ -42,6 +42,7 @@ public class GimmickSubject : MonoBehaviour
 
     public void NotifyExit()
     {
+        Debug.Log("Exit 可历滚 角青");
         foreach (var observer in observersOff)
         {
             Debug.Log("Notifying observer: " + observer.GetType().Name);
