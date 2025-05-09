@@ -20,7 +20,7 @@ public class PlayerInputHandler : MonoBehaviour
 
         if (joystick == null)
         {
-            joystick = FindObjectOfType<JoystickController>();
+            joystick = FindAnyObjectByType<JoystickController>();
             Debug.LogError("조이스틱을 찾을 수 없습니다!");
         }
 
@@ -36,7 +36,7 @@ public class PlayerInputHandler : MonoBehaviour
         isMoving = false;
         
         // 조이스틱 입력 감지
-        if (joystick != null && joystick.IsMoving())
+        if (joystick != null && joystick.IsMoving() && !rb.isKinematic)
         {
             moveDirection = joystick.GetHorizontal();
             isMoving = true;
