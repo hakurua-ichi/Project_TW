@@ -19,6 +19,7 @@ public class CameraSystemController : MonoBehaviour, ICameraSystem
     private CameraValueInitializer valueInitializer;
     
     // 이벤트
+    // 구독자가 명확하지 않음 - 외부 시스템에서 구독할 수 있음
     public event System.Action<float> RotationCompleted;
     
     // 프로퍼티
@@ -50,13 +51,14 @@ public class CameraSystemController : MonoBehaviour, ICameraSystem
     private void SetupEventSubscriptions()
     {
         // 이벤트 연결
-        rotationInput.RotationRequested += OnRotationRequested;
-        positionCalculator.PositionCalculated += rotationInterpolator.StartRotation;
-        rotationInterpolator.RotationFinished += OnRotationFinished;
-        trackingController.TrackingModeChanged += positionTracker.SetTrackingMode;
-        valueInitializer.InitializationCompleted += OnInitializationCompleted;
+        rotationInput.RotationRequested += OnRotationRequested;          // RotationInput -> CameraSystemController
+        positionCalculator.PositionCalculated += rotationInterpolator.StartRotation;  // RotationPositionCalculator -> RotationInterpolator
+        rotationInterpolator.RotationFinished += OnRotationFinished;     // RotationInterpolator -> CameraSystemController
+        trackingController.TrackingModeChanged += positionTracker.SetTrackingMode;   // TrackingModeController -> PlayerPositionTracker
+        valueInitializer.InitializationCompleted += OnInitializationCompleted;        // CameraValueInitializer -> CameraSystemController
     }
     
+    // CameraValueInitializer.InitializationCompleted 이벤트의 구독자 메서드
     private void OnInitializationCompleted(float distance, float height, float angle)
     {
         positionCalculator.Initialize(playerTransform, height, angle);
@@ -84,16 +86,19 @@ public class CameraSystemController : MonoBehaviour, ICameraSystem
             legacyScript.enabled = false;
     }
     
+    // RotationInput.RotationRequested 이벤트의 구독자 메서드
     private void OnRotationRequested(float angle)
     {
         if (IsRotating) return;
         positionCalculator.CalculateNewPosition(angle);
     }
     
+    // RotationInterpolator.RotationFinished 이벤트의 구독자 메서드
     private void OnRotationFinished(float finalAngle)
     {
         positionCalculator.SetCurrentAngle(finalAngle);
         trackingController.UpdateTrackingMode(finalAngle);
+        // RotationCompleted 이벤트 발생 - 구독자 불명확
         RotationCompleted?.Invoke(finalAngle);
     }
     
