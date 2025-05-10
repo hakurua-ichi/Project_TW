@@ -11,6 +11,9 @@ public class RotationInterpolator : MonoBehaviour
     private bool isRotating = false;
     
     // 회전 완료 이벤트
+    // 구독자:
+    // - CameraSystemController.OnRotationFinished(float finalAngle)
+    //   위치: Assets\Script\Camera\Camera_Movement\Script\CameraSystemController.cs
     public event System.Action<float> RotationFinished;
     
     // 프로퍼티

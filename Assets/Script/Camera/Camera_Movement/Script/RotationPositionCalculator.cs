@@ -7,6 +7,9 @@ public class RotationPositionCalculator : MonoBehaviour
     private float currentAngle = 0f;
     
     // 위치 계산 결과 이벤트
+    // 구독자:
+    // - RotationInterpolator.StartRotation(Vector3 position, Quaternion rotation, float newAngle)
+    //   위치: Assets\Script\Camera\Camera_Movement\Script\RotationInterpolator.cs
     public event System.Action<Vector3, Quaternion, float> PositionCalculated;
     
     // 초기화 메서드
@@ -59,6 +62,9 @@ public class RotationPositionCalculator : MonoBehaviour
         currentAngle = newDegrees;
         
         // 계산 결과 이벤트 발생
+        // 구독자:
+        // - RotationInterpolator.StartRotation(Vector3 position, Quaternion rotation, float newAngle)
+        //   위치: Assets\Script\Camera\Camera_Movement\Script\RotationInterpolator.cs
         PositionCalculated?.Invoke(newPosition, targetRotation, currentAngle);
     }
     

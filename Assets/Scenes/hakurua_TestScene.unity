@@ -6367,6 +6367,44 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5, y: 5, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &592045144 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6853306085648697547, guid: 44f675ddfafa1c34b8607d6058a082ef, type: 3}
+  m_PrefabInstance: {fileID: 825177400}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &592045159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 592045144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 645a817dfb2e7f841907ba0c61c63043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fovShakeIntensity: 3
+  shakeDuration: 0.05
+  decreaseFactor: 1
+  continuousShake: 1
+  enableOnStart: 0
+  startDelay: 1
+  alwaysShake: 0
+  detectRotationDirectly: 1
+  mapTransform: {fileID: 0}
+  rotationThreshold: 0.01
+  debugMode: 0
+  logEveryShake: 0
+  rotateMaps: []
+  originalFOV: 0
+  currentShakeDuration: 0
+  isMapRotating: 0
+  isInitialized: 0
+  mainCamera: {fileID: 0}
+  previousRotation: {x: 0, y: 0, z: 0, w: 0}
+  rotationDelta: 0
+  frameCounter: 0
 --- !u!1001 &593138662
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9135,11 +9173,13 @@ PrefabInstance:
       propertyPath: m_CullingMask.m_Bits
       value: 223
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7902977444633040875, guid: 44f675ddfafa1c34b8607d6058a082ef, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6853306085648697547, guid: 44f675ddfafa1c34b8607d6058a082ef, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 592045159}
   m_SourcePrefab: {fileID: 100100000, guid: 44f675ddfafa1c34b8607d6058a082ef, type: 3}
 --- !u!1001 &859827221
 PrefabInstance:
@@ -21581,8 +21621,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 90
-  leftKeyBinding: <Keyboard>/q
-  rightKeyBinding: <Keyboard>/e
+  leftRotateKey: 113
+  rightRotateKey: 101
   pivotPoint: {fileID: 0}
   showDebugInfo: 1
   childCount: 0
