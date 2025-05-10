@@ -71,9 +71,18 @@ public class RotationInterpolator : MonoBehaviour
         cameraTransform.position = targetPosition;
         
         isRotating = false;
-        float finalAngle = roundedY;
+        
+        // 여기서 카메라가 플레이어를 바라보는 방향이므로 180도를 뺀 값이 실제 카메라의 회전 각도
+        // 180도를 더하는 코드는 RotationPositionCalculator.cs에 있음
+        float finalAngle = (roundedY - 180f) % 360f;
+        if (finalAngle < 0) finalAngle += 360f;
+        
+        Debug.Log($"[회전 인터폴레이터] 회전 완료: UI각도={roundedY}°, 실제각도={finalAngle}°");
         
         // 회전 완료 이벤트 발생
+        // 구독자:
+        // - CameraSystemController.OnRotationFinished(float finalAngle)
+        //   위치: Assets\Script\Camera\Camera_Movement\Script\CameraSystemController.cs
         RotationFinished?.Invoke(finalAngle);
     }
 }
