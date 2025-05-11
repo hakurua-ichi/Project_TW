@@ -1,16 +1,30 @@
 using UnityEngine;
 
-public class InteractionObjectController : MonoBehaviour
+public class InteractionObjectController : MonoBehaviour, IGimmickObserver
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private GameObject buttonUI;
+    [SerializeField] private bool showOnEnter = true; // true: Enter에 표시, false: Exit에 숨김
+
+    private void Awake()
     {
-        
+        if (buttonUI != null)
+            buttonUI.SetActive(false);
+        else
+            Debug.LogWarning("UIButtonAdapter: buttonUI가 설정되지 않았습니다.");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnGimmickTriggered()
     {
-        
+        if (buttonUI == null) return;
+
+        buttonUI.SetActive(showOnEnter);
+    }
+
+    public static InteractionObjectController Attach(GameObject targetObject, GameObject buttonUI, bool showOnEnter)
+    {
+        var adapter = targetObject.AddComponent<InteractionObjectController>();
+        adapter.buttonUI = buttonUI;
+        adapter.showOnEnter = showOnEnter;
+        return adapter;
     }
 }
