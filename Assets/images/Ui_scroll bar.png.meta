@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 29c22b1210410b34788afc1733b69c3f
+guid: 613e4968458656348a96016737e23310
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,23 +97,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: right_Arrowhead
+      name: Ui_scroll bar_0
       rect:
         serializedVersion: 2
-        x: 134
-        y: 134
-        width: 759
-        height: 758
+        x: 344
+        y: 193
+        width: 332
+        height: 1299
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 171acd8c21b1d1c44874196e962f4adc
-      internalID: -1440710190
+      spriteID: 187b4b8f7ca94c64ab226f05399461d2
+      internalID: -1991027445
       vertices: []
       indices: 
       edges: []
@@ -122,7 +122,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 890f32cfd0b1b2f42898383ae8a216ef
+    spriteID: 81376a99ae32ef043b7d631f4c9688ad
     internalID: 0
     vertices: []
     indices: 
@@ -132,7 +132,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      right_Arrowhead: -1440710190
+      Ui_scroll bar_0: -1991027445
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

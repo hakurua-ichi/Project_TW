@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 29c22b1210410b34788afc1733b69c3f
+guid: 40c0973340fc15248bc884791fdccd2c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,23 +97,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: right_Arrowhead
+      name: UI_checkBox_Box
       rect:
         serializedVersion: 2
-        x: 134
-        y: 134
-        width: 759
-        height: 758
+        x: 299
+        y: 521
+        width: 429
+        height: 444
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 171acd8c21b1d1c44874196e962f4adc
-      internalID: -1440710190
+      spriteID: 1676426d694a8db47b2dc5b1f38b4934
+      internalID: 540319447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_checkBox_check
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 73
+        width: 360
+        height: 361
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1adcb75584a8c2040adb18fff921f8d8
+      internalID: -2100824942
       vertices: []
       indices: 
       edges: []
@@ -122,7 +144,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 890f32cfd0b1b2f42898383ae8a216ef
+    spriteID: 2446e1beed65efa41afa2cde6edbc373
     internalID: 0
     vertices: []
     indices: 
@@ -132,7 +154,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      right_Arrowhead: -1440710190
+      UI_checkBox_Box: 540319447
+      UI_checkBox_check: -2100824942
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
