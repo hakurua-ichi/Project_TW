@@ -37,6 +37,7 @@ public class GimmickSubject : MonoBehaviour
         {
             Debug.Log("Notifying observer: " + observer.GetType().Name);
             observer.OnGimmickTriggered();
+            observer.ButtonClick();
         }
     }
 
@@ -47,6 +48,7 @@ public class GimmickSubject : MonoBehaviour
         {
             Debug.Log("Notifying observer: " + observer.GetType().Name);
             observer.OnGimmickTriggered();
+            observer.ButtonClick();
         }
     }
 }

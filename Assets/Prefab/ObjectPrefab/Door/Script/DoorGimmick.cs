@@ -30,6 +30,11 @@ public class DoorGimmick : MonoBehaviour, IGimmickObserver
         gimmickContext.StartAction();
     }
 
+    public void ButtonClick()
+    {
+
+    }
+
     // 내부 클래스: Light 끄기 전용 옵저버
     private class ExitObserver : IGimmickObserver
     {
@@ -43,6 +48,11 @@ public class DoorGimmick : MonoBehaviour, IGimmickObserver
         public void OnGimmickTriggered()
         {
             context.CancelAction(); // 문 닫기
+        }
+
+        public void ButtonClick()
+        {
+
         }
     }
 }

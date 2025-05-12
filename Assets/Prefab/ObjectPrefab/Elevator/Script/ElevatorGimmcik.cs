@@ -30,6 +30,11 @@ public class ElevatorGimmcik : MonoBehaviour, IGimmickObserver
         gimmickContext.StartAction();
     }
 
+    public void ButtonClick()
+    {
+
+    }
+
     // 내부 클래스: 엘리베이터 정지 전용 옵저버
     private class ExitObserver : IGimmickObserver
     {
@@ -41,6 +46,11 @@ public class ElevatorGimmcik : MonoBehaviour, IGimmickObserver
         public void OnGimmickTriggered()
         {
             context.CancelAction(); // 엘리베이터 정지
+        }
+
+        public void ButtonClick()
+        {
+
         }
     }
 }

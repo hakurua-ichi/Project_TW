@@ -15,11 +15,11 @@ public class LightGimmick : MonoBehaviour, IGimmickObserver
         context.SetAction(new LightToggleAction(targetLight));
 
         // 옵저버 등록
-        //var subject = GetComponent<GimmickSubject>();
+        var subject = GetComponent<GimmickSubject>();
         if (TriggerObject != null)
         {
             Debug.Log("Light 옵저버 등록 성공");
-            TriggerObject.AddObserverEnter(this); // 불 켜기
+            //TriggerObject.AddObserverEnter(this); // 불 켜기
             TriggerObject.AddObserverExit(new ExitObserver(context)); // 불 끄기
         }
         else
@@ -28,7 +28,7 @@ public class LightGimmick : MonoBehaviour, IGimmickObserver
         }
     }
 
-    public void OnGimmickTriggered()
+    public void ButtonClick()
     {
         Debug.Log("Light기믹 실행");
         context.StartAction();
@@ -47,6 +47,11 @@ public class LightGimmick : MonoBehaviour, IGimmickObserver
         public void OnGimmickTriggered()
         {
             context.CancelAction(); // 불 끄기
+        }
+
+        public void ButtonClick()
+        {
+
         }
     }
 }
