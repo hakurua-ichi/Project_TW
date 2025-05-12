@@ -5,20 +5,22 @@ public class ProximityTriggerObject : MonoBehaviour
 {
     [SerializeField] private float detectionRadius = 3f;
     [SerializeField] private Transform playerTransform;
-
-    private GimmickSubject subject;
+    [SerializeField] private GameObject button_UI;
     private bool isPlayerInRange = false;
 
     private void Awake()
     {
-        subject = GetComponent<GimmickSubject>();
-
         if (playerTransform == null)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             if (player != null)
                 playerTransform = player.transform;
         }
+    }
+
+    private void Start()
+    {
+        button_UI.SetActive(false);
     }
 
     private void Update()
@@ -30,12 +32,12 @@ public class ProximityTriggerObject : MonoBehaviour
         if (distance <= detectionRadius && !isPlayerInRange)
         {
             isPlayerInRange = true;
-            subject.Notify(); // Enter 알림
+            button_UI.SetActive(isPlayerInRange);
         }
         else if (distance > detectionRadius && isPlayerInRange)
         {
             isPlayerInRange = false;
-            subject.NotifyExit(); // Exit 알림
+            button_UI.SetActive(isPlayerInRange);
         }
     }
 
