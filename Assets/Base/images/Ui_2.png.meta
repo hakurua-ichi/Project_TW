@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 29c22b1210410b34788afc1733b69c3f
+guid: dc0cd1030119a7144a456712132b466a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: right_Arrowhead
+      name: UI_2_horizontal panel
       rect:
         serializedVersion: 2
-        x: 134
-        y: 134
-        width: 759
-        height: 758
+        x: 115
+        y: 37
+        width: 788
+        height: 248
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,8 +112,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 171acd8c21b1d1c44874196e962f4adc
-      internalID: -1440710190
+      spriteID: edad37df9c891b34b92ae834d3cbc630
+      internalID: -650152635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_2_panel
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 501
+        width: 592
+        height: 731
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eac5c471d246f0e4ab49801fb420849e
+      internalID: 2069131786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_2_small horizontal panel
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 1285
+        width: 611
+        height: 220
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c03f35e6fa135d343a264871362df194
+      internalID: 744794695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_2_Down arrow
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 650
+        width: 151
+        height: 158
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 199d6074d281ac7479efcc8f029685e1
+      internalID: 1238823131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ui_2_diamond button
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 472
+        width: 158
+        height: 151
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3a6077fb86a15e479560b817ab15860
+      internalID: 225904891
       vertices: []
       indices: 
       edges: []
@@ -122,7 +210,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 890f32cfd0b1b2f42898383ae8a216ef
+    spriteID: 6e743579e541ccf49a187f3968a92d9e
     internalID: 0
     vertices: []
     indices: 
@@ -132,7 +220,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      right_Arrowhead: -1440710190
+      UI_2_Down arrow: 1238823131
+      UI_2_horizontal panel: -650152635
+      UI_2_panel: 2069131786
+      UI_2_small horizontal panel: 744794695
+      Ui_2_diamond button: 225904891
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

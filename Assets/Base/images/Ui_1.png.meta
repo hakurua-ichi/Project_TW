@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 29c22b1210410b34788afc1733b69c3f
+guid: 1e28c0149d69c2c428bb9a3947e13655
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: right_Arrowhead
+      name: UI_Panel
       rect:
         serializedVersion: 2
-        x: 134
-        y: 134
-        width: 759
-        height: 758
+        x: 82
+        y: 1106
+        width: 867
+        height: 376
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,8 +112,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 171acd8c21b1d1c44874196e962f4adc
-      internalID: -1440710190
+      spriteID: d747c84ee1ec6b145a161e9814a07cb5
+      internalID: 1405988967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_circle
+      rect:
+        serializedVersion: 2
+        x: 695
+        y: 762
+        width: 275
+        height: 286
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46e068f001622f147814c8ebecfa7ab9
+      internalID: -596506023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ui_1_square button
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 312
+        width: 97
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c64b49827e9947f41b15ea8f334180c9
+      internalID: 1326896165
       vertices: []
       indices: 
       edges: []
@@ -122,7 +166,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 890f32cfd0b1b2f42898383ae8a216ef
+    spriteID: fb1cb19be10608f40bbd676543e5c8ab
     internalID: 0
     vertices: []
     indices: 
@@ -132,7 +176,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      right_Arrowhead: -1440710190
+      UI_Panel: 1405988967
+      UI_circle: -596506023
+      Ui_1_square button: 1326896165
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
