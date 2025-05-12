@@ -75,8 +75,4 @@ public class AuthUIManager : MonoBehaviour
     {
         if(loginRegisterButton != null) loginRegisterButton.interactable = interactable;
     }
-
-    // 이 UI 매니저는 LoginScene에 있다고 가정합니다.
-    // HomeScene에 있는 로그아웃 버튼은 HomeUIManager 등이 관리하고,
-    // 그 UIManager가 AuthController의 Logout 기능을 호출하도록 연결할 수 있습니다.
 }

@@ -71,9 +71,8 @@ public class FirebaseAuthenticator : MonoBehaviour
 
         try
         {
-            // AuthResult를 받고, User 프로퍼티를 통해 FirebaseUser 객체를 얻습니다.
             AuthResult authResult = await _auth.SignInWithEmailAndPasswordAsync(email, password).ConfigureAwait(true);
-            FirebaseUser signedInUser = authResult.User; // <--- 수정된 부분
+            FirebaseUser signedInUser = authResult.User;
             return (signedInUser, AuthError.None, null);
         }
         catch (Exception ex)
@@ -93,9 +92,8 @@ public class FirebaseAuthenticator : MonoBehaviour
         Debug.LogWarning("Firebase Auth는 사용자의 비밀번호를 안전하게 해시하여 저장합니다. 클라이언트에서 직접 암호화하지 마세요.");
         try
         {
-            // AuthResult를 받고, User 프로퍼티를 통해 FirebaseUser 객체를 얻습니다.
             AuthResult authResult = await _auth.CreateUserWithEmailAndPasswordAsync(email, password).ConfigureAwait(true);
-            FirebaseUser newUser = authResult.User; // <--- 수정된 부분
+            FirebaseUser newUser = authResult.User;
             return (newUser, AuthError.None, null);
         }
         catch (Exception ex)
