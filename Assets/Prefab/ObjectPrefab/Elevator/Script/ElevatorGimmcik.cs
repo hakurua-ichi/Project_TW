@@ -7,6 +7,7 @@ public class ElevatorGimmcik : MonoBehaviour, IGimmickObserver
 
     public GameObject elevatorObject;
     private GimmickContext gimmickContext;
+    private bool isPlayerOnElevator = false;
 
     private void Start()
     {
@@ -17,7 +18,6 @@ public class ElevatorGimmcik : MonoBehaviour, IGimmickObserver
         {
             Debug.Log("Elevator 옵저버 등록 성공");
             triggerObject.AddObserverEnter(this); // 엘리베이터 작동
-            triggerObject.AddObserverExit(new ExitObserver(gimmickContext)); // 엘리베이터 정지
         }
         else
         {
@@ -27,30 +27,22 @@ public class ElevatorGimmcik : MonoBehaviour, IGimmickObserver
 
     public void OnGimmickTriggered()
     {
-        gimmickContext.StartAction();
+        if(!isPlayerOnElevator)
+        {
+            Debug.Log("엘리베이터에 탑승");
+            isPlayerOnElevator = true;
+            gimmickContext.StartAction();
+        }
+        else
+        {
+            Debug.Log("엘리베이터에서 하차");
+            isPlayerOnElevator = false;
+            gimmickContext.CancelAction();
+        }
     }
 
     public void ButtonClick()
     {
 
-    }
-
-    // 내부 클래스: 엘리베이터 정지 전용 옵저버
-    private class ExitObserver : IGimmickObserver
-    {
-        private GimmickContext context;
-        public ExitObserver(GimmickContext ctx)
-        {
-            context = ctx;
-        }
-        public void OnGimmickTriggered()
-        {
-            context.CancelAction(); // 엘리베이터 정지
-        }
-
-        public void ButtonClick()
-        {
-
-        }
     }
 }
