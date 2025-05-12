@@ -19,13 +19,18 @@ public class LightGimmick : MonoBehaviour, IGimmickObserver
         if (TriggerObject != null)
         {
             Debug.Log("Light 옵저버 등록 성공");
-            //TriggerObject.AddObserverEnter(this); // 불 켜기
+            TriggerObject.AddObserverEnter(this); // 불 켜기
             TriggerObject.AddObserverExit(new ExitObserver(context)); // 불 끄기
         }
         else
         {
             Debug.LogWarning("GimmickSubject가 Light 오브젝트에 없습니다.");
         }
+    }
+
+    public void OnGimmickTriggered()
+    {
+
     }
 
     public void ButtonClick()

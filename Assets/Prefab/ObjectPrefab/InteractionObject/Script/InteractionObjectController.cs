@@ -28,6 +28,11 @@ public class InteractionObjectController : MonoBehaviour, IGimmickObserver
         buttonUI.SetActive(showOnEnter);
     }
 
+    public void ButtonClick()
+    {
+
+    }
+
     public static InteractionObjectController Attach(GameObject targetObject, GameObject buttonUI, bool showOnEnter)
     {
         var adapter = targetObject.AddComponent<InteractionObjectController>();

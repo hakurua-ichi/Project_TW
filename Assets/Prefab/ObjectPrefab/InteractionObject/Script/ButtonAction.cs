@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ButtonAction : MonoBehaviour
 {
-    [SerializeField] private GameObject
+    [SerializeField] private GameObject ob;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
