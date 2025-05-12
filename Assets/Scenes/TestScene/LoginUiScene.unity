@@ -1932,6 +1932,7 @@ GameObject:
   - component: {fileID: 1299328304}
   - component: {fileID: 1299328306}
   - component: {fileID: 1299328305}
+  - component: {fileID: 1299328307}
   m_Layer: 5
   m_Name: LoginPanel
   m_TagString: Untagged
@@ -1997,6 +1998,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1299328303}
   m_CullTransparentMesh: 1
+--- !u!114 &1299328307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1299328303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 219083ef314c3114cb8510ea6a8a8516, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idInput: {fileID: 2032681039}
+  passwordInput: {fileID: 888179635}
+  loginButton: {fileID: 73350244}
+  googleLoginButton: {fileID: 2059006206}
 --- !u!1 &1481825876
 GameObject:
   m_ObjectHideFlags: 0
