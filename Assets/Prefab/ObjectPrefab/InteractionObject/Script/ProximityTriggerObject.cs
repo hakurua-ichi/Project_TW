@@ -5,7 +5,7 @@ using TMPro;
 public class ProximityTriggerObject : MonoBehaviour
 {
     [SerializeField] private float detectionRadius = 3f;
-    [SerializeField] private Transform playerTransform;
+    private Transform playerTransform;
     [SerializeField] private GameObject button_UI;
     [SerializeField] private GameObject actionObject; // 액션 오브젝트
     private TextMeshProUGUI buttonText; // 버튼 텍스트
@@ -27,6 +27,7 @@ public class ProximityTriggerObject : MonoBehaviour
         button_UI.SetActive(false);
         buttonText = button_UI.GetComponentInChildren<TextMeshProUGUI>();
         actionObjectName = actionObject.name;
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     private void Update()
