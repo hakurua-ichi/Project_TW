@@ -117,6 +117,9 @@ public class WallTransparencySystem : MonoBehaviour
         Collider[] walls = wallDetector.DetectWalls(zoneManager.TransparentZone);
         materialApplier.ApplyTransparency(walls, floorDetector.GetExcludedFloorObjects());
 
+        // Plane 감지 및 처리 추가
+        wallDetector.DetectPlanes(player, cameraTrans);
+
         // 시각화 업데이트
         visualizationManager.UpdateVisualElements(cameraTrans.position, player.position);
     }
@@ -132,7 +135,6 @@ public class WallTransparencySystem : MonoBehaviour
         if (prevWidthFactor != zoneWidthFactor)
         {
             settingsChanged = true;
-            //Debug.Log($"Width Factor 변경: {prevWidthFactor} → {zoneWidthFactor}");
             prevWidthFactor = zoneWidthFactor;
         }
         
@@ -140,7 +142,6 @@ public class WallTransparencySystem : MonoBehaviour
         if (prevHeightFactor != zoneHeightFactor)
         {
             settingsChanged = true;
-            //Debug.Log($"Height Factor 변경: {prevHeightFactor} → {zoneHeightFactor}");
             prevHeightFactor = zoneHeightFactor;
         }
         
@@ -148,7 +149,6 @@ public class WallTransparencySystem : MonoBehaviour
         if (prevDistanceOffset != zoneDistanceOffset)
         {
             settingsChanged = true;
-            //Debug.Log($"Distance Offset 변경: {prevDistanceOffset} → {zoneDistanceOffset}");
             prevDistanceOffset = zoneDistanceOffset;
         }
         
@@ -156,7 +156,6 @@ public class WallTransparencySystem : MonoBehaviour
         if (prevZoneColor != zoneColor)
         {
             settingsChanged = true;
-            //Debug.Log($"Zone Color 변경: {prevZoneColor} → {zoneColor}");
             prevZoneColor = zoneColor;
             
             // 시각화 매니저에 새 색상 업데이트

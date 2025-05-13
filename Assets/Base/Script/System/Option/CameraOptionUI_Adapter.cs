@@ -71,7 +71,7 @@ public class CameraOptionUI_Adapter : MonoBehaviour
         {
             antialiasingDropdown.ClearOptions();
             antialiasingDropdown.AddOptions(new System.Collections.Generic.List<string> {
-                "사용 안함", "FXAA", "SMAA", "TAA"
+                "None", "FXAA", "SMAA", "TAA"
             });
         }
         
@@ -80,7 +80,7 @@ public class CameraOptionUI_Adapter : MonoBehaviour
         {
             shadowResolutionDropdown.ClearOptions();
             shadowResolutionDropdown.AddOptions(new System.Collections.Generic.List<string> {
-                "낮음", "중간", "높음"
+                "Low", "Medium", "High"
             });
         }
     }

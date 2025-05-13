@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 /// <summary>
 /// 투명 영역 내 벽 감지
@@ -22,5 +23,42 @@ public class WallDetector
             transparentZone.transform.rotation,
             wallLayers
         );
+    }
+
+    public void DetectPlanes(Transform player, Transform cameraTrans)
+    {
+        // 모든 PlaneGroup 컨트롤러 찾기
+        SimplePlaneGroupController[] planeGroups = Object.FindObjectsOfType<SimplePlaneGroupController>();
+        
+        foreach (SimplePlaneGroupController planeGroup in planeGroups)
+        {
+            // 각 그룹의 모든 Plane Collider 가져오기
+            Collider[] planeColliders = planeGroup.GetAllPlaneColliders();
+            
+            foreach (Collider planeCollider in planeColliders)
+            {
+                // 카메라와 플레이어 사이에 plane이 있는지 체크
+                RaycastHit hit;
+                Vector3 direction = player.position - cameraTrans.position;
+                float distance = direction.magnitude;
+                
+                if (Physics.Raycast(cameraTrans.position, direction.normalized, out hit, distance, wallLayers))
+                {
+                    // 히트된 오브젝트가 현재 plane인지 확인
+                    if (hit.collider.gameObject == planeCollider.gameObject)
+                    {
+                        planeGroup.SetDetectedByWallDetector(planeCollider.gameObject, true);
+                    }
+                    else
+                    {
+                        planeGroup.SetDetectedByWallDetector(planeCollider.gameObject, false);
+                    }
+                }
+                else
+                {
+                    planeGroup.SetDetectedByWallDetector(planeCollider.gameObject, false);
+                }
+            }
+        }
     }
 }
