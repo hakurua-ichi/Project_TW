@@ -37,7 +37,7 @@ public class PlayerPhysicsSetup : MonoBehaviour
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.mass = 10f;
-        rb.linearDamping = 5f;
+        rb.linearDamping = 1f;
         rb.useGravity = true;
     }
 }

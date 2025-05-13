@@ -8,6 +8,13 @@ public class RotationInput : MonoBehaviour
     //   위치: Assets\Script\Camera\Camera_Movement\Script\CameraSystemController.cs
     public event System.Action<float> RotationRequested;
     
+    // TouchUIScript에서 호출 가능한 공개 메서드
+    public void RequestRotation(float angle)
+    {
+        // RotationRequested 이벤트 발생
+        RotationRequested?.Invoke(angle);
+    }
+    
     void Update()
     {
         // 회전 입력 감지
