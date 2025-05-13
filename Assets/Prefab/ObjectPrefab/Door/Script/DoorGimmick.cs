@@ -5,19 +5,20 @@ public class DoorGimmick : MonoBehaviour, IGimmickObserver
     [SerializeField] private GimmickSubject TriggerObject;
 
     public GameObject doorObject;
-    private GimmickContext gimmickContext;
+    private GimmickContext context;
+    private bool doorState = false;
 
     void Start()
     {
-        gimmickContext = new GimmickContext();
-        gimmickContext.SetAction(new OpenDoorAction(doorObject, GameObject.FindGameObjectWithTag("Player").transform));
+        context = new GimmickContext();
+        context.SetAction(new OpenDoorAction(doorObject, GameObject.FindGameObjectWithTag("Player").transform));
 
         // 옵저버 등록
         if (TriggerObject != null)
         {
             Debug.Log("Door 옵저버 등록 성공");
             TriggerObject.AddObserverEnter(this); // 불 켜기
-            TriggerObject.AddObserverExit(new ExitObserver(gimmickContext)); // 불 끄기
+            //TriggerObject.AddObserverExit(new ExitObserver(gimmickContext)); // 불 끄기
         }
         else
         {
@@ -27,22 +28,40 @@ public class DoorGimmick : MonoBehaviour, IGimmickObserver
 
     public void OnGimmickTriggered()
     {
-        gimmickContext.StartAction();
+        //gimmickContext.StartAction();
     }
 
-    // 내부 클래스: Light 끄기 전용 옵저버
-    private class ExitObserver : IGimmickObserver
+    public void ButtonClick()
     {
-        private GimmickContext context;
-
-        public ExitObserver(GimmickContext ctx)
+        if (!doorState)
         {
-            context = ctx;
+            context.StartAction();
+            doorState = true;
         }
-
-        public void OnGimmickTriggered()
+        else
         {
-            context.CancelAction(); // 문 닫기
+            context.CancelAction();
+            doorState = false;
         }
     }
+    // 내부 클래스: Light 끄기 전용 옵저버
+    //private class ExitObserver : IGimmickObserver
+    //{
+    //    private GimmickContext context;
+
+    //    public ExitObserver(GimmickContext ctx)
+    //    {
+    //        context = ctx;
+    //    }
+
+    //    public void OnGimmickTriggered()
+    //    {
+    //        context.CancelAction(); // 문 닫기
+    //    }
+
+    //    public void ButtonClick()
+    //    {
+
+    //    }
+    //}
 }
