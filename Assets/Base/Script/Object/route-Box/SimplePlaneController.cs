@@ -44,9 +44,18 @@ public class SimplePlaneGroupController : MonoBehaviour
                 
                 // Collider를 트리거로 설정
                 childCollider.isTrigger = true;
-                
-                // 레이어 설정 (WallDetector가 감지할 수 있도록)
-                child.gameObject.layer = LayerMask.NameToLayer("TransparentObstacle");
+                  // 레이어 설정 (WallDetector가 감지할 수 있도록)
+                int transparentLayer = LayerMask.NameToLayer("Wall");
+                if (transparentLayer != -1)
+                {
+                    child.gameObject.layer = transparentLayer;
+                }
+                else
+                {
+                    Debug.LogWarning("'Wall' 레이어가 정의되어 있지 않습니다. Project Settings에서 레이어를 정의해주세요.");
+                    // 기본적으로 사용 가능한 "Ignore Raycast" 레이어 사용
+                    child.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+                }
             }
         }
         
