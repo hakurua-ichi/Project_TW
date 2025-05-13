@@ -4,6 +4,13 @@ public class RotationPositionCalculator : MonoBehaviour
 {
     [SerializeField] private Transform playerTransform;
     
+    [Header("카메라 위치 설정")]
+    [Tooltip("카메라와 플레이어 사이의 거리")]
+    [SerializeField] private float cameraDistance = 5f;
+    
+    [Tooltip("카메라의 높이 (플레이어 기준)")]
+    [SerializeField] private float cameraHeight = 2f;
+    
     private float currentAngle = 0f;
     
     // 위치 계산 결과 이벤트
@@ -17,6 +24,10 @@ public class RotationPositionCalculator : MonoBehaviour
     {
         playerTransform = player;
         currentAngle = initialAngle;
+        
+        // 높이 값이 외부에서 지정되었을 경우 적용
+        if (initialHeight > 0)
+            cameraHeight = initialHeight;
     }
     
     // 새 회전 각도로 위치 계산
@@ -31,15 +42,14 @@ public class RotationPositionCalculator : MonoBehaviour
         // 플레이어에서 카메라로의 방향 벡터 계산
         Vector3 directionToCamera = cameraPosition - playerPosition;
         
-        // 현재 높이 저장
-        float height = directionToCamera.y;
+        // 현재 높이 저장 (외부에서 지정된 높이 우선 사용)
+        float height = cameraHeight;
         
-        // XZ 평면에서의 방향 벡터 계산
-        Vector3 flatDirection = new Vector3(directionToCamera.x, 0, directionToCamera.z);
-        float distance = flatDirection.magnitude;
+        // 현재 거리 저장 (외부에서 지정된 거리 우선 사용)
+        float distance = cameraDistance;
         
         // 현재 각도 계산 (arctan2를 사용하여 현재 방향 각도 계산)
-        float currentDegrees = Mathf.Atan2(flatDirection.x, flatDirection.z) * Mathf.Rad2Deg;
+        float currentDegrees = Mathf.Atan2(directionToCamera.x, directionToCamera.z) * Mathf.Rad2Deg;
         
         // 새 각도 계산 (현재 각도에 회전량 더하기)
         float newDegrees = currentDegrees + angleChange;
@@ -62,14 +72,25 @@ public class RotationPositionCalculator : MonoBehaviour
         currentAngle = newDegrees;
         
         // 계산 결과 이벤트 발생
-        // 구독자:
-        // - RotationInterpolator.StartRotation(Vector3 position, Quaternion rotation, float newAngle)
-        //   위치: Assets\Script\Camera\Camera_Movement\Script\RotationInterpolator.cs
         PositionCalculated?.Invoke(newPosition, targetRotation, currentAngle);
     }
     
     // 현재 각도 반환 (외부에서 필요할 때)
     public float GetCurrentAngle() => currentAngle;
+    
+    // 거리와 높이 setter/getter
+    public float GetCameraDistance() => cameraDistance;
+    public float GetCameraHeight() => cameraHeight;
+    
+    public void SetCameraDistance(float distance)
+    {
+        cameraDistance = distance;
+    }
+    
+    public void SetCameraHeight(float height)
+    {
+        cameraHeight = height;
+    }
     
     public void SetCurrentAngle(float angle)
     {

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerPhysicsSetup))]
+[RequireComponent(typeof(RigidbodyStepUp))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private bool faceDirectionOfMovement = true;
@@ -9,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private PlayerMovementController movementController;
     private PlayerAnimationController animationController;
     private PlayerRotationHandler rotationHandler;
+    private RigidbodyStepUp stepUpHandler;
 
     void Start()
     {
@@ -24,10 +26,14 @@ public class PlayerController : MonoBehaviour
         animationController = GetComponent<PlayerAnimationController>();
         if (animationController == null)
             animationController = gameObject.AddComponent<PlayerAnimationController>();
-            
-        rotationHandler = GetComponent<PlayerRotationHandler>();
+              rotationHandler = GetComponent<PlayerRotationHandler>();
         if (rotationHandler == null)
             rotationHandler = gameObject.AddComponent<PlayerRotationHandler>();
+            
+        // StepUp 컴포넌트 가져오기 (또는 추가)
+        stepUpHandler = GetComponent<RigidbodyStepUp>();
+        if (stepUpHandler == null)
+            stepUpHandler = gameObject.AddComponent<RigidbodyStepUp>();
     }
 
     void Update()
