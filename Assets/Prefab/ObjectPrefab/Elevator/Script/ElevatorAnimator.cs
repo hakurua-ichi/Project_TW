@@ -12,33 +12,35 @@ public class ElevatorAnimator : MonoBehaviour
 
     private ElevatorState elevatorState;
 
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = true;
         target = topPoint;
         elevatorState = new ElevatorState();
+        Debug.Log("Animator Elevator State: " + elevatorState);
 
-        Debug.Log("[ElevatorAnimator] Start() 호출됨");
-        Debug.Log("[ElevatorAnimator] 초기 목표 지점: " + target.position);
-        Debug.Log("[ElevatorAnimator] ElevatorState.IsMoving: " + elevatorState.IsMoving);
+        //Debug.Log("[ElevatorAnimator] Start() 호출됨");
+        //Debug.Log("[ElevatorAnimator] 초기 목표 지점: " + target.position);
+        //Debug.Log("[ElevatorAnimator] ElevatorState.IsMoving: " + elevatorState.IsMoving);
     }
 
     public void StartElevator()
     {
         elevatorState.IsMoving = true;
-        Debug.Log("[ElevatorAnimator] StartElevator() 호출됨 - IsMoving: " + elevatorState.IsMoving);
+        //Debug.Log("[ElevatorAnimator] StartElevator() 호출됨 - IsMoving: " + elevatorState.IsMoving);
     }
 
     public void StopElevator()
     {
         elevatorState.IsMoving = false;
-        Debug.Log("[ElevatorAnimator] StopElevator() 호출됨 - IsMoving: " + elevatorState.IsMoving);
+        //Debug.Log("[ElevatorAnimator] StopElevator() 호출됨 - IsMoving: " + elevatorState.IsMoving);
     }
 
     public ElevatorState SetState()
     {
-        Debug.Log("[ElevatorAnimator] SetState() 호출됨 - ElevatorState 반환");
+        Debug.Log("animator elevatorState: " + elevatorState);
+        //Debug.Log("[ElevatorAnimator] SetState() 호출됨 - ElevatorState 반환");
         return elevatorState;
     }
 
@@ -54,8 +56,8 @@ public class ElevatorAnimator : MonoBehaviour
         {
             elevatorState.IsMoving = false;
 
-            Debug.Log("[ElevatorAnimator] 도착 - 위치: " + transform.position);
-            Debug.Log("[ElevatorAnimator] IsMoving = false");
+            //Debug.Log("[ElevatorAnimator] 도착 - 위치: " + transform.position);
+            //Debug.Log("[ElevatorAnimator] IsMoving = false");
 
             SwitchTarget();  // 도착했을 때만 목표를 변경
         }
@@ -65,6 +67,6 @@ public class ElevatorAnimator : MonoBehaviour
     private void SwitchTarget()
     {
         target = (target == topPoint) ? bottomPoint : topPoint;
-        Debug.Log("[ElevatorAnimator] SwitchTarget() 호출됨 - 다음 목표 지점: " + target.position);
+        //Debug.Log("[ElevatorAnimator] SwitchTarget() 호출됨 - 다음 목표 지점: " + target.position);
     }
 }
