@@ -47,7 +47,7 @@ public class ElevatorAction : IGimmickAction
     public void setup()
     {
         //Debug.Log("[ElevatorAction] setup() »£√‚µ ");
-
+        Debug.Log("elevatorState: " + elevatorState);
         elevatorState.IsMoving = false;
         mover.StopElevator();
 
