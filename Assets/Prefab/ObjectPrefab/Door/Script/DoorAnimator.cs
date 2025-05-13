@@ -15,31 +15,31 @@ public class DoorAnimator
 
     public void Open(DoorState state)
     {
-        Vector3 toPlayer = (state.Player.position - state.DoorTransform.position).normalized;
-        float dot = Vector3.Dot(state.DoorTransform.right, toPlayer);
+        //Vector3 toPlayer = (state.Player.position - state.DoorTransform.position).normalized;
+        //float dot = Vector3.Dot(state.DoorTransform.right, toPlayer);
 
-        if (dot > 0)
-        {
+        //if (dot > 0)
+        //{
             animator.SetTrigger("RightOpen");
-        }
-        else
-        {
-            animator.SetTrigger("LeftOpen");
-        }
+        //}
+        //else
+        //{
+            //animator.SetTrigger("LeftOpen");
+        //}
     }
 
     public void Close(DoorState state)
     {
-        Vector3 toPlayer = (state.Player.position - state.DoorTransform.position).normalized;
-        float dot = Vector3.Dot(state.DoorTransform.right, toPlayer);
+        //Vector3 toPlayer = (state.Player.position - state.DoorTransform.position).normalized;
+        //float dot = Vector3.Dot(state.DoorTransform.right, toPlayer);
 
-        if (dot > 0)
-        {
+        //if (dot > 0)
+        //{
             animator.SetTrigger("RightClose");
-        }
-        else
-        {
-            animator.SetTrigger("LeftClose");
-        }
+        //}
+        //else
+        //{
+            //animator.SetTrigger("LeftClose");
+        //}
     }
 }
