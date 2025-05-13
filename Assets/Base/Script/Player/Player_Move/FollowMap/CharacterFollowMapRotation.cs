@@ -35,29 +35,13 @@ public class CharacterFollowMapRotation : MonoBehaviour
     // 새 블록 감지 시 호출
     private void HandleNewBlockDetected(Transform block)
     {
-        // 블록에서 RotateMap 컴포넌트 찾기
-        RotateMap blockRotateMap = block.GetComponent<RotateMap>();
+        // 직접 검색 대신 부모까지 포함하여 검색
+        RotateMap blockRotateMap = block.GetComponentInParent<RotateMap>();
         
-        // 컴포넌트가 없으면 부모 관계에서 찾기 (태그 체크 없이)
-        if (blockRotateMap == null)
-        {
-            Transform parent = block;
-            while (parent != null)
-            {
-                blockRotateMap = parent.GetComponent<RotateMap>();
-                if (blockRotateMap != null) break;
-                
-                if (parent.parent == null) break;
-                parent = parent.parent;
-            }
-        }
-        
-        // 발견된 RotateMap 설정
         if (blockRotateMap != null)
         {
             currentRotationMap = blockRotateMap;
             hasRotatingMap = true;
-            //Debug.Log($"[회전 맵] 회전 맵 자동 감지: {currentRotationMap.name}");
         }
     }
     
@@ -93,7 +77,20 @@ public class CharacterFollowMapRotation : MonoBehaviour
     }
     
     // 충돌 감지 함수들
-    private void OnCollisionEnter(Collision collision) => collisionDetector.CheckCollision(collision);
+    private void OnCollisionEnter(Collision collision)
+    {
+        // 충돌 오브젝트에서 직접 RotateMap 찾기
+        RotateMap blockRotateMap = collision.gameObject.GetComponentInParent<RotateMap>();
+        if (blockRotateMap != null)
+        {
+            currentRotationMap = blockRotateMap;
+            hasRotatingMap = true;
+        }
+        
+        // 기존 충돌 로직 호출
+        collisionDetector.CheckCollision(collision);
+    }
+    
     private void OnCollisionStay(Collision collision) => collisionDetector.CheckCollision(collision);
     
     private void OnCollisionExit(Collision collision)
