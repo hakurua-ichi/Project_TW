@@ -17,8 +17,7 @@ public class DoorGimmick : MonoBehaviour, IGimmickObserver
         if (TriggerObject != null)
         {
             Debug.Log("Door 옵저버 등록 성공");
-            TriggerObject.AddObserverEnter(this); // 불 켜기
-            //TriggerObject.AddObserverExit(new ExitObserver(gimmickContext)); // 불 끄기
+            TriggerObject.AddObserverEnter(this); // 문 옵저버 등록
         }
         else
         {
@@ -44,24 +43,4 @@ public class DoorGimmick : MonoBehaviour, IGimmickObserver
             doorState = false;
         }
     }
-    // 내부 클래스: Light 끄기 전용 옵저버
-    //private class ExitObserver : IGimmickObserver
-    //{
-    //    private GimmickContext context;
-
-    //    public ExitObserver(GimmickContext ctx)
-    //    {
-    //        context = ctx;
-    //    }
-
-    //    public void OnGimmickTriggered()
-    //    {
-    //        context.CancelAction(); // 문 닫기
-    //    }
-
-    //    public void ButtonClick()
-    //    {
-
-    //    }
-    //}
 }
