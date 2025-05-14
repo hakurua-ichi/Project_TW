@@ -9,6 +9,9 @@ public class PlayerMovementController : MonoBehaviour
     private Rigidbody rb;
     private bool isGrounded;
     private float airControl = 0.3f;
+    
+    // 스텝업 관련
+    private RigidbodyStepUp stepUpHandler;
 
     void Start()
     {
@@ -30,6 +33,13 @@ public class PlayerMovementController : MonoBehaviour
         {
             rb = gameObject.AddComponent<Rigidbody>();
         }
+        
+        // StepUp 컴포넌트 가져오기
+        stepUpHandler = GetComponent<RigidbodyStepUp>();
+        if (stepUpHandler == null)
+        {
+            stepUpHandler = gameObject.AddComponent<RigidbodyStepUp>();
+        }
     }
 
     void Update()
@@ -46,17 +56,19 @@ public class PlayerMovementController : MonoBehaviour
             RotateTowardCamera(verticalInput);
         }
 
-        Vector3 moveVector = CalculateMoveVector(horizontalInput, 0);
+        Vector3 moveVector = CalculateMoveVector(horizontalInput, verticalInput);
 
         Vector3 velocity = rb.linearVelocity;
 
+        // 자연스러운 이동을 위해 공중에서는 부분적으로 입력 적용
         if (!isGrounded && !rb.isKinematic)
         {
             velocity.x = velocity.x * (1 - airControl) + moveVector.x * airControl;
             velocity.z = velocity.z * (1 - airControl) + moveVector.z * airControl;
             rb.linearVelocity = velocity;
         }
-        if (!rb.isKinematic && isGrounded)
+        // 지면에서는 직접 속도 설정
+        else if (!rb.isKinematic && isGrounded)
         {
             velocity.x = moveVector.x;
             velocity.z = moveVector.z;

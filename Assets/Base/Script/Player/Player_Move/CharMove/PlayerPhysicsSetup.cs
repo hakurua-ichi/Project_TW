@@ -34,10 +34,10 @@ public class PlayerPhysicsSetup : MonoBehaviour
         */
         
         // 물리 특성 조정으로 튀는 현상 방지
-        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        rb.mass = 5f;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
-        rb.mass = 10f;
-        rb.linearDamping = 1f;
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        rb.linearDamping = 5f; // 기존 1.0f보다 낮게 설정
         rb.useGravity = true;
     }
 }

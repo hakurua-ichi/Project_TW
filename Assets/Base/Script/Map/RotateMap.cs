@@ -1,11 +1,10 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class RotateMap : MonoBehaviour
 {
     [SerializeField] private float rotationSpeed = 90f;
-    [SerializeField] private string leftKeyBinding = "<Keyboard>/q"; // 문자열 기반 키 바인딩
-    [SerializeField] private string rightKeyBinding = "<Keyboard>/e"; // 문자열 기반 키 바인딩
+    [SerializeField] private KeyCode leftRotateKey = KeyCode.Q; // 구버전 입력 시스템 KeyCode 사용
+    [SerializeField] private KeyCode rightRotateKey = KeyCode.E; // 구버전 입력 시스템 KeyCode 사용
     [SerializeField] private Transform pivotPoint;
 
     [Header("디버그 정보")]
@@ -15,28 +14,6 @@ public class RotateMap : MonoBehaviour
     private bool isRotating = false;
     private float targetRotation = 0f;
     private float currentRotation = 0f;
-
-    // Input System 액션 생성
-    private InputAction leftRotateAction;
-    private InputAction rightRotateAction;
-
-    void Awake()
-    {
-        // 입력 액션 설정
-        leftRotateAction = new InputAction("RotateLeft", binding: leftKeyBinding);
-        rightRotateAction = new InputAction("RotateRight", binding: rightKeyBinding);
-
-        // 액션 활성화
-        leftRotateAction.Enable();
-        rightRotateAction.Enable();
-    }
-
-    void OnDestroy()
-    {
-        // 액션 정리
-        leftRotateAction.Dispose();
-        rightRotateAction.Dispose();
-    }
 
     void Start()
     {
@@ -62,13 +39,11 @@ public class RotateMap : MonoBehaviour
                 //Debug.Log($"[회전 맵] 자식 {i}: {transform.GetChild(i).name}");
             }
         }
-    }
-
-    void Update()
+    }    void Update()
     {
-        // 키 입력 확인
-        bool leftKeyDown = leftRotateAction.triggered;
-        bool rightKeyDown = rightRotateAction.triggered;
+        // 키 입력 확인 (구버전 입력 시스템 사용)
+        bool leftKeyDown = Input.GetKeyDown(leftRotateKey);
+        bool rightKeyDown = Input.GetKeyDown(rightRotateKey);
 
         if (showDebugInfo && (leftKeyDown || rightKeyDown))
         {
