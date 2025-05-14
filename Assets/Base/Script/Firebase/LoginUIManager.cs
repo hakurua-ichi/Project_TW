@@ -11,13 +11,11 @@ public class LoginUIManager : MonoBehaviour
     public TMP_InputField passwordInput;
     public Button signUpButton;
     public Button emailSignInButton;
-    public Button googleSignInButton;
+    public Button logoutButton;
     public TMP_Text statusText; // 상태 메시지 표시용
 
     [Header("Dependencies")]
     public EmailPasswordAuthHandler emailAuthHandler;
-    public GoogleAuthHandler googleAuthHandler;
-    // public SceneNavigationService sceneNavigator; // 씬 네비게이터 (필요 시)
 
     private bool _isProcessing = false; // 중복 요청 방지 플래그
 
@@ -25,14 +23,11 @@ public class LoginUIManager : MonoBehaviour
     {
         // 핸들러 연결 확인
         if (emailAuthHandler == null) Debug.LogError("LoginUIManager: EmailPasswordAuthHandler is not assigned!");
-        if (googleAuthHandler == null) Debug.LogError("LoginUIManager: GoogleAuthHandler is not assigned!");
-        // if (sceneNavigator == null) Debug.LogError("LoginUIManager: SceneNavigationService is not assigned!");
-
 
         // 버튼 리스너 등록
         signUpButton.onClick.AddListener(HandleSignUpClicked);
         emailSignInButton.onClick.AddListener(HandleEmailSignInClicked);
-        googleSignInButton.onClick.AddListener(HandleGoogleSignInClicked);
+        logoutButton.onClick.AddListener(HandleLogoutClicked);
 
         // FirebaseAuthenticator 및 각 핸들러의 이벤트 구독
         SubscribeToAuthEvents();
@@ -62,10 +57,6 @@ public class LoginUIManager : MonoBehaviour
         {
             emailAuthHandler.OnAuthOperationCompleted += HandleAuthOperationCompleted;
         }
-        if (googleAuthHandler != null)
-        {
-            googleAuthHandler.OnAuthOperationCompleted += HandleAuthOperationCompleted;
-        }
     }
 
     private void UnsubscribeFromAuthEvents()
@@ -79,10 +70,6 @@ public class LoginUIManager : MonoBehaviour
         if (emailAuthHandler != null)
         {
             emailAuthHandler.OnAuthOperationCompleted -= HandleAuthOperationCompleted;
-        }
-        if (googleAuthHandler != null)
-        {
-            googleAuthHandler.OnAuthOperationCompleted -= HandleAuthOperationCompleted;
         }
     }
 
@@ -135,6 +122,23 @@ public class LoginUIManager : MonoBehaviour
         // 실패 시에는 메시지만 표시되고 UI는 현재 상태 유지
     }
 
+    private void HandleLogoutClicked()
+    {
+        if (_isProcessing || FirebaseAuthenticator.Instance == null) return;
+
+        _isProcessing = true; // 로그아웃 처리 중
+        SetAllButtonsInteractable(false); // 모든 인터랙션 비활성화 (로그아웃 버튼 포함)
+        SetStatus("로그아웃 중...", false);
+
+        // Firebase 로그아웃
+        FirebaseAuthenticator.Instance.SignOut();
+
+        // FirebaseAuthenticator.Instance.SignOut() 호출 후
+        // OnUserSignedOut 이벤트가 발생하여 HandleUserSignedOut이 호출되고,
+        // 거기서 UI 업데이트 및 _isProcessing = false 처리가 이루어집니다.
+        // 따라서 여기서 직접 _isProcessing = false 등을 호출할 필요는 없습니다.
+    }
+
     #endregion
 
     #region Button Click Handlers
@@ -161,16 +165,6 @@ public class LoginUIManager : MonoBehaviour
         await emailAuthHandler.SignInWithEmailAsync(emailInput.text, passwordInput.text);
     }
 
-    private async void HandleGoogleSignInClicked()
-    {
-        if (_isProcessing || googleAuthHandler == null) return;
-
-        _isProcessing = true;
-        SetAllButtonsInteractable(false);
-        SetStatus("Google 로그인 진행 중...", false);
-        await googleAuthHandler.SignInWithGoogleAsync();
-    }
-
     #endregion
 
     #region UI Helper Methods
@@ -194,30 +188,55 @@ public class LoginUIManager : MonoBehaviour
     {
         bool isSignedIn = user != null;
 
-        // 로그인/회원가입 관련 UI는 로그아웃 상태일 때만 활성화
+        // 로그인/회원가입 관련 UI
         emailInput.gameObject.SetActive(!isSignedIn);
         passwordInput.gameObject.SetActive(!isSignedIn);
         signUpButton.gameObject.SetActive(!isSignedIn);
         emailSignInButton.gameObject.SetActive(!isSignedIn);
-        googleSignInButton.gameObject.SetActive(!isSignedIn);
 
-        SetAllButtonsInteractable(!isSignedIn && !_isProcessing); // 로그인 안했고, 처리중도 아닐때 활성화
+        // 로그아웃 버튼은 로그인 상태일 때만 활성화/보이기
+        if (logoutButton != null)
+        {
+            logoutButton.gameObject.SetActive(isSignedIn);
+            logoutButton.interactable = isSignedIn && !_isProcessing; // 로그인 했고, 처리중 아닐때
+        }
+
+        // 로그인 안 했거나 처리 중이 아닐 때 다른 버튼들 활성화
+        bool canInteractWithAuthButtons = !isSignedIn && !_isProcessing;
+        signUpButton.interactable = canInteractWithAuthButtons;
+        emailSignInButton.interactable = canInteractWithAuthButtons;
+        emailInput.interactable = canInteractWithAuthButtons;
+        passwordInput.interactable = canInteractWithAuthButtons;
 
         if (!isSignedIn)
         {
-             emailInput.text = "";
-             passwordInput.text = "";
+            emailInput.text = "";
+            passwordInput.text = "";
+            // 로그인 화면으로 돌아왔을 때 초기 상태 메시지 (선택적)
+            // if (statusText.text.Contains("환영합니다")) // 이전 로그인 성공 메시지가 남아있다면
+            // {
+            //     SetStatus("로그인해주세요.", false);
+            // }
         }
     }
 
     private void SetAllButtonsInteractable(bool interactable)
     {
+        // 로그인/가입 관련 버튼들
         signUpButton.interactable = interactable;
         emailSignInButton.interactable = interactable;
-        googleSignInButton.interactable = interactable;
-        // 입력 필드도 함께 제어
         emailInput.interactable = interactable;
         passwordInput.interactable = interactable;
+
+        // 로그아웃 버튼도 제어 (단, 로그아웃 버튼의 활성화/비활성화는 로그인 상태에 따라 더 우선적으로 결정될 수 있음)
+        if (logoutButton != null)
+        {
+            // 로그아웃 버튼은 '로그인 상태' 이면서 '처리중이 아닐 때'만 활성화되어야 함
+            // 이 함수는 _isProcessing 상태 변경 시 주로 호출되므로,
+            // 현재 로그인 상태를 고려하여 interactable을 설정해야 함.
+            bool isSignedIn = FirebaseAuthenticator.Instance?.CurrentUser != null;
+            logoutButton.interactable = isSignedIn && interactable;
+        }
     }
 
     private void SetStatus(string message, bool isError)
@@ -230,6 +249,5 @@ public class LoginUIManager : MonoBehaviour
         if (isError) Debug.LogError($"LoginUIManager Status: {message}");
         else Debug.Log($"LoginUIManager Status: {message}");
     }
-
     #endregion
 }
