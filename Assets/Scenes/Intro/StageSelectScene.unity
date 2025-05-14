@@ -1201,7 +1201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 1277709565}
-  SceneName: Haku_Test_stage_copy
+  SceneName: stage1
 --- !u!1001 &1717894822
 PrefabInstance:
   m_ObjectHideFlags: 0

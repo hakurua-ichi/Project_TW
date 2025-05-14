@@ -5266,7 +5266,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1990848558}
   - component: {fileID: 1990848561}
-  - component: {fileID: 1990848560}
   - component: {fileID: 1990848559}
   m_Layer: 0
   m_Name: SceneChanger
@@ -5304,20 +5303,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: 1434035838}
   SceneName: LoginUiScene
---- !u!114 &1990848560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1990848557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dff4731b08a642347a7d9fd70dd2e09b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  button: {fileID: 1469898045}
-  SceneName: 
 --- !u!114 &1990848561
 MonoBehaviour:
   m_ObjectHideFlags: 0
