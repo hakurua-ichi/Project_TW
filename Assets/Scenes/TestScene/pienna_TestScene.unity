@@ -5724,7 +5724,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1050386108655360807, guid: 8a7b2d8fdfe2a1945ad007c0c27be66f, type: 3}
       propertyPath: m_Name
-      value: Candle_Fire
+      value: Candle
       objectReference: {fileID: 0}
     - target: {fileID: 2626076765560856551, guid: 8a7b2d8fdfe2a1945ad007c0c27be66f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -26639,8 +26639,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 90
-  leftKeyBinding: <Keyboard>/q
-  rightKeyBinding: <Keyboard>/e
+  leftRotateKey: 113
+  rightRotateKey: 101
   pivotPoint: {fileID: 0}
   showDebugInfo: 1
   childCount: 0
