@@ -3,6 +3,9 @@ using UnityEngine.UI; // 일반 Button 용
 using TMPro;       // TextMeshPro 용
 using Firebase.Auth;
 using Firebase;
+using UnityEngine.SceneManagement;
+using System.Reflection;
+using System;
 
 public class LoginUIManager : MonoBehaviour
 {
@@ -19,10 +22,15 @@ public class LoginUIManager : MonoBehaviour
 
     private bool _isProcessing = false; // 중복 요청 방지 플래그
 
+    private void Awake()
+    {
+        Debug.Log("어웨이크 실행");
+        
+    }
+
     void Start()
     {
-        // 핸들러 연결 확인
-        if (emailAuthHandler == null) Debug.LogError("LoginUIManager: EmailPasswordAuthHandler is not assigned!");
+        
 
         // 버튼 리스너 등록
         signUpButton.onClick.AddListener(HandleSignUpClicked);
@@ -38,6 +46,10 @@ public class LoginUIManager : MonoBehaviour
             SetStatus("Firebase 초기화 중...", false);
         }
         UpdateUIForAuthState(FirebaseAuthenticator.Instance?.CurrentUser);
+
+        // 핸들러 연결 확인
+        if (emailAuthHandler == null) Debug.LogError("LoginUIManager: EmailPasswordAuthHandler is not assigned!");
+        Debug.Log("이메일 핸들러: " + emailAuthHandler);
     }
 
     void OnDestroy()
@@ -95,6 +107,7 @@ public class LoginUIManager : MonoBehaviour
         _isProcessing = false; // 로그인 성공 시 처리 중 상태 해제
 
         // TODO: 로그인 성공 후 다음 씬으로 이동
+        SceneManager.LoadScene("MainMenuScene");
         Debug.Log("Login Succeeded. Navigating to next scene...");
     }
 
