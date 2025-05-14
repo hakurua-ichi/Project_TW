@@ -2105,6 +2105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   optionsPanel: {fileID: 514512280}
   optionButton: {fileID: 1860238008}
+  optionButton2: {fileID: 681528855}
 --- !u!114 &60883588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89664,7 +89665,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0016403198}
+  m_AnchoredPosition: {x: 0, y: 0.0013427734}
   m_SizeDelta: {x: 0, y: 60}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1001 &2138751723
