@@ -2861,8 +2861,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 414bc7ae1bd210e41bf23de8d7a96a23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  webClientId: 993008318424-4d40v9i5ppn2rdfkoqk2319k7ppcrdi7.apps.googleusercontent.com
-  _isGoogleSignInInitialized: 0
 --- !u!114 &1828781043
 MonoBehaviour:
   m_ObjectHideFlags: 0

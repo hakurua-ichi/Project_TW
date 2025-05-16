@@ -3,6 +3,7 @@ using UnityEngine.UI; // 일반 Button 용
 using TMPro;       // TextMeshPro 용
 using Firebase.Auth;
 using Firebase;
+using UnityEngine.SceneManagement;
 
 public class LoginUIManager : MonoBehaviour
 {
@@ -21,9 +22,25 @@ public class LoginUIManager : MonoBehaviour
 
     void Start()
     {
-        // 핸들러 연결 확인
-        if (emailAuthHandler == null) Debug.LogError("LoginUIManager: EmailPasswordAuthHandler is not assigned!");
+        // _isProcessing 상태 초기화 (중요!)
+        _isProcessing = false;
 
+        // 핸들러 연결 확인
+        if (emailAuthHandler == null)
+        {
+            emailAuthHandler = FindFirstObjectByType<EmailPasswordAuthHandler>();
+            if (emailAuthHandler == null) 
+                Debug.LogError("LoginUIManager: EmailPasswordAuthHandler를 찾을 수 없습니다!");
+        }
+
+        // 먼저 기존 이벤트 구독 해제 (안전하게)
+        UnsubscribeFromAuthEvents();
+        
+        // 버튼 리스너 초기화 - 중복 등록 방지
+        signUpButton.onClick.RemoveAllListeners();
+        emailSignInButton.onClick.RemoveAllListeners();
+        logoutButton.onClick.RemoveAllListeners();
+        
         // 버튼 리스너 등록
         signUpButton.onClick.AddListener(HandleSignUpClicked);
         emailSignInButton.onClick.AddListener(HandleEmailSignInClicked);
@@ -32,12 +49,25 @@ public class LoginUIManager : MonoBehaviour
         // FirebaseAuthenticator 및 각 핸들러의 이벤트 구독
         SubscribeToAuthEvents();
 
-        // 초기 UI 상태 설정 (예: Firebase 초기화 중 메시지)
-        if (FirebaseAuthenticator.Instance == null || !FirebaseAuthenticator.Instance.IsInitialized)
+        // Firebase 초기화 상태 확인
+        if (FirebaseAuthenticator.Instance == null)
+        {
+            SetStatus("Firebase 인스턴스를 찾을 수 없습니다.", true);
+            SetAllButtonsInteractable(false);
+            return;
+        }
+        
+        if (!FirebaseAuthenticator.Instance.IsInitialized)
         {
             SetStatus("Firebase 초기화 중...", false);
+            SetAllButtonsInteractable(false);
         }
-        UpdateUIForAuthState(FirebaseAuthenticator.Instance?.CurrentUser);
+        else
+        {
+            // Firebase가 이미 초기화된 경우, 수동으로 현재 인증 상태 업데이트
+            SetStatus("로그인 준비 완료.", false);
+            UpdateUIForAuthState(FirebaseAuthenticator.Instance.CurrentUser);
+        }
     }
 
     void OnDestroy()
@@ -61,6 +91,7 @@ public class LoginUIManager : MonoBehaviour
 
     private void UnsubscribeFromAuthEvents()
     {
+        Debug.Log("Unsubscribing from Firebase events.");
         if (FirebaseAuthenticator.Instance != null)
         {
             FirebaseAuthenticator.Instance.OnInitializationComplete -= HandleFirebaseInitialization;
@@ -93,8 +124,8 @@ public class LoginUIManager : MonoBehaviour
     {
         SetStatus($"환영합니다, {user.DisplayName ?? user.Email}!", false);
         _isProcessing = false; // 로그인 성공 시 처리 중 상태 해제
-
         // TODO: 로그인 성공 후 다음 씬으로 이동
+        SceneManager.LoadScene("MainMenuScene"); // 다음 씬으로 이동 (씬 이름은 필요에 따라 변경)
         Debug.Log("Login Succeeded. Navigating to next scene...");
     }
 
@@ -126,17 +157,27 @@ public class LoginUIManager : MonoBehaviour
     {
         if (_isProcessing || FirebaseAuthenticator.Instance == null) return;
 
-        _isProcessing = true; // 로그아웃 처리 중
-        SetAllButtonsInteractable(false); // 모든 인터랙션 비활성화 (로그아웃 버튼 포함)
+        _isProcessing = true;
+        SetAllButtonsInteractable(false);
         SetStatus("로그아웃 중...", false);
 
-        // Firebase 로그아웃
-        FirebaseAuthenticator.Instance.SignOut();
-
-        // FirebaseAuthenticator.Instance.SignOut() 호출 후
-        // OnUserSignedOut 이벤트가 발생하여 HandleUserSignedOut이 호출되고,
-        // 거기서 UI 업데이트 및 _isProcessing = false 처리가 이루어집니다.
-        // 따라서 여기서 직접 _isProcessing = false 등을 호출할 필요는 없습니다.
+        try
+        {
+            // Firebase 로그아웃
+            FirebaseAuthenticator.Instance.SignOut();
+            
+            // 즉시 UI 업데이트 (이벤트가 제대로 발생하지 않을 경우를 대비)
+            UpdateUIForAuthState(null);
+            _isProcessing = false;
+            SetStatus("로그아웃되었습니다. 다시 로그인해주세요.", false);
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError($"로그아웃 오류: {ex.Message}");
+            SetStatus("로그아웃 실패. 나중에 다시 시도해주세요.", true);
+            _isProcessing = false;
+            SetAllButtonsInteractable(true);
+        }
     }
 
     #endregion
@@ -212,11 +253,21 @@ public class LoginUIManager : MonoBehaviour
         {
             emailInput.text = "";
             passwordInput.text = "";
-            // 로그인 화면으로 돌아왔을 때 초기 상태 메시지 (선택적)
-            // if (statusText.text.Contains("환영합니다")) // 이전 로그인 성공 메시지가 남아있다면
-            // {
-            //     SetStatus("로그인해주세요.", false);
-            // }
+            
+            // 로그인 입력 필드가 비활성화되어 있다면 활성화
+            if (!emailInput.interactable)
+            {
+                emailInput.interactable = true;
+                passwordInput.interactable = true;
+                signUpButton.interactable = true;
+                emailSignInButton.interactable = true;
+            }
+            
+            // 로그아웃 후 상태 메시지 설정
+            if (string.IsNullOrEmpty(statusText.text) || statusText.text.Contains("환영합니다") || statusText.text.Contains("로그아웃"))
+            {
+                SetStatus("로그인해주세요.", false);
+            }
         }
     }
 
