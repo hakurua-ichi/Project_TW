@@ -10,23 +10,17 @@ using System;
 public class LoginUIManager : MonoBehaviour
 {
     [Header("UI Elements - Login/Sign Up")]
-    public TMP_InputField emailInput;
-    public TMP_InputField passwordInput;
-    public Button signUpButton;
-    public Button emailSignInButton;
-    public Button logoutButton;
-    public TMP_Text statusText; // 상태 메시지 표시용
+    [SerializeField] private TMP_InputField emailInput;
+    [SerializeField] private TMP_InputField passwordInput;
+    [SerializeField] private Button signUpButton;
+    [SerializeField] private Button emailSignInButton;
+    [SerializeField] private Button logoutButton;
+    [SerializeField] private TMP_Text statusText; // 상태 메시지 표시용
 
     [Header("Dependencies")]
-    public EmailPasswordAuthHandler emailAuthHandler;
+    [SerializeField] private EmailPasswordAuthHandler emailAuthHandler;
 
     private bool _isProcessing = false; // 중복 요청 방지 플래그
-
-    private void Awake()
-    {
-        Debug.Log("어웨이크 실행");
-        
-    }
 
     void Start()
     {
@@ -145,6 +139,8 @@ public class LoginUIManager : MonoBehaviour
 
         // Firebase 로그아웃
         FirebaseAuthenticator.Instance.SignOut();
+
+        emailAuthHandler = GameObject.Find("AuthService").GetComponent<EmailPasswordAuthHandler>();
 
         // FirebaseAuthenticator.Instance.SignOut() 호출 후
         // OnUserSignedOut 이벤트가 발생하여 HandleUserSignedOut이 호출되고,
