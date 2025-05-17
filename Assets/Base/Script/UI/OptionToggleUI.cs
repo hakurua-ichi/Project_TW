@@ -3,8 +3,9 @@ using UnityEngine.UI;
 
 public class OptionToggleUI : MonoBehaviour
 {
-    public GameObject optionsPanel; // 옵션창 오브젝트
-    public Button optionButton;     // 옵션 버튼
+    [SerializeField] private GameObject optionsPanel; // 옵션창 오브젝트
+    [SerializeField] private Button optionButton;     // 옵션 버튼
+    [SerializeField] private Button optionButton2;    // 옵션 버튼2 옵션 안에서 종료하기위한 버튼
 
     void Start()
     {
@@ -13,6 +14,7 @@ public class OptionToggleUI : MonoBehaviour
 
         // 버튼 클릭 시 Toggle 호출
         optionButton.onClick.AddListener(ToggleOptionsPanel);
+        optionButton2.onClick.AddListener(ToggleOptionsPanel);
     }
 
     void ToggleOptionsPanel()
