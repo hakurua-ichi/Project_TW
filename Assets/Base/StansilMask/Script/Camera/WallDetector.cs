@@ -7,10 +7,12 @@ using System.Collections.Generic;
 public class WallDetector
 {
     private LayerMask wallLayers;
+    private SimplePlaneGroupController[] planeGroups;
 
     public WallDetector(LayerMask wallLayers)
     {
         this.wallLayers = wallLayers;
+        planeGroups = Object.FindObjectsOfType<SimplePlaneGroupController>();
     }
 
     public Collider[] DetectWalls(GameObject transparentZone)
@@ -27,9 +29,6 @@ public class WallDetector
 
     public void DetectPlanes(Transform player, Transform cameraTrans)
     {
-        // 모든 PlaneGroup 컨트롤러 찾기
-        SimplePlaneGroupController[] planeGroups = Object.FindObjectsOfType<SimplePlaneGroupController>();
-        
         foreach (SimplePlaneGroupController planeGroup in planeGroups)
         {
             // 각 그룹의 모든 Plane Collider 가져오기

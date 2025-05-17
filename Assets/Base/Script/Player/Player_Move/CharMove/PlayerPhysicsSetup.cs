@@ -21,10 +21,10 @@ public class PlayerPhysicsSetup : MonoBehaviour
         {
             rb = gameObject.AddComponent<Rigidbody>();
         }
-        
+
         // Rigidbody 물리 특성 조정
-        rb.constraints =RigidbodyConstraints.FreezeRotationX | 
-                        RigidbodyConstraints.FreezeRotationY | 
+        rb.constraints = RigidbodyConstraints.FreezeRotationX |
+                        RigidbodyConstraints.FreezeRotationY |
                         RigidbodyConstraints.FreezeRotationZ;
         /*
                 rb.constraints = RigidbodyConstraints.FreezePositionZ | 
@@ -32,12 +32,12 @@ public class PlayerPhysicsSetup : MonoBehaviour
                         RigidbodyConstraints.FreezeRotationY | 
                         RigidbodyConstraints.FreezeRotationZ;
         */
-        
+
         // 물리 특성 조정으로 튀는 현상 방지
         rb.mass = 5f;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-        rb.linearDamping = 5f; // 기존 1.0f보다 낮게 설정
+        rb.linearDamping = 2f; // 기존 1.0f보다 낮게 설정
         rb.useGravity = true;
     }
 }

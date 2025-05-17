@@ -1,357 +1,234 @@
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
-Shader "Hidden/Camera-DepthTexture" {
-Properties {
-	_MainTex ("", 2D) = "white" {}
-	_Cutoff ("", Float) = 0.5
-	_Color ("", Color) = (1,1,1,1)
-}
-Category {
-	Fog { Mode Off }
-
-SubShader {
-	Tags { "RenderType"="Opaque" }
-	Pass {
-CGPROGRAM
-#pragma vertex vert
-#pragma fragment frag
-#include "UnityCG.cginc"
-struct v2f {
-    float4 pos : SV_POSITION;
-	#ifdef UNITY_MIGHT_NOT_HAVE_DEPTH_TEXTURE
-    float2 depth : TEXCOORD0;
-	#endif
-};
-v2f vert( appdata_base v ) {
-    v2f o;
-    o.pos = UnityObjectToClipPos(v.vertex);
-    UNITY_TRANSFER_DEPTH(o.depth);
-    return o;
-}
-fixed4 frag(v2f i) : SV_Target {
-    UNITY_OUTPUT_DEPTH(i.depth);
-}
-ENDCG
-	}
-}
-
-SubShader {
-	Tags { "RenderType"="OpaqueDoubleSided" }
-	Pass {
-		Cull Off
-CGPROGRAM
-#pragma vertex vert
-#pragma fragment frag
-#include "UnityCG.cginc"
-struct v2f {
-    float4 pos : SV_POSITION;
-	#ifdef UNITY_MIGHT_NOT_HAVE_DEPTH_TEXTURE
-    float2 depth : TEXCOORD0;
-	#endif
-};
-v2f vert( appdata_base v ) {
-    v2f o;
-    o.pos = UnityObjectToClipPos(v.vertex);
-    UNITY_TRANSFER_DEPTH(o.depth);
-    return o;
-}
-fixed4 frag(v2f i) : SV_Target {
-    UNITY_OUTPUT_DEPTH(i.depth);
-}
-ENDCG
-	}
-}
-
-SubShader {
-	Tags { "RenderType"="TransparentCutout" }
-	Pass {
-CGPROGRAM
-#pragma vertex vert
-#pragma fragment frag
-#include "UnityCG.cginc"
-struct v2f {
-    float4 pos : SV_POSITION;
-	float2 uv : TEXCOORD0;
-	#ifdef UNITY_MIGHT_NOT_HAVE_DEPTH_TEXTURE
-    float2 depth : TEXCOORD1;
-	#endif
-};
-uniform float4 _MainTex_ST;
-v2f vert( appdata_base v ) {
-    v2f o;
-    o.pos = UnityObjectToClipPos(v.vertex);
-	o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
-    UNITY_TRANSFER_DEPTH(o.depth);
-    return o;
-}
-uniform sampler2D _MainTex;
-uniform fixed _Cutoff;
-uniform fixed4 _Color;
-fixed4 frag(v2f i) : SV_Target {
-	fixed4 texcol = tex2D( _MainTex, i.uv );
-	clip( texcol.a*_Color.a - _Cutoff );
-    UNITY_OUTPUT_DEPTH(i.depth);
-}
-ENDCG
-	}
-}
-
-SubShader {
-	Tags { "RenderType"="TreeBark" }
-	Pass {
-CGPROGRAM
-#pragma vertex vert
-#pragma fragment frag
-#pragma glsl_no_auto_normalization
-#include "UnityCG.cginc"
-#include "Lighting.cginc"
-#include "TerrainEngine.cginc"
-struct v2f {
-    float4 pos : SV_POSITION;
-	#ifdef UNITY_MIGHT_NOT_HAVE_DEPTH_TEXTURE
-	float2 depth : TEXCOORD0;
-	#endif
-};
-v2f vert( appdata_full v ) {
-    v2f o;
-    TreeVertBark(v);
-	
-	o.pos = UnityObjectToClipPos( v.vertex );
-    UNITY_TRANSFER_DEPTH(o.depth);
-    return o;
-}
-fixed4 frag(v2f i) : SV_Target {
-	UNITY_OUTPUT_DEPTH(i.depth);
-}
-ENDCG
-	}
-}
-
-SubShader {
-	Tags { "RenderType"="TreeLeaf" }
-	Pass {
-CGPROGRAM
-#pragma vertex vert
-#pragma fragment frag
-#pragma glsl_no_auto_normalization
-#include "UnityCG.cginc"
-#include "Lighting.cginc"
-#include "TerrainEngine.cginc"
-struct v2f {
-	float4 pos : SV_POSITION;
-	float2 uv : TEXCOORD0;
-	#ifdef UNITY_MIGHT_NOT_HAVE_DEPTH_TEXTURE
-	float2 depth : TEXCOORD1;
-	#endif
-};
-v2f vert( appdata_full v ) {
-    v2f o;
-    TreeVertLeaf(v);
-	
-	o.pos = UnityObjectToClipPos( v.vertex );
-	o.uv = v.texcoord.xy;
-    UNITY_TRANSFER_DEPTH(o.depth);
-    return o;
-}
-uniform sampler2D _MainTex;
-uniform fixed _Cutoff;
-fixed4 frag(v2f i) : SV_Target {
-	half alpha = tex2D(_MainTex, i.uv).a;
-
-	clip (alpha - _Cutoff);
-	UNITY_OUTPUT_DEPTH(i.depth);
-}
-ENDCG
-	}
-}
-
-SubShader {
-	Tags { "RenderType"="TreeOpaque" }
-	Pass {
-CGPROGRAM
-#pragma vertex vert
-#pragma fragment frag
-#include "UnityCG.cginc"
-#include "TerrainEngine.cginc"
-struct v2f {
-	float4 pos : SV_POSITION;
-	#ifdef UNITY_MIGHT_NOT_HAVE_DEPTH_TEXTURE
-	float2 depth : TEXCOORD0;
-	#endif
-};
-struct appdata {
-    float4 vertex : POSITION;
-    fixed4 color : COLOR;
-};
-v2f vert( appdata v ) {
-	v2f o;
-	TerrainAnimateTree(v.vertex, v.color.w);
-	o.pos = UnityObjectToClipPos( v.vertex );
-    UNITY_TRANSFER_DEPTH(o.depth);
-	return o;
-}
-fixed4 frag( v2f i ) : SV_Target {
-    UNITY_OUTPUT_DEPTH(i.depth);
-}
-ENDCG
-	}
-} 
-
-SubShader {
-	Tags { "RenderType"="TreeTransparentCutout" }
-	Pass {
-		Cull Off
-CGPROGRAM
-#pragma vertex vert
-#pragma fragment frag
-#include "UnityCG.cginc"
-#include "TerrainEngine.cginc"
-
-struct v2f {
-	float4 pos : SV_POSITION;
-	float2 uv : TEXCOORD0;
-	#ifdef UNITY_MIGHT_NOT_HAVE_DEPTH_TEXTURE
-	float2 depth : TEXCOORD1;
-	#endif
-};
-struct appdata {
-    float4 vertex : POSITION;
-    fixed4 color : COLOR;
-    float4 texcoord : TEXCOORD0;
-};
-v2f vert( appdata v ) {
-	v2f o;
-	TerrainAnimateTree(v.vertex, v.color.w);
-	o.pos = UnityObjectToClipPos( v.vertex );
-	o.uv = v.texcoord.xy;
-    UNITY_TRANSFER_DEPTH(o.depth);
-	return o;
-}
-uniform sampler2D _MainTex;
-uniform fixed _Cutoff;
-fixed4 frag( v2f i ) : SV_Target {
-	half alpha = tex2D(_MainTex, i.uv).a;
-
-	clip (alpha - _Cutoff);
-    UNITY_OUTPUT_DEPTH(i.depth);
-}
-ENDCG
-	}
-}
-
-SubShader {
-	Tags { "RenderType"="TreeBillboard" }
-	Pass {
-		Cull Off
-CGPROGRAM
-#pragma vertex vert
-#pragma fragment frag
-#include "UnityCG.cginc"
-#include "TerrainEngine.cginc"
-struct v2f {
-	float4 pos : SV_POSITION;
-	float2 uv : TEXCOORD0;
-	#ifdef UNITY_MIGHT_NOT_HAVE_DEPTH_TEXTURE
-	float2 depth : TEXCOORD1;
-	#endif
-};
-v2f vert (appdata_tree_billboard v) {
-	v2f o;
-	TerrainBillboardTree(v.vertex, v.texcoord1.xy, v.texcoord.y);
-	o.pos = UnityObjectToClipPos (v.vertex);
-	o.uv.x = v.texcoord.x;
-	o.uv.y = v.texcoord.y > 0;
-    UNITY_TRANSFER_DEPTH(o.depth);
-	return o;
-}
-uniform sampler2D _MainTex;
-fixed4 frag( v2f i ) : SV_Target {
-	fixed4 texcol = tex2D( _MainTex, i.uv );
-	clip( texcol.a - 0.001 );
-    UNITY_OUTPUT_DEPTH(i.depth);
-}
-ENDCG
-	}
-}
-
-SubShader {
-	Tags { "RenderType"="GrassBillboard" }
-	Pass {
-		Cull Off		
-CGPROGRAM
-#pragma vertex vert
-#pragma fragment frag
-#include "UnityCG.cginc"
-#include "TerrainEngine.cginc"
-#pragma glsl_no_auto_normalization
-
-struct v2f {
-	float4 pos : SV_POSITION;
-	fixed4 color : COLOR;
-	float2 uv : TEXCOORD0;
-	#ifdef UNITY_MIGHT_NOT_HAVE_DEPTH_TEXTURE
-	float2 depth : TEXCOORD1;
-	#endif
-};
-
-v2f vert (appdata_full v) {
-	v2f o;
-	WavingGrassBillboardVert (v);
-	o.color = v.color;
-	o.pos = UnityObjectToClipPos (v.vertex);
-	o.uv = v.texcoord.xy;
-    UNITY_TRANSFER_DEPTH(o.depth);
-	return o;
-}
-uniform sampler2D _MainTex;
-uniform fixed _Cutoff;
-fixed4 frag( v2f i ) : SV_Target {
-	fixed4 texcol = tex2D( _MainTex, i.uv );
-	fixed alpha = texcol.a * i.color.a;
-	clip( alpha - _Cutoff );
-    UNITY_OUTPUT_DEPTH(i.depth);
-}
-ENDCG
-	}
-}
-
-SubShader {
-	Tags { "RenderType"="Grass" }
-	Pass {
-		Cull Off
-CGPROGRAM
-#pragma vertex vert
-#pragma fragment frag
-#include "UnityCG.cginc"
-#include "TerrainEngine.cginc"
-struct v2f {
-	float4 pos : SV_POSITION;
-	fixed4 color : COLOR;
-	float2 uv : TEXCOORD0;
-	#ifdef UNITY_MIGHT_NOT_HAVE_DEPTH_TEXTURE
-	float2 depth : TEXCOORD1;
-	#endif
-};
-v2f vert (appdata_full v) {
-	v2f o;
-	WavingGrassVert (v);
-	o.color = v.color;
-	o.pos = UnityObjectToClipPos (v.vertex);
-	o.uv = v.texcoord;
-    UNITY_TRANSFER_DEPTH(o.depth);
-	return o;
-}
-uniform sampler2D _MainTex;
-uniform fixed _Cutoff;
-fixed4 frag(v2f i) : SV_Target {
-	fixed4 texcol = tex2D( _MainTex, i.uv );
-	fixed alpha = texcol.a * i.color.a;
-	clip( alpha - _Cutoff );
-    UNITY_OUTPUT_DEPTH(i.depth);
-}
-ENDCG
-	}
-}
-}
-Fallback Off
+// URP용 Camera-DepthTexture 셰이더
+Shader "Hidden/Universal/Camera-DepthTexture"
+{
+    Properties
+    {
+        _MainTex ("", 2D) = "white" {}
+        _Cutoff ("", Float) = 0.5
+        _Color ("", Color) = (1,1,1,1)
+    }
+    
+    HLSLINCLUDE
+    #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+    #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+    
+    CBUFFER_START(UnityPerMaterial)
+        float4 _MainTex_ST;
+        half _Cutoff;
+        half4 _Color;
+    CBUFFER_END
+    
+    struct Attributes
+    {
+        float4 positionOS : POSITION;
+        float2 uv : TEXCOORD0;
+        float4 color : COLOR;
+        #if defined(SHADER_API_MOBILE)
+        float3 normalOS : NORMAL;
+        #endif
+    };
+    
+    struct Varyings
+    {
+        float4 positionCS : SV_POSITION;
+        float2 uv : TEXCOORD0;
+    };
+    
+    TEXTURE2D(_MainTex);
+    SAMPLER(sampler_MainTex);
+    
+    Varyings StandardDepthOnlyVertex(Attributes input)
+    {
+        Varyings output = (Varyings)0;
+        output.positionCS = TransformObjectToHClip(input.positionOS.xyz);
+        output.uv = TRANSFORM_TEX(input.uv, _MainTex);
+        return output;
+    }
+    
+    half4 StandardDepthOnlyFragment(Varyings input) : SV_TARGET
+    {
+        return 0;
+    }
+    
+    half4 StandardAlphaClipDepthOnlyFragment(Varyings input) : SV_TARGET
+    {
+        half alpha = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, input.uv).a;
+        clip(alpha - _Cutoff);
+        return 0;
+    }
+    ENDHLSL
+    
+    SubShader
+    {
+        Tags { "RenderType"="Opaque" "RenderPipeline"="UniversalPipeline" }
+        
+        Pass
+        {
+            Name "DepthOnly"
+            Tags { "LightMode"="DepthOnly" }
+            
+            ZWrite On
+            ColorMask 0
+            Cull Back
+            
+            HLSLPROGRAM
+            #pragma vertex StandardDepthOnlyVertex
+            #pragma fragment StandardDepthOnlyFragment
+            #pragma multi_compile_instancing
+            ENDHLSL
+        }
+    }
+    
+    SubShader
+    {
+        Tags { "RenderType"="OpaqueDoubleSided" "RenderPipeline"="UniversalPipeline" }
+        
+        Pass
+        {
+            Name "DepthOnly"
+            Tags { "LightMode"="DepthOnly" }
+            
+            ZWrite On
+            ColorMask 0
+            Cull Off
+            
+            HLSLPROGRAM
+            #pragma vertex StandardDepthOnlyVertex
+            #pragma fragment StandardDepthOnlyFragment
+            #pragma multi_compile_instancing
+            ENDHLSL
+        }
+    }
+    
+    SubShader
+    {
+        Tags { "RenderType"="TransparentCutout" "RenderPipeline"="UniversalPipeline" }
+        
+        Pass
+        {
+            Name "DepthOnly"
+            Tags { "LightMode"="DepthOnly" }
+            
+            ZWrite On
+            ColorMask 0
+            Cull Back
+            
+            HLSLPROGRAM
+            #pragma vertex StandardDepthOnlyVertex
+            #pragma fragment StandardAlphaClipDepthOnlyFragment
+            #pragma multi_compile_instancing
+            ENDHLSL
+        }
+    }
+    
+    // Tree 렌더링 관련 서브셰이더들
+    SubShader
+    {
+        Tags { "RenderType"="TreeBark" "RenderPipeline"="UniversalPipeline" }
+        
+        Pass
+        {
+            Name "DepthOnly"
+            Tags { "LightMode"="DepthOnly" }
+            
+            ZWrite On
+            ColorMask 0
+            Cull Back
+            
+            HLSLPROGRAM
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/UnityGBuffer.hlsl"
+            
+            #pragma vertex StandardDepthOnlyVertex
+            #pragma fragment StandardDepthOnlyFragment
+            #pragma multi_compile_instancing
+            ENDHLSL
+        }
+    }
+    
+    SubShader
+    {
+        Tags { "RenderType"="TreeLeaf" "RenderPipeline"="UniversalPipeline" }
+        
+        Pass
+        {
+            Name "DepthOnly"
+            Tags { "LightMode"="DepthOnly" }
+            
+            ZWrite On
+            ColorMask 0
+            Cull Back
+            
+            HLSLPROGRAM
+            #pragma vertex StandardDepthOnlyVertex
+            #pragma fragment StandardAlphaClipDepthOnlyFragment
+            #pragma multi_compile_instancing
+            ENDHLSL
+        }
+    }
+    
+    // 빌보드 및 잔디 관련 서브셰이더들
+    SubShader
+    {
+        Tags { "RenderType"="TreeBillboard" "RenderPipeline"="UniversalPipeline" }
+        
+        Pass
+        {
+            Name "DepthOnly"
+            Tags { "LightMode"="DepthOnly" }
+            
+            ZWrite On
+            ColorMask 0
+            Cull Off
+            
+            HLSLPROGRAM
+            #pragma vertex StandardDepthOnlyVertex
+            #pragma fragment StandardAlphaClipDepthOnlyFragment
+            #pragma multi_compile_instancing
+            ENDHLSL
+        }
+    }
+    
+    SubShader
+    {
+        Tags { "RenderType"="Grass" "RenderPipeline"="UniversalPipeline" }
+        
+        Pass
+        {
+            Name "DepthOnly"
+            Tags { "LightMode"="DepthOnly" }
+            
+            ZWrite On
+            ColorMask 0
+            Cull Off
+            
+            HLSLPROGRAM
+            #pragma vertex StandardDepthOnlyVertex
+            #pragma fragment StandardAlphaClipDepthOnlyFragment
+            #pragma multi_compile_instancing
+            ENDHLSL
+        }
+    }
+    
+    SubShader
+    {
+        Tags { "RenderType"="GrassBillboard" "RenderPipeline"="UniversalPipeline" }
+        
+        Pass
+        {
+            Name "DepthOnly"
+            Tags { "LightMode"="DepthOnly" }
+            
+            ZWrite On
+            ColorMask 0
+            Cull Off
+            
+            HLSLPROGRAM
+            #pragma vertex StandardDepthOnlyVertex
+            #pragma fragment StandardAlphaClipDepthOnlyFragment
+            #pragma multi_compile_instancing
+            ENDHLSL
+        }
+    }
+    
+    Fallback "Hidden/Universal Render Pipeline/FallbackError"
 }
