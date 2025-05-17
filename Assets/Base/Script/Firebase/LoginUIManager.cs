@@ -15,13 +15,18 @@ public class LoginUIManager : MonoBehaviour
     [SerializeField] private Button logoutButton;
     [SerializeField] private TMP_Text statusText; // 상태 메시지 표시용
 
-    [Header("Dependencies")]
-    [SerializeField] private EmailPasswordAuthHandler emailAuthHandler;
-
+    //[Header("Dependencies")]
+    //[SerializeField] private EmailPasswordAuthHandler emailAuthHandler;
+    private EmailPasswordAuthHandler emailAuthHandler; // EmailPasswordAuthHandler 싱글톤 참조
     private bool _isProcessing = false; // 중복 요청 방지 플래그
+    private TabFocus tabFocus; // TabFocus 스크립트 참조
 
     void Start()
     {
+        emailAuthHandler = FindFirstObjectByType<EmailPasswordAuthHandler>();
+        tabFocus = FindFirstObjectByType<TabFocus>();
+        tabFocus.Initialize(emailInput, passwordInput, signUpButton, emailSignInButton); // TabFocus 초기화
+
         // _isProcessing 상태 초기화 (중요!)
         _isProcessing = false;
 
