@@ -8,20 +8,25 @@ using UnityEngine.SceneManagement;
 public class LoginUIManager : MonoBehaviour
 {
     [Header("UI Elements - Login/Sign Up")]
-    public TMP_InputField emailInput;
-    public TMP_InputField passwordInput;
-    public Button signUpButton;
-    public Button emailSignInButton;
-    public Button logoutButton;
-    public TMP_Text statusText; // 상태 메시지 표시용
+    [SerializeField] private TMP_InputField emailInput;
+    [SerializeField] private TMP_InputField passwordInput;
+    [SerializeField] private Button signUpButton;
+    [SerializeField] private Button emailSignInButton;
+    [SerializeField] private Button logoutButton;
+    [SerializeField] private TMP_Text statusText; // 상태 메시지 표시용
 
-    [Header("Dependencies")]
-    public EmailPasswordAuthHandler emailAuthHandler;
-
+    //[Header("Dependencies")]
+    //[SerializeField] private EmailPasswordAuthHandler emailAuthHandler;
+    private EmailPasswordAuthHandler emailAuthHandler; // EmailPasswordAuthHandler 싱글톤 참조
     private bool _isProcessing = false; // 중복 요청 방지 플래그
+    private TabFocus tabFocus; // TabFocus 스크립트 참조
 
     void Start()
     {
+        emailAuthHandler = FindFirstObjectByType<EmailPasswordAuthHandler>();
+        tabFocus = FindFirstObjectByType<TabFocus>();
+        tabFocus.Initialize(emailInput, passwordInput, signUpButton, emailSignInButton); // TabFocus 초기화
+
         // _isProcessing 상태 초기화 (중요!)
         _isProcessing = false;
 

@@ -6,6 +6,11 @@ using Firebase;
 
 public class EmailPasswordAuthHandler : MonoBehaviour
 {
+    /// <summary>
+    /// 살아-있는 EmailPasswordAuthHandler를 어디서든 얻을 수 있는 싱글톤 참조
+    /// </summary>
+    public static EmailPasswordAuthHandler Instance { get; private set; }
+
     private FirebaseAuth _auth;
 
     // 이벤트 정의
@@ -13,6 +18,23 @@ public class EmailPasswordAuthHandler : MonoBehaviour
     /// 이메일/비밀번호 인증 시도(가입 또는 로그인) 완료 시 발생 (성공 여부, 메시지, 사용자 정보)
     /// </summary>
     public event Action<bool, string, FirebaseUser> OnAuthOperationCompleted;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            // AuthService 오브젝트 자체에 DontDestroyOnLoad가 이미 들어가 있다면
+            // 여기서는 굳이 또 호출할 필요 없습니다.
+            // DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
+        {
+            // 중복 생성되면 바로 파괴해 레퍼런스 혼란 방지
+            Destroy(gameObject);
+            return;
+        }
+    }
 
     void Start()
     {
