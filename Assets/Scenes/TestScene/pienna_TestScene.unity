@@ -5338,7 +5338,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2626076765560856551, guid: 8a7b2d8fdfe2a1945ad007c0c27be66f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 34.212303
+      value: 31.8
       objectReference: {fileID: 0}
     - target: {fileID: 2626076765560856551, guid: 8a7b2d8fdfe2a1945ad007c0c27be66f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5376,6 +5376,10 @@ PrefabInstance:
       propertyPath: button_UI
       value: 
       objectReference: {fileID: 1694133073}
+    - target: {fileID: 5633015443932966439, guid: 8a7b2d8fdfe2a1945ad007c0c27be66f, type: 3}
+      propertyPath: detectionRadius
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12524,7 +12528,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7730775468030310558, guid: d8e21b0843cfbab4e9562fa4a7bdf798, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.222005
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 7730775468030310558, guid: d8e21b0843cfbab4e9562fa4a7bdf798, type: 3}
       propertyPath: m_LocalPosition.y
@@ -12532,7 +12536,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7730775468030310558, guid: d8e21b0843cfbab4e9562fa4a7bdf798, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.71867
+      value: 31.7
       objectReference: {fileID: 0}
     - target: {fileID: 7730775468030310558, guid: d8e21b0843cfbab4e9562fa4a7bdf798, type: 3}
       propertyPath: m_LocalRotation.w
@@ -12574,6 +12578,10 @@ PrefabInstance:
       propertyPath: actionObject
       value: 
       objectReference: {fileID: 1421341459}
+    - target: {fileID: 9087365070466290529, guid: d8e21b0843cfbab4e9562fa4a7bdf798, type: 3}
+      propertyPath: detectionRadius
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -25171,6 +25179,10 @@ PrefabInstance:
       propertyPath: button_UI
       value: 
       objectReference: {fileID: 1694133073}
+    - target: {fileID: 6202890362899418713, guid: 410e7d9a6beba69498d28602e7031967, type: 3}
+      propertyPath: detectionRadius
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6567446329453915075, guid: 410e7d9a6beba69498d28602e7031967, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -25193,7 +25205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6567446329453915075, guid: 410e7d9a6beba69498d28602e7031967, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 33.56646
+      value: 31.24
       objectReference: {fileID: 0}
     - target: {fileID: 6567446329453915075, guid: 410e7d9a6beba69498d28602e7031967, type: 3}
       propertyPath: m_LocalRotation.w

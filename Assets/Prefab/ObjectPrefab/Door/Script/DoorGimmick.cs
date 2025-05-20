@@ -21,6 +21,7 @@ public class DoorGimmick : MonoBehaviour, IGimmickObserver
 
     public void ButtonClick()
     {
+        Debug.Log("DoorGimmick ½ÇÇà");
         if (!doorState)
         {
             context.StartAction();

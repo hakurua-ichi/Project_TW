@@ -97,4 +97,7 @@ public class ProximityTriggerObject : MonoBehaviour
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
+
+    public GimmickSubject GetSubject() => subject;
+    public IGimmickObserver GetObserver() => observer;
 }

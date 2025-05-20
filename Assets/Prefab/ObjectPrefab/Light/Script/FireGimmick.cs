@@ -6,7 +6,7 @@ public class FireGimmick : MonoBehaviour, IGimmickObserver
     [SerializeField] private GameObject FireObject;
     private ParticleSystem fire;
     private AudioSource fireAudio;
-    private bool lightState = false;
+    private bool fireState = false;
     private GimmickContext context;
 
 
@@ -28,15 +28,15 @@ public class FireGimmick : MonoBehaviour, IGimmickObserver
     public void ButtonClick()
     {
         Debug.Log("Fire ½ÇÇà");
-        if (!lightState)
+        if (!fireState)
         {
             context.StartAction();
-            lightState = true;
+            fireState = true;
         }
         else
         {
             context.CancelAction();
-            lightState = false;
+            fireState = false;
         }
     }
 }

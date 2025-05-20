@@ -32,43 +32,29 @@ public class GimmickSubject : MonoBehaviour
 
     public void Notify(IGimmickObserver caller)
     {
-        Debug.Log("Notify called by: " + caller.GetType().Name);
-        if (observersOn.Contains(caller))
+        if (!observersOn.Contains(caller))
         {
-            for(int i = 0; i < observersOn.Count; i++)
-            {
-                if (observersOn[i] == caller)
-                {
-                    Debug.Log("Notify called by: " + caller.GetType().Name);
-                    observersOn[i].OnGimmickTriggered();
-                    observersOn[i].ButtonClick();
-                    return;
-                }
-                else
-                {
-                    Debug.Log("해당 옵저버가 없습니다");
-                    return;
-                }
-            }
+            Debug.Log("해당 옵저버가 없습니다");
+            return;  
         }
+
+        Debug.Log("Notify called by: " + caller.GetType().Name);
+        caller.OnGimmickTriggered();
+        caller.ButtonClick();
+        return;
     }
 
     public void NotifyExit(IGimmickObserver caller)
     {
-        for (int i = 0; i < observersOn.Count; i++)
+        if (!observersOn.Contains(caller))
         {
-            if (observersOn[i] == caller)
-            {
-                Debug.Log("NotifyExit called by: " + caller.GetType().Name);
-                observersOn[i].OnGimmickTriggered();
-                observersOn[i].ButtonClick();
-                return;
-            }
-            else
-            {
-                Debug.Log("해당 옵저버가 없습니다");
-                return;
-            }
+            Debug.Log("해당 옵저버가 없습니다");
+            return;  
         }
+
+        Debug.Log("NotifyExit called by: " + caller.GetType().Name);
+        caller.OnGimmickTriggered();
+        caller.ButtonClick();
+        return;
     }
 }
