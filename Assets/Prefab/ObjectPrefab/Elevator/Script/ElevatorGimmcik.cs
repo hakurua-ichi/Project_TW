@@ -16,7 +16,7 @@ public class ElevatorGimmcik : MonoBehaviour, IGimmickObserver
 
         if (elevatorObject != null)
         {
-            Debug.Log("Elevator 옵저버 등록 성공");
+            //Debug.Log("Elevator 옵저버 등록 성공");
             triggerObject.AddObserverEnter(this); // 엘리베이터 작동
         }
         else

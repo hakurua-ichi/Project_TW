@@ -18,7 +18,7 @@ public class ElevatorAnimator : MonoBehaviour
         rb.isKinematic = true;
         target = topPoint;
         elevatorState = new ElevatorState();
-        Debug.Log("Animator Elevator State: " + elevatorState);
+        //Debug.Log("Animator Elevator State: " + elevatorState);
 
         //Debug.Log("[ElevatorAnimator] Start() 호출됨");
         //Debug.Log("[ElevatorAnimator] 초기 목표 지점: " + target.position);
@@ -39,7 +39,7 @@ public class ElevatorAnimator : MonoBehaviour
 
     public ElevatorState SetState()
     {
-        Debug.Log("animator elevatorState: " + elevatorState);
+        //Debug.Log("animator elevatorState: " + elevatorState);
         //Debug.Log("[ElevatorAnimator] SetState() 호출됨 - ElevatorState 반환");
         return elevatorState;
     }

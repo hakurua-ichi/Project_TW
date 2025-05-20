@@ -13,18 +13,6 @@ public class LightGimmick : MonoBehaviour, IGimmickObserver
         // 전략 세팅
         context = new GimmickContext();
         context.SetAction(new LightToggleAction(targetLight));
-
-        // 옵저버 등록
-        var subject = GetComponent<GimmickSubject>();
-        if (TriggerObject != null)
-        {
-            Debug.Log("Light 옵저버 등록 성공");
-            TriggerObject.AddObserverEnter(this); // Light 상태관리 옵저버
-        }
-        else
-        {
-            Debug.LogWarning("GimmickSubject가 Light 오브젝트에 없습니다.");
-        }
     }
 
     public void OnGimmickTriggered()

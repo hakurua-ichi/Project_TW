@@ -12,17 +12,6 @@ public class DoorGimmick : MonoBehaviour, IGimmickObserver
     {
         context = new GimmickContext();
         context.SetAction(new OpenDoorAction(doorObject, GameObject.FindGameObjectWithTag("Player").transform));
-
-        // 옵저버 등록
-        if (TriggerObject != null)
-        {
-            Debug.Log("Door 옵저버 등록 성공");
-            TriggerObject.AddObserverEnter(this); // 문 옵저버 등록
-        }
-        else
-        {
-            Debug.LogWarning("GimmickSubject가 Door 오브젝트에 없습니다.");
-        }
     }
 
     public void OnGimmickTriggered()
