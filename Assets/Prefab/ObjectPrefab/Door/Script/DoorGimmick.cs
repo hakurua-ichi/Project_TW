@@ -14,9 +14,14 @@ public class DoorGimmick : MonoBehaviour, IGimmickObserver
         context.SetAction(new OpenDoorAction(doorObject, GameObject.FindGameObjectWithTag("Player").transform));
     }
 
-    public void OnGimmickTriggered()
+    public void OnGimmickEnter()
     {
         //gimmickContext.StartAction();
+    }
+
+    public void OnGimmickLeave()
+    {
+
     }
 
     public void ButtonClick()

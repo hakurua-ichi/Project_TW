@@ -3,70 +3,48 @@ using UnityEngine;
 
 /// <summary>
 /// Central publisher in the Observer pattern for gimmick interactions.
-/// - Supports separate subscription lists for "enter" and "exit" style events.
-/// - Broadcasts to *all* registered observers; no need to pass a specific caller.
-/// - Keeps public API symmetrical and names self-explanatory.
+/// - Three independent event channels: Enter / Leave / Button.
+/// - Prevents duplicate registration, cleans up null-entries on dispatch.
 /// </summary>
 public class GimmickSubject : MonoBehaviour
 {
-    // ▶ Separate lists for clarity; could also be merged if both callbacks are always needed.
     private readonly List<IGimmickObserver> _enterObservers = new();
-    private readonly List<IGimmickObserver> _exitObservers = new();
+    private readonly List<IGimmickObserver> _leaveObservers = new();
+    private readonly List<IGimmickObserver> _buttonObservers = new();
 
-    #region Observer registration helpers
+    /* ────────── 공통 헬퍼 ────────── */
+    private static void TryAdd(List<IGimmickObserver> list, IGimmickObserver o)
+    { if (o != null && !list.Contains(o)) list.Add(o); }
 
-    public void AddEnterObserver(IGimmickObserver observer)
+    private static void TryRemove(List<IGimmickObserver> list, IGimmickObserver o)
+    { if (o != null) list.Remove(o); }
+
+    /* ────────── 등록 / 해제 ────────── */
+    public void AddEnterObserver(IGimmickObserver o) => TryAdd(_enterObservers, o);
+    public void RemoveEnterObserver(IGimmickObserver o) => TryRemove(_enterObservers, o);
+
+    public void AddLeaveObserver(IGimmickObserver o) => TryAdd(_leaveObservers, o);
+    public void RemoveLeaveObserver(IGimmickObserver o) => TryRemove(_leaveObservers, o);
+
+    public void AddButtonObserver(IGimmickObserver o) => TryAdd(_buttonObservers, o);
+    public void RemoveButtonObserver(IGimmickObserver o) => TryRemove(_buttonObservers, o);
+
+    /* ────────── 이벤트 브로드캐스트 ────────── */
+    public void NotifyEnter() => Dispatch(_enterObservers, obs => obs.OnGimmickEnter());
+    public void NotifyLeave() => Dispatch(_leaveObservers, obs => obs.OnGimmickLeave());
+    public void NotifyButton() => Dispatch(_buttonObservers, obs => obs.ButtonClick());
+
+    /* ────────── 내부: null-세이프 디스패처 ────────── */
+    private static void Dispatch(List<IGimmickObserver> list, System.Action<IGimmickObserver> call)
     {
-        if (observer != null && !_enterObservers.Contains(observer))
-            _enterObservers.Add(observer);
+        for (int i = list.Count - 1; i >= 0; i--)
+        {
+            var obs = list[i];
+            if (obs == null) { list.RemoveAt(i); continue; } // 고스트 참조 청소
+            call(obs);
+        }
     }
-
-    public void RemoveEnterObserver(IGimmickObserver observer) => _enterObservers.Remove(observer);
-
-    public void AddExitObserver(IGimmickObserver observer)
-    {
-        if (observer != null && !_exitObservers.Contains(observer))
-            _exitObservers.Add(observer);
-    }
-
-    public void RemoveExitObserver(IGimmickObserver observer) => _exitObservers.Remove(observer);
-
-    #endregion
-
-    #region Event dispatch
-
-    /// <summary>
-    /// Broadcast a "gimmick enter" event to every observer that registered via <see cref="AddEnterObserver"/>.
-    /// Maps to <see cref="IGimmickObserver.OnGimmickTriggered"/>.
-    /// </summary>
-    public void NotifyEnter()
-    {
-        foreach (var obs in _enterObservers)
-            obs?.OnGimmickTriggered();
-    }
-
-    /// <summary>
-    /// Broadcast a "gimmick exit / button release" event to every observer that registered via <see cref="AddExitObserver"/>.
-    /// Maps to <see cref="IGimmickObserver.ButtonClick"/>.
-    /// </summary>
-    public void NotifyExit()
-    {
-        foreach (var obs in _exitObservers)
-            obs?.ButtonClick();
-    }
-
-    #endregion
-
-    #region Backwards-compatibility shims (optional)
-    // Note the discard parameter "_" to satisfy the compiler: a name is still required.
-    [System.Obsolete("Use NotifyEnter() and maintain observers via AddEnterObserver instead.")]
-    public void Notify(IGimmickObserver _) => NotifyEnter();
-
-    [System.Obsolete("Use NotifyExit() and maintain observers via AddExitObserver instead.")]
-    public void NotifyExit(IGimmickObserver _) => NotifyExit();
-    #endregion
 }
-
 
 #region old code
 /*

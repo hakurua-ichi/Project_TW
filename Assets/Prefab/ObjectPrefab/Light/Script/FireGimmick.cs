@@ -20,7 +20,12 @@ public class FireGimmick : MonoBehaviour, IGimmickObserver
         context.SetAction(new FireToggleAction(fire, fireAudio));
     }
 
-    public void OnGimmickTriggered()
+    public void OnGimmickEnter()
+    {
+
+    }
+
+    public void OnGimmickLeave()
     {
 
     }

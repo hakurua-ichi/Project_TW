@@ -15,7 +15,12 @@ public class LightGimmick : MonoBehaviour, IGimmickObserver
         context.SetAction(new LightToggleAction(targetLight));
     }
 
-    public void OnGimmickTriggered()
+    public void OnGimmickEnter()
+    {
+
+    }
+
+    public void OnGimmickLeave()
     {
 
     }

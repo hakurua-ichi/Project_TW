@@ -45,7 +45,7 @@ public class InteractionsButtonAction : MonoBehaviour
     public void OnButtonClicked()
     {
         Debug.Log("Button Clicked");
-        currentTrigger?.InvokeButton();   // Subject.NotifyExit() 내부에서 실행
+        currentTrigger.InvokeButton();   // Subject.NotifyExit() 내부에서 실행
     }
 }
 
