@@ -7,9 +7,9 @@ public class ProximityTriggerObject : MonoBehaviour
     [SerializeField] private float radius = 2f;
     [SerializeField] private Transform player;
 
-    [Header("Observer (IGimmickObserver 구현 컴포넌트)")]
-    [SerializeField] private GameObject actionTarget;      // 실제 기믹 오브젝트
-    [SerializeField] private MonoBehaviour observerComponent; // 드래그 전용 슬롯
+    [Header("동작 할 오브젝트")]
+    [SerializeField] private GameObject actionTarget;       // 실제 기믹 오브젝트
+    private MonoBehaviour observerComponent;                // 드래그 전용 슬롯
 
     private IGimmickObserver observer;
     private GimmickSubject subject;
@@ -23,6 +23,7 @@ public class ProximityTriggerObject : MonoBehaviour
     /* -------------------- 초기화 -------------------- */
     void Awake()
     {
+        observerComponent = actionTarget.GetComponent<MonoBehaviour>();
         subject = GetComponent<GimmickSubject>();
         observer = observerComponent as IGimmickObserver;
 

@@ -84,11 +84,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8829451551789304537, guid: e91fa0fac941e714e8c4d5709097019f, type: 3}
   m_PrefabInstance: {fileID: 1065308464905697307}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &8376764578205790915 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8829451551789304536, guid: e91fa0fac941e714e8c4d5709097019f, type: 3}
-  m_PrefabInstance: {fileID: 1065308464905697307}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8376764578205790917 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8829451551789304542, guid: e91fa0fac941e714e8c4d5709097019f, type: 3}
@@ -107,7 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TriggerObject: {fileID: 3333336082951101829}
-  Fire: {fileID: 8376764578205790915}
+  FireObject: {fileID: 8376764578205790917}
 --- !u!114 &2044873562302958802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,9 +238,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7182b5fad5640d4b93e49183cf4a97e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRadius: 3
-  button_UI: {fileID: 0}
-  actionObject: {fileID: 8376764578205790917}
+  radius: 2
+  player: {fileID: 0}
+  actionTarget: {fileID: 0}
 --- !u!4 &6567446329453915075 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a527cb5ed18dbcb45a62b3bdec715867, type: 3}

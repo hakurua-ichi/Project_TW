@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(GimmickSubject))]
 public class TriggerObject : MonoBehaviour
 {
+    [Header("동작 할 오브젝트")]
     [SerializeField] private GameObject actionTarget;
 
     private IGimmickObserver observer;   // 실제 기믹 스크립트
