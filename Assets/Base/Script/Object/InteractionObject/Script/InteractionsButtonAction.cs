@@ -44,27 +44,25 @@ public class InteractionsButtonAction : MonoBehaviour
     public void RequestSelection(ProximityTriggerObject trigger, GameObject objectName)
     {
         Debug.Log("리퀘스트 실행");
-        if (trigger == null) return;
-
-        // ① 플레이어 Transform 가져오기
-        var playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj == null) return;
-        var playerT = playerObj.transform;
-
-        // ② trigger와 player 간 거리 계산
-        float dist = Vector3.Distance(trigger.transform.position, playerT.position);
-
-        // ③ 기존 로직 대신 dist 비교
-        float currentDist = currentTrigger != null
-            ? Vector3.Distance(currentTrigger.transform.position, playerT.position)
-            : float.MaxValue;
-
-        if (dist < currentDist)
+        // 들어온 trigger는 무시하고, inRange 전체에서 closest만 추출
+        var closest = ProximityTriggerObject.GetClosestInRange();
+        if (closest == null)
         {
-            currentTrigger = trigger;
-            buttonText.text = objectName != null ? objectName.name : "Interact";
-            uiRoot.SetActive(true);
+            uiRoot.SetActive(false);
+            return;
         }
+
+        // ▶ 새로 뽑은 closest가 달라졌을 때만 갱신
+        if (closest != currentTrigger)
+        {
+            currentTrigger = closest;
+            // 가장 가까운 트리거의 actionTarget 이름을 버튼에 표시
+            buttonText.text = closest.ActionTarget != null
+                ? closest.ActionTarget.name
+                : "Interact";
+        }
+
+        uiRoot.SetActive(true);
         Debug.Log("리퀘스트 종료");
     }
 

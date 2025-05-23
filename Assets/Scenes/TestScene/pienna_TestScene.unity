@@ -842,7 +842,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionTarget: {fileID: 63057704}
-  player: {fileID: 0}
+  player: {fileID: 1095509647}
+  radius: 3
 --- !u!114 &63057708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5606,15 +5607,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2626076765560856551, guid: 8a7b2d8fdfe2a1945ad007c0c27be66f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.52
+      value: 3.6
       objectReference: {fileID: 0}
     - target: {fileID: 2626076765560856551, guid: 8a7b2d8fdfe2a1945ad007c0c27be66f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.69
+      value: -7.44
       objectReference: {fileID: 0}
     - target: {fileID: 2626076765560856551, guid: 8a7b2d8fdfe2a1945ad007c0c27be66f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 35.02
+      value: 32.95
       objectReference: {fileID: 0}
     - target: {fileID: 2626076765560856551, guid: 8a7b2d8fdfe2a1945ad007c0c27be66f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5654,7 +5655,7 @@ PrefabInstance:
       objectReference: {fileID: 1095509647}
     - target: {fileID: 5633015443932966439, guid: 8a7b2d8fdfe2a1945ad007c0c27be66f, type: 3}
       propertyPath: radius
-      value: 3
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5633015443932966439, guid: 8a7b2d8fdfe2a1945ad007c0c27be66f, type: 3}
       propertyPath: button_UI
@@ -8634,7 +8635,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2626076765560856551, guid: 8a7b2d8fdfe2a1945ad007c0c27be66f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.18
+      value: 0.71
       objectReference: {fileID: 0}
     - target: {fileID: 2626076765560856551, guid: 8a7b2d8fdfe2a1945ad007c0c27be66f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8642,7 +8643,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2626076765560856551, guid: 8a7b2d8fdfe2a1945ad007c0c27be66f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 27.61
+      value: 32.800003
       objectReference: {fileID: 0}
     - target: {fileID: 2626076765560856551, guid: 8a7b2d8fdfe2a1945ad007c0c27be66f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8682,7 +8683,7 @@ PrefabInstance:
       objectReference: {fileID: 1095509647}
     - target: {fileID: 5633015443932966439, guid: 8a7b2d8fdfe2a1945ad007c0c27be66f, type: 3}
       propertyPath: radius
-      value: 3
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5633015443932966439, guid: 8a7b2d8fdfe2a1945ad007c0c27be66f, type: 3}
       propertyPath: button_UI
@@ -13062,6 +13063,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DoorButton
       objectReference: {fileID: 0}
+    - target: {fileID: 5122481463742635197, guid: d8e21b0843cfbab4e9562fa4a7bdf798, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7730775468030310558, guid: d8e21b0843cfbab4e9562fa4a7bdf798, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7
@@ -13112,7 +13117,7 @@ PrefabInstance:
       objectReference: {fileID: 1095509647}
     - target: {fileID: 9087365070466290529, guid: d8e21b0843cfbab4e9562fa4a7bdf798, type: 3}
       propertyPath: radius
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9087365070466290529, guid: d8e21b0843cfbab4e9562fa4a7bdf798, type: 3}
       propertyPath: button_UI
@@ -15173,16 +15178,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5793681581026954161, guid: ce52f6830af251244a0b9bbe784b92a5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5793681581026954161, guid: ce52f6830af251244a0b9bbe784b92a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.645262
       objectReference: {fileID: 0}
     - target: {fileID: 5793681581026954161, guid: ce52f6830af251244a0b9bbe784b92a5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 3.58
       objectReference: {fileID: 0}
     - target: {fileID: 5793681581026954161, guid: ce52f6830af251244a0b9bbe784b92a5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.5
+      value: -8.04
       objectReference: {fileID: 0}
     - target: {fileID: 5793681581026954161, guid: ce52f6830af251244a0b9bbe784b92a5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -25864,7 +25873,7 @@ PrefabInstance:
       objectReference: {fileID: 1095509647}
     - target: {fileID: 6202890362899418713, guid: 410e7d9a6beba69498d28602e7031967, type: 3}
       propertyPath: radius
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6202890362899418713, guid: 410e7d9a6beba69498d28602e7031967, type: 3}
       propertyPath: button_UI

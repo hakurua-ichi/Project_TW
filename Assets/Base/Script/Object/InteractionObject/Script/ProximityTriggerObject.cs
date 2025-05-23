@@ -7,6 +7,8 @@ public class ProximityTriggerObject : MonoBehaviour
     [Header("동작 할 오브젝트")]
     [SerializeField] private GameObject actionTarget;   // 실제 기믹 오브젝트
     [SerializeField] private Transform player;
+    [SerializeField] private float radius;
+    public GameObject ActionTarget => actionTarget;
 
     private IGimmickObserver observer;
     private GimmickSubject subject;
@@ -18,7 +20,6 @@ public class ProximityTriggerObject : MonoBehaviour
     void Awake()
     {
         subject = GetComponent<GimmickSubject>();
-        ui = GetComponent<InteractionsButtonAction>();
 
         /* 1) actionTarget 안에서 찾기 */
         if (observer == null && actionTarget != null)
@@ -43,6 +44,13 @@ public class ProximityTriggerObject : MonoBehaviour
         // SphereCollider 세팅
         var col = GetComponent<SphereCollider>();
         col.isTrigger = true;
+        col.radius = radius;
+    }
+
+    private void Start()
+    {
+
+        ui = InteractionsButtonAction.Instance;
     }
 
     // ▶ 플레이어가 범위 안으로 들어올 때
@@ -54,7 +62,6 @@ public class ProximityTriggerObject : MonoBehaviour
         // 리스트에 추가
         if (!inRange.Contains(this))
             inRange.Add(this);
-        Debug.Log("214124");
 
         if (ui == null)
         {
@@ -62,7 +69,6 @@ public class ProximityTriggerObject : MonoBehaviour
             return;
         }
 
-        Debug.Log("캐릭 진입2");
         subject.AddButtonObserver(observer);
         ui.RequestSelection(this, actionTarget);
     }
@@ -77,7 +83,7 @@ public class ProximityTriggerObject : MonoBehaviour
         inRange.Remove(this);
 
         if (ui == null) return;
-
+        Debug.Log("옵저버 제거");
         subject.RemoveButtonObserver(observer);
         ui.NotifyExit(this);
     }
