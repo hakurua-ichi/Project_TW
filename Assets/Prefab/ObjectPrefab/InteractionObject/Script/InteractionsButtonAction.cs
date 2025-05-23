@@ -21,7 +21,7 @@ public class InteractionsButtonAction : MonoBehaviour
     // 트리거가 ‘나를 선택해 달라’고 호출
     public void RequestSelection(ProximityTriggerObject trigger, GameObject objectName)
     {
-        // ① 더 가까우면 교체
+        // 더 가까우면 교체
         if (currentTrigger == null ||
             trigger.DistanceToPlayer < currentTrigger.DistanceToPlayer)
         {

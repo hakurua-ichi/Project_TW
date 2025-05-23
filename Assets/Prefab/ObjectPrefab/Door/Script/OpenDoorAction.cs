@@ -39,7 +39,7 @@ public class OpenDoorAction : IGimmickAction
         }
     }
 
-    public void setup()
+    public void Setup()
     {
         doorState.IsOpen = false;
     }

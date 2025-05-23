@@ -3,6 +3,11 @@ using UnityEngine;
 public class DoorAnimator
 {
     private Animator animator;
+    // 파라미터 해시 캐싱
+    private static readonly int HashRightOpen = Animator.StringToHash("RightOpen");
+    private static readonly int HashRightClose = Animator.StringToHash("RightClose");
+    private static readonly int HashLeftOpen = Animator.StringToHash("LeftOpen");
+    private static readonly int HashLeftClose = Animator.StringToHash("LeftClose");
 
     public DoorAnimator(GameObject doorObject)
     {
@@ -16,31 +21,47 @@ public class DoorAnimator
     //아래 주석 처리된 내용은 트리거존을 통한 문 작동시 문이 열리는 방향을 결정하기 위한 코드
     public void Open(DoorState state)
     {
-        //Vector3 toPlayer = (state.Player.position - state.DoorTransform.position).normalized;
-        //float dot = Vector3.Dot(state.DoorTransform.right, toPlayer);
+        if (animator == null) return;
 
-        //if (dot > 0)
-        //{
+        #region 트리거 존에 의한 작동
+        /*
+        Vector3 toPlayer = (state.Player.position - state.DoorTransform.position).normalized;
+        float dot = Vector3.Dot(state.DoorTransform.right, toPlayer);
+
+        if (dot > 0)
+        {
             animator.SetTrigger("RightOpen");
-        //}
-        //else
-        //{
-            //animator.SetTrigger("LeftOpen");
-        //}
+        }
+        else
+        {
+            animator.SetTrigger("LeftOpen");
+        }
+        */
+        #endregion
+
+        animator.SetTrigger(HashRightOpen);
     }
 
     public void Close(DoorState state)
     {
-        //Vector3 toPlayer = (state.Player.position - state.DoorTransform.position).normalized;
-        //float dot = Vector3.Dot(state.DoorTransform.right, toPlayer);
+        if (animator == null) return;
 
-        //if (dot > 0)
-        //{
+        #region 트리거 존에 의한 작동
+        /*
+        Vector3 toPlayer = (state.Player.position - state.DoorTransform.position).normalized;
+        float dot = Vector3.Dot(state.DoorTransform.right, toPlayer);
+
+        if (dot > 0)
+        {
             animator.SetTrigger("RightClose");
-        //}
-        //else
-        //{
-            //animator.SetTrigger("LeftClose");
-        //}
+        }
+        else
+        {
+            animator.SetTrigger("LeftClose");
+        }
+        */
+        #endregion
+
+        animator.SetTrigger(HashRightClose);
     }
 }
