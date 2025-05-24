@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 
-[RequireComponent(typeof(Canvas))] // Ensure UI Canvas present if needed
 public class InteractionsButtonAction : MonoBehaviour
 {
     public static InteractionsButtonAction Instance { get; private set; }
