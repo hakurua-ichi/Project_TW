@@ -46,4 +46,18 @@ public class TriggerObject : MonoBehaviour
         subject.RemoveEnterObserver(observer);
         subject.RemoveLeaveObserver(observer);
     }
+
+    /// <summary>
+    /// 트리거 오브젝트가 비활성화되거나 파괴될 때 옵저버 등록 해제 보장
+    /// </summary>
+    void OnDisable()
+    {
+        if (observer != null && subject != null)
+        {
+            subject.RemoveEnterObserver(observer);
+            subject.RemoveLeaveObserver(observer);
+        }
+    }
+
+    void OnDestroy() => OnDisable();
 }

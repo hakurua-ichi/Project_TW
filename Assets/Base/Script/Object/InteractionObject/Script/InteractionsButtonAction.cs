@@ -37,6 +37,29 @@ public class InteractionsButtonAction : MonoBehaviour
         uiRoot.SetActive(false);
     }
 
+    void Update()
+    {
+        // inRange 에 등록된 것들 중 가장 가까운 트리거를 꺼내 온다
+        var closest = ProximityTriggerObject.GetClosestInRange();
+
+        // 바뀐 게 없으면 아무 것도 하지 않는다
+        if (closest == currentTrigger) return;
+
+        currentTrigger = closest;
+
+        if (currentTrigger != null)
+        {
+            // 버튼 텍스트 세팅
+            buttonText.text = currentTrigger.ActionTarget.name;
+            uiRoot.SetActive(true);
+        }
+        else
+        {
+            // 범위 밖으로 모두 벗어난 경우
+            uiRoot.SetActive(false);
+        }
+    }
+
     /// <summary>
     /// ProximityTriggerObject가 자신을 선택해 달라고 요청할 때 호출됩니다.
     /// 가장 가까운 트리거만 표시하도록 currentTrigger를 업데이트합니다.
@@ -74,6 +97,8 @@ public class InteractionsButtonAction : MonoBehaviour
     {
         if (trigger == null || trigger != currentTrigger) return;
         currentTrigger = ProximityTriggerObject.GetClosestInRange();
+        if (currentTrigger != null)
+            buttonText.text = currentTrigger.ActionTarget?.name ?? "Interact";
         uiRoot.SetActive(currentTrigger != null);
     }
 
@@ -90,55 +115,3 @@ public class InteractionsButtonAction : MonoBehaviour
         currentTrigger.InvokeButton();
     }
 }
-
-
-//using TMPro;
-//using UnityEngine;
-
-//public class InteractionsButtonAction : MonoBehaviour
-//{
-//    public static InteractionsButtonAction Instance { get; private set; }
-
-//    [SerializeField] private GameObject uiRoot;   // 실제 버튼 오브젝트
-//    private ProximityTriggerObject currentTrigger;
-//    private TextMeshProUGUI buttonText;
-
-//    void Awake()
-//    {
-//        buttonText = uiRoot.GetComponentInChildren<TextMeshProUGUI>();
-//        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
-//        Instance = this;
-//        uiRoot.SetActive(false);
-
-//    }
-
-//    // 트리거가 ‘나를 선택해 달라’고 호출
-//    public void RequestSelection(ProximityTriggerObject trigger, GameObject objectName)
-//    {
-//        // 더 가까우면 교체
-//        if (currentTrigger == null ||
-//            trigger.DistanceToPlayer < currentTrigger.DistanceToPlayer)
-//        {
-//            currentTrigger = trigger;
-//            buttonText.text = objectName.name; // 버튼 텍스트 변경
-//            uiRoot.SetActive(true);
-//        }
-//    }
-
-//    // 트리거가 범위를 벗어났다고 알림
-//    public void NotifyExit(ProximityTriggerObject trigger)
-//    {
-//        if (trigger == currentTrigger)
-//        {
-//            currentTrigger = ProximityTriggerObject.GetClosestInRange();
-//            uiRoot.SetActive(currentTrigger != null);
-//        }
-//    }
-
-//    // 버튼 클릭 시 호출
-//    public void OnButtonClicked()
-//    {
-//        Debug.Log("Button Clicked");
-//        currentTrigger.InvokeButton();   // Subject.NotifyExit() 내부에서 실행
-//    }
-//}
