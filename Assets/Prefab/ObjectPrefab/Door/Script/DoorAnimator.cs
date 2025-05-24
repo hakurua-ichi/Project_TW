@@ -24,7 +24,7 @@ public class DoorAnimator
         if (animator == null) return;
 
         #region 트리거 존에 의한 작동
-        /*
+        
         Vector3 toPlayer = (state.Player.position - state.DoorTransform.position).normalized;
         float dot = Vector3.Dot(state.DoorTransform.right, toPlayer);
 
@@ -36,10 +36,10 @@ public class DoorAnimator
         {
             animator.SetTrigger("LeftOpen");
         }
-        */
+        
         #endregion
 
-        animator.SetTrigger(HashRightOpen);
+        //animator.SetTrigger(HashRightOpen);
     }
 
     public void Close(DoorState state)
@@ -47,7 +47,7 @@ public class DoorAnimator
         if (animator == null) return;
 
         #region 트리거 존에 의한 작동
-        /*
+        
         Vector3 toPlayer = (state.Player.position - state.DoorTransform.position).normalized;
         float dot = Vector3.Dot(state.DoorTransform.right, toPlayer);
 
@@ -59,9 +59,9 @@ public class DoorAnimator
         {
             animator.SetTrigger("LeftClose");
         }
-        */
+        
         #endregion
 
-        animator.SetTrigger(HashRightClose);
+        //animator.SetTrigger(HashRightClose);
     }
 }

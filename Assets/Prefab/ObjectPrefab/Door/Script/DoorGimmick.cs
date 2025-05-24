@@ -16,12 +16,20 @@ public class DoorGimmick : MonoBehaviour, IGimmickObserver
 
     public void OnGimmickEnter()
     {
-        //gimmickContext.StartAction();
+        if (!doorState)
+        {
+            context.StartAction();    // 문 열기 애니메이션 트리거
+            doorState = true;
+        }
     }
 
     public void OnGimmickLeave()
     {
-
+        if (doorState)
+        {
+            context.CancelAction();   // 문 닫기 애니메이션 트리거
+            doorState = false;
+        }
     }
 
     public void ButtonClick()

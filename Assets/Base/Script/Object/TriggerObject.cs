@@ -24,8 +24,9 @@ public class TriggerObject : MonoBehaviour
     /* ────────── 트리거 존 진입 ────────── */
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log("즉시 발동 범위 캐릭 진입");
         if (!other.CompareTag("Player") || observer == null) return;
-
+        Debug.Log("옵저버 등록");
         // 1 일단 옵저버를 두 리스트에 등록
         subject.AddEnterObserver(observer);
         subject.AddLeaveObserver(observer);
@@ -37,6 +38,7 @@ public class TriggerObject : MonoBehaviour
     /* ────────── 트리거 존 이탈 ────────── */
     void OnTriggerExit(Collider other)
     {
+        Debug.Log("즉시 발동 범위 캐릭 이탈");
         if (!other.CompareTag("Player") || observer == null) return;
 
         // 1 '존 이탈' 이벤트 브로드캐스트

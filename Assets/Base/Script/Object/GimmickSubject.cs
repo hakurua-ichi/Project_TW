@@ -37,6 +37,7 @@ public class GimmickSubject : MonoBehaviour
     /* ────────── 내부: null-세이프 디스패처 ────────── */
     private static void Dispatch(List<IGimmickObserver> list, System.Action<IGimmickObserver> call)
     {
+        Debug.Log("디스패치 실행");
         for (int i = list.Count - 1; i >= 0; i--)
         {
             var obs = list[i];
