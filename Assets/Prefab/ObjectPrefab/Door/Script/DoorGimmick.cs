@@ -12,26 +12,29 @@ public class DoorGimmick : MonoBehaviour, IGimmickObserver
     {
         context = new GimmickContext();
         context.SetAction(new OpenDoorAction(doorObject, GameObject.FindGameObjectWithTag("Player").transform));
+    }
 
-        // 옵저버 등록
-        if (TriggerObject != null)
+    public void OnGimmickEnter()
+    {
+        if (!doorState)
         {
-            Debug.Log("Door 옵저버 등록 성공");
-            TriggerObject.AddObserverEnter(this); // 문 옵저버 등록
-        }
-        else
-        {
-            Debug.LogWarning("GimmickSubject가 Door 오브젝트에 없습니다.");
+            context.StartAction();    // 문 열기 애니메이션 트리거
+            doorState = true;
         }
     }
 
-    public void OnGimmickTriggered()
+    public void OnGimmickLeave()
     {
-        //gimmickContext.StartAction();
+        if (doorState)
+        {
+            context.CancelAction();   // 문 닫기 애니메이션 트리거
+            doorState = false;
+        }
     }
 
     public void ButtonClick()
     {
+        Debug.Log("DoorGimmick 실행");
         if (!doorState)
         {
             context.StartAction();

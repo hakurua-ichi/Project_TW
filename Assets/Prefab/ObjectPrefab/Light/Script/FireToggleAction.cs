@@ -25,7 +25,7 @@ public class FireToggleAction : IGimmickAction
         fireAudio.Stop();
     }
 
-    public void setup()
+    public void Setup()
     {
         fire.Stop(); // 초기 상태를 꺼진 상태로 설정
         fireAudio.Stop(); // 초기 상태를 꺼진 상태로 설정
