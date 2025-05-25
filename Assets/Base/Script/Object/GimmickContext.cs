@@ -5,7 +5,7 @@ public class GimmickContext
     public void SetAction(IGimmickAction action)
     {
         currentAction = action;
-        currentAction?.setup();
+        currentAction?.Setup();
     }
 
     public void StartAction()

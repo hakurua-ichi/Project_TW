@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 4072224723926002057}
   - component: {fileID: 5122481463742635197}
   - component: {fileID: 7877088923271501542}
-  - component: {fileID: 7856837873226343299}
   - component: {fileID: 9087365070466290529}
+  - component: {fileID: 2581719745118588186}
   m_Layer: 0
   m_Name: DoorButton
   m_TagString: Untagged
@@ -123,19 +123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10c7c7097aa699c4fbec26917b3004fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7856837873226343299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4769039006066133948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7104de7d8d7a4449ab27d2ae933aea0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionTarget: {fileID: 0}
 --- !u!114 &9087365070466290529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,7 +135,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7182b5fad5640d4b93e49183cf4a97e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRadius: 2
-  playerTransform: {fileID: 0}
-  button_UI: {fileID: 0}
-  actionObject: {fileID: 0}
+  actionTarget: {fileID: 0}
+  player: {fileID: 0}
+  radius: 0
+--- !u!135 &2581719745118588186
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4769039006066133948}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
