@@ -7,7 +7,6 @@ public class OpenDoorAction : IGimmickAction
 
     public OpenDoorAction(GameObject doorObject, Transform player)
     {
-        doorAnimator = new DoorAnimator(doorObject);
         doorState = new DoorState(player, doorObject.transform);
     }
 
