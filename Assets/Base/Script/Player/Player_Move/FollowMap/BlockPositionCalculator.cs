@@ -1,6 +1,5 @@
 using UnityEngine;
-
-public class BlockPositionCalculator
+    public class BlockPositionCalculator
 {
     public Vector3 CalculatePositionAboveBlock(Transform block)
     {
@@ -38,9 +37,7 @@ public class BlockPositionCalculator
         {
             blockHeight = blockRenderer.bounds.size.y;
             return blockRenderer.bounds.center.y + blockHeight / 2;
-        }
-        
-        // 기본 계산
+        }        // 기본 계산
         blockHeight = block.localScale.y;
         return blockCenter.y + blockHeight / 2;
     }
