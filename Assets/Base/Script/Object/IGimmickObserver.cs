@@ -1,6 +1,6 @@
 public interface IGimmickObserver
 {
-    void OnGimmickTriggered();
-
+    void OnGimmickEnter();
+    void OnGimmickLeave();
     void ButtonClick();
 }

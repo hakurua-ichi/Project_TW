@@ -44,10 +44,10 @@ public class ElevatorAction : IGimmickAction
         //Debug.Log("[ElevatorAction] 엘리베이터 정지. IsMoving: " + elevatorState.IsMoving);
     }
 
-    public void setup()
+    public void Setup()
     {
         //Debug.Log("[ElevatorAction] setup() 호출됨");
-        Debug.Log("elevatorState: " + elevatorState);
+        //Debug.Log("elevatorState: " + elevatorState);
         elevatorState.IsMoving = false;
         mover.StopElevator();
 
