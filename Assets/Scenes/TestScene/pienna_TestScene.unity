@@ -15015,6 +15015,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 787348315}
     m_Modifications:
+    - target: {fileID: 1786946898082792461, guid: 54f7a1028de543f4599dfbb60ae2cbdd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5809040134127361120, guid: 54f7a1028de543f4599dfbb60ae2cbdd, type: 3}
       propertyPath: m_Name
       value: Door
@@ -15066,7 +15070,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5809040134127361120, guid: 54f7a1028de543f4599dfbb60ae2cbdd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1421341471}
   m_SourcePrefab: {fileID: 100100000, guid: 54f7a1028de543f4599dfbb60ae2cbdd, type: 3}
 --- !u!1001 &1075745239
 PrefabInstance:
@@ -18572,6 +18579,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10c7c7097aa699c4fbec26917b3004fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1421341471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1421341459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ea9f1ac3dad627408ef08e69c48649a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openAngle: 90
+  speed: 1
 --- !u!1001 &1438972709
 PrefabInstance:
   m_ObjectHideFlags: 0
