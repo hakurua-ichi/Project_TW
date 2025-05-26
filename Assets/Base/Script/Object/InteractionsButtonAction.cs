@@ -1,11 +1,13 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InteractionsButtonAction : MonoBehaviour
 {
     public static InteractionsButtonAction Instance { get; private set; }
 
     [SerializeField] private GameObject uiRoot;   // 실제 버튼 오브젝트 (Canvas 하위)
+    private Button button;
     private TextMeshProUGUI buttonText;
     private ProximityTriggerObject currentTrigger;
 
@@ -31,9 +33,15 @@ public class InteractionsButtonAction : MonoBehaviour
         if (buttonText == null)
         {
             Debug.LogError("[InteractionsButtonAction] uiRoot 하위에 TextMeshProUGUI 컴포넌트가 없습니다.", this);
-        }
+        }   
 
         uiRoot.SetActive(false);
+    }
+
+    private void Start()
+    {
+        button =  uiRoot.GetComponent<Button>();
+        button.onClick.AddListener(OnButtonClicked);
     }
 
     void Update()
