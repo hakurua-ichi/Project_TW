@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// CharacterFollowMapRotation
+/// CharacterMapFollower
 /// 
 /// 캐릭터가 회전하는 맵 블록을 따라 회전하고, 지면에 고정되도록 처리하는 컴포넌트
 /// 맵이나 카메라 회전 시 캐릭터 이동을 제한하고, 위치를 블록 위에 고정시킴
@@ -14,7 +14,7 @@ using System.Collections;
 /// - 지면 스냅핑 처리
 /// - 애니메이션 상태 연동
 /// </summary>
-public class CharacterFollowMapRotation : MonoBehaviour
+public class CharacterMapFollower : MonoBehaviour
 {    
     [Header("설정")]
     [SerializeField] private string blockTag = "RotatingBlock"; // 블록에 사용할 태그
