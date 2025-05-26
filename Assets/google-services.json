@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "993008318424",
+    "firebase_url": "https://project-tw-566b7-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "project-tw-566b7",
+    "storage_bucket": "project-tw-566b7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:993008318424:android:d9a08ee4dc7e9e0575e4ad",
+        "android_client_info": {
+          "package_name": "com.silla_TeamHT.Project_TW"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "993008318424-dd2ko5a409an6lpck31secap9i8l89p8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.silla_TeamHT.Project_TW",
+            "certificate_hash": "54f7eba7bc25edd00facfbf6f3065cb905bf33d0"
+          }
+        },
+        {
+          "client_id": "993008318424-4d40v9i5ppn2rdfkoqk2319k7ppcrdi7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3ZOLMKQ64ibrtx0sDxp_PCyym4yfyqIE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "993008318424-4d40v9i5ppn2rdfkoqk2319k7ppcrdi7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "993008318424-foit9ptpf800tqomf0k3vmdjvs963o0a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.silla-TeamHT.Project-TW"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
