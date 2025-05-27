@@ -1,7 +1,6 @@
 using UnityEngine;
 using System;
-
-public class BlockCollisionDetector
+    public class BlockCollisionDetector
 {
     private string blockTag;
     private Transform currentBlock;
@@ -31,6 +30,24 @@ public class BlockCollisionDetector
         }
     }
     
+    // CharacterController용 추가 메서드
+    public void CheckCollision(Transform collidedTransform)
+    {
+        // 태그 체크와 함께 부모 계층에서도 RotateMap 검색
+        GameObject collidedObject = collidedTransform.gameObject;
+        bool hasMatchingTag = collidedObject.CompareTag(blockTag);
+        bool hasRotateMapInParent = collidedObject.GetComponentInParent<RotateMap>() != null;
+        
+        if (hasMatchingTag || hasRotateMapInParent)
+        {
+            if (currentBlock == null || currentBlock != collidedTransform)
+            {
+                currentBlock = collidedTransform;
+                OnNewBlockDetected?.Invoke(currentBlock);
+            }
+        }
+    }
+    
     public void ExitCollision(Transform collidedTransform, bool isRotating)
     {
         // 맵이 회전 중이 아닐 때만 블록 참조 초기화
@@ -38,9 +55,7 @@ public class BlockCollisionDetector
         {
             currentBlock = null;
         }
-    }
-    
-    public void Reset()
+    }    public void Reset()
     {
         currentBlock = null;
     }

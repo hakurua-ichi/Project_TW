@@ -2231,6 +2231,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   optionsPanel: {fileID: 514512280}
   optionButton: {fileID: 1860238008}
+  optionButton2: {fileID: 0}
 --- !u!114 &60883588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44763,6 +44764,9 @@ MonoBehaviour:
   rotateRightButton: {fileID: 1889856488}
   inputHandler: {fileID: 977302569}
   cameraRotationInput: {fileID: 686031755}
+  playerTransform: {fileID: 0}
+  blockTag: RotatingBlock
+  gridSize: 2
 --- !u!1001 &1009953824
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -68562,8 +68566,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 90
-  leftKeyBinding: <Keyboard>/q
-  rightKeyBinding: <Keyboard>/e
+  leftRotateKey: 113
+  rightRotateKey: 101
   pivotPoint: {fileID: 0}
   showDebugInfo: 1
   childCount: 0
@@ -69056,7 +69060,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5765491178147907582, guid: 5b79a45fc0a13a54a886625ce8c10313, type: 3}
+    - {fileID: 663536718195985939, guid: 5b79a45fc0a13a54a886625ce8c10313, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -89800,8 +89806,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 90
-  leftKeyBinding: <Keyboard>/q
-  rightKeyBinding: <Keyboard>/e
+  leftRotateKey: 113
+  rightRotateKey: 101
   pivotPoint: {fileID: 0}
   showDebugInfo: 1
   childCount: 0
@@ -94062,7 +94068,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0020599365}
+  m_AnchoredPosition: {x: 0, y: 0.0014572144}
   m_SizeDelta: {x: 0, y: 60}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1001 &2138751723
