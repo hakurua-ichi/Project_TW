@@ -1,18 +1,61 @@
+using TMPro;
 using UnityEngine;
 
 public class PickUpGimmick : MonoBehaviour, IGimmickObserver
 {
-    [SerializeField] InventoryItem itemData;
+    private GimmickSubject triggerObject;
+    private GimmickContext context;
+    private Inventory inventory;
+    private InventoryUI inventoryUI;
+
+    void Start()
+    {
+        inventory = GameObject.Find("InteractionButtonManager").GetComponent <Inventory>();
+        inventoryUI = GameObject.Find("ItemUsingButton").GetComponent<InventoryUI>();
+
+        context = new GimmickContext();
+        context.SetAction(new PickUpAction(inventory, gameObject.name));
+    }
 
     public void ButtonClick()
     {
-        bool ok = SingleSlotInventory.Instance.PickupItem(itemData);
-        if (ok)
-            Destroy(gameObject);
+        Debug.Log("πˆ∆∞ ≈¨∏Øµ ");
+        if (inventory.hasItem)
+        {
+            Debug.Log("¿Œ∫•≈‰∏Æ ∞°µÊ ¬¸");
+            return;
+        }
         else
-            Debug.Log("ΩΩ∑‘¿Ã ∞°µÊ √°Ω¿¥œ¥Ÿ!");
+        {
+            Debug.Log("PickUpGimmick: æ∆¿Ã≈€ ¡›±‚");
+            context.StartAction();
+            inventoryUI.SetItemName(inventory);
+            Destroy(gameObject);
+            Debug.Log("PickUpGimmick: æ∆¿Ã≈€ ∆ƒ±´");
+        }
     }
     // OnGimmickEnter/Leave ¿∫ ∫Û ±∏«ˆ
     public void OnGimmickEnter() { }
     public void OnGimmickLeave() { }
 }
+
+//#region GPTªÍ
+//using UnityEngine;
+
+//public class PickUpGimmick : MonoBehaviour, IGimmickObserver
+//{
+//    [SerializeField] InventoryItem itemData;
+
+//    public void ButtonClick()
+//    {
+//        bool ok = SingleSlotInventory.Instance.PickupItem(itemData);
+//        if (ok)
+//            Destroy(gameObject);
+//        else
+//            Debug.Log("ΩΩ∑‘¿Ã ∞°µÊ √°Ω¿¥œ¥Ÿ!");
+//    }
+//    // OnGimmickEnter/Leave ¿∫ ∫Û ±∏«ˆ
+//    public void OnGimmickEnter() { }
+//    public void OnGimmickLeave() { }
+//}
+//#endregion
