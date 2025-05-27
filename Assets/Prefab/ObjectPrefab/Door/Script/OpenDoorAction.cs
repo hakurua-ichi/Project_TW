@@ -7,7 +7,7 @@ public class OpenDoorAction : IGimmickAction
 
     public OpenDoorAction(GameObject doorObject, Transform player)
     {
-        doorAnimator = new DoorAnimator(doorObject);
+        doorAnimator = doorObject.GetComponent<DoorAnimator>();
         doorState = new DoorState(player, doorObject.transform);
     }
 
@@ -16,8 +16,8 @@ public class OpenDoorAction : IGimmickAction
         if (!doorState.IsOpen)
         {
             Debug.Log("문을 엽니다.");
-            doorAnimator.Open(doorState);
             doorState.IsOpen = true;
+            doorAnimator.SetState(doorState);
         }
         else
         {
@@ -30,8 +30,8 @@ public class OpenDoorAction : IGimmickAction
         if (doorState.IsOpen)
         {
             Debug.Log("문을 닫습니다.");
-            doorAnimator.Close(doorState);
             doorState.IsOpen = false;
+            doorAnimator.SetState(doorState);
         }
         else
         {
