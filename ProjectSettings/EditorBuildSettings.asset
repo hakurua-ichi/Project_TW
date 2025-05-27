@@ -4,7 +4,25 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Intro/LoginUiScene.unity
+    guid: bc5f8175f3ddf4b42b00edf434a59f17
+  - enabled: 1
+    path: Assets/Scenes/Intro/MainMenuScene.unity
+    guid: f27e48c98f0411e4388bc6570336b578
+  - enabled: 1
+    path: Assets/Scenes/Intro/StageSelectScene.unity
+    guid: de8d9c56c49850d488b10681168750fa
+  - enabled: 1
+    path: Assets/Scenes/MainStage/chapter_1/stage1-1.unity
+    guid: 5a811ff1262df3042b55a14907fd30c4
+  - enabled: 1
+    path: Assets/Scenes/TestScene/pienna_TestScene.unity
+    guid: 143382515d953d44094e61a71cc48863
+  - enabled: 1
+    path: Assets/Scenes/TestScene/pienna_TestScene 1.unity
+    guid: 21fe177a5e437434bbae5462a141f05a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 289c1b55c9541489481df5cc06664110, type: 3}
   m_UseUCBPForAssetBundles: 0
