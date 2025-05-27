@@ -1,137 +1,144 @@
-using Firebase;
-using Firebase.Auth;
-using Firebase.Extensions;
+using UnityEngine;
 using System;
 using System.Threading.Tasks;
-using UnityEngine;
+using Firebase;
+using Firebase.Auth;
 
 public class FirebaseAuthenticator : MonoBehaviour
 {
+    public static FirebaseAuthenticator Instance { get; private set; }
+
     private FirebaseApp _firebaseApp;
     private FirebaseAuth _auth;
-    private FirebaseUser _user;
 
-    public FirebaseUser CurrentUser => _user;
+    public FirebaseUser CurrentUser => _auth?.CurrentUser;
     public bool IsInitialized { get; private set; } = false;
 
-    public event Action<FirebaseUser> OnAuthStateChanged;
-    public event Action<bool, string> OnInitializationCompleted;
+    // 이벤트 정의
+    /// <summary>
+    /// Firebase 초기화 완료 시 발생 (성공 여부, 메시지)
+    /// </summary>
+    public event Action<bool, string> OnInitializationComplete;
 
-    public void Initialize()
+    /// <summary>
+    /// 사용자 로그인 시 발생 (로그인된 사용자 정보)
+    /// </summary>
+    public event Action<FirebaseUser> OnUserSignedIn;
+
+    /// <summary>
+    /// 사용자 로그아웃 시 발생
+    /// </summary>
+    public event Action OnUserSignedOut;
+
+
+    void Awake()
     {
-        Debug.Log("FirebaseAuthenticator: Initializing Firebase...");
-        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // 앱 전체에서 사용 가능하도록
+            InitializeFirebase();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void InitializeFirebase()
+    {
+        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
         {
             var dependencyStatus = task.Result;
             if (dependencyStatus == DependencyStatus.Available)
             {
                 _firebaseApp = FirebaseApp.DefaultInstance;
                 _auth = FirebaseAuth.DefaultInstance;
-                _auth.StateChanged += HandleAuthStateChanged;
-                HandleAuthStateChanged(this, null);
+                _auth.StateChanged += AuthStateChanged; // 인증 상태 변경 리스너 등록
+
                 IsInitialized = true;
-                Debug.Log("FirebaseAuthenticator: Firebase Initialized successfully.");
-                OnInitializationCompleted?.Invoke(true, "Firebase 초기화 성공");
+                Debug.Log("FirebaseAuthenticator: Firebase SDK initialization successful.");
+                OnInitializationComplete?.Invoke(true, "Firebase SDK 초기화 성공.");
+                AuthStateChanged(this, null); // 초기 상태 강제 호출하여 현재 사용자 상태 반영
             }
             else
             {
                 IsInitialized = false;
                 Debug.LogError($"FirebaseAuthenticator: Could not resolve all Firebase dependencies: {dependencyStatus}");
-                OnInitializationCompleted?.Invoke(false, $"Firebase 초기화 실패: {dependencyStatus}");
+                OnInitializationComplete?.Invoke(false, $"Firebase 종속성 해결 실패: {dependencyStatus}");
             }
-        });
+        }, TaskScheduler.FromCurrentSynchronizationContext()); // Unity 메인 스레드에서 ContinueWith 실행 보장
     }
 
-    private void HandleAuthStateChanged(object sender, EventArgs e)
+    private void AuthStateChanged(object sender, EventArgs eventArgs)
     {
-        if (_auth == null) return;
+        if (!IsInitialized) return; // 초기화 전에는 호출 방지
 
-        if (_auth.CurrentUser != _user)
+        if (_auth.CurrentUser != CurrentUserInternalCache) // 실제 상태와 내부 캐시 비교 (중복 호출 방지 및 명확한 상태 변경 감지)
         {
-            _user = _auth.CurrentUser;
-            if (_user != null)
+            if (_auth.CurrentUser != null)
             {
-                Debug.Log($"FirebaseAuthenticator: User signed in: {_user.Email} (UID: {_user.UserId})");
+                CurrentUserInternalCache = _auth.CurrentUser;
+                Debug.Log($"FirebaseAuthenticator: User signed in: {CurrentUserInternalCache.UserId}");
+                OnUserSignedIn?.Invoke(CurrentUserInternalCache);
             }
             else
             {
+                CurrentUserInternalCache = null;
                 Debug.Log("FirebaseAuthenticator: User signed out.");
+                OnUserSignedOut?.Invoke();
             }
-            OnAuthStateChanged?.Invoke(_user);
+        } else if (_auth.CurrentUser != null && CurrentUserInternalCache == null) {
+            // 앱 시작 시 이미 로그인 된 경우 (StateChanged가 CurrentUser가 null이 아닐 때 한번만 호출될 수 있음)
+             CurrentUserInternalCache = _auth.CurrentUser;
+             Debug.Log($"FirebaseAuthenticator: User already signed in: {CurrentUserInternalCache.UserId}");
+             OnUserSignedIn?.Invoke(CurrentUserInternalCache);
         }
     }
 
-    public async Task<(FirebaseUser User, AuthError ErrorCode, string ErrorMessage)> SignInUserAsync(string email, string password)
-    {
-        if (!IsInitialized || _auth == null)
-        {
-            Debug.LogError("FirebaseAuthenticator: Not initialized or auth instance is null.");
-            return (null, AuthError.None, "Firebase not initialized.");
-        }
+    // StateChanged 이벤트에서 중복 호출을 방지하거나 명확한 변경을 감지하기 위한 내부 캐시
+    private FirebaseUser CurrentUserInternalCache;
 
-        try
-        {
-            AuthResult authResult = await _auth.SignInWithEmailAndPasswordAsync(email, password).ConfigureAwait(true);
-            FirebaseUser signedInUser = authResult.User;
-            return (signedInUser, AuthError.None, null);
-        }
-        catch (Exception ex)
-        {
-            return HandleAuthException(ex);
-        }
-    }
 
-    public async Task<(FirebaseUser User, AuthError ErrorCode, string ErrorMessage)> CreateUserAsync(string email, string password)
-    {
-        if (!IsInitialized || _auth == null)
-        {
-             Debug.LogError("FirebaseAuthenticator: Not initialized or auth instance is null.");
-            return (null, AuthError.None, "Firebase not initialized.");
-        }
-
-        Debug.LogWarning("Firebase Auth는 사용자의 비밀번호를 안전하게 해시하여 저장합니다. 클라이언트에서 직접 암호화하지 마세요.");
-        try
-        {
-            AuthResult authResult = await _auth.CreateUserWithEmailAndPasswordAsync(email, password).ConfigureAwait(true);
-            FirebaseUser newUser = authResult.User;
-            return (newUser, AuthError.None, null);
-        }
-        catch (Exception ex)
-        {
-            return HandleAuthException(ex);
-        }
-    }
-
+    /// <summary>
+    /// Firebase에서 로그아웃합니다.
+    /// Google 로그인 사용자는 Google Sign-Out도 함께 처리해야 할 수 있습니다 (GoogleAuthHandler에서 담당).
+    /// </summary>
     public void SignOut()
     {
-        if (_auth != null && _auth.CurrentUser != null)
+        if (_auth == null || _auth.CurrentUser == null)
         {
-            _auth.SignOut();
+            Debug.LogWarning("FirebaseAuthenticator: No user to sign out or Auth not initialized.");
+            return;
         }
-        else
-        {
-            Debug.LogWarning("FirebaseAuthenticator: Auth instance is null or no user is currently signed in to sign out.");
-        }
+        _auth.SignOut(); // StateChanged 이벤트가 호출되어 OnUserSignedOut이 트리거됨
     }
 
-    private (FirebaseUser, AuthError, string) HandleAuthException(Exception ex)
+
+    /// <summary>
+    /// FirebaseAuth 인스턴스를 반환합니다. 다른 AuthHandler에서 사용됩니다.
+    /// 초기화 확인 후 사용해야 합니다.
+    /// </summary>
+    public FirebaseAuth GetFirebaseAuth()
     {
-        Debug.LogError($"FirebaseAuthenticator Error: {ex}");
-        if (ex.GetBaseException() is FirebaseException firebaseEx)
+        if (!IsInitialized)
         {
-            AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
-            return (null, errorCode, firebaseEx.Message);
+            Debug.LogError("FirebaseAuthenticator: FirebaseAuth instance requested before initialization.");
+            return null;
         }
-        return (null, AuthError.None, ex.Message);
+        return _auth;
     }
 
     void OnDestroy()
     {
         if (_auth != null)
         {
-            _auth.StateChanged -= HandleAuthStateChanged;
+            _auth.StateChanged -= AuthStateChanged;
             _auth = null;
         }
-        _firebaseApp = null;
+        if (Instance == this)
+        {
+            Instance = null;
+        }
     }
 }

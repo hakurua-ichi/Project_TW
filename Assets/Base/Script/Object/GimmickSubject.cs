@@ -1,74 +1,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Central publisher in the Observer pattern for gimmick interactions.
+/// - Three independent event channels: Enter / Leave / Button.
+/// - Prevents duplicate registration, cleans up null-entries on dispatch.
+/// </summary>
 public class GimmickSubject : MonoBehaviour
 {
-    private List<IGimmickObserver> observersOn = new List<IGimmickObserver>();
-    private List<IGimmickObserver> observersOff = new List<IGimmickObserver>();
+    private readonly List<IGimmickObserver> _enterObservers = new();
+    private readonly List<IGimmickObserver> _leaveObservers = new();
+    private readonly List<IGimmickObserver> _buttonObservers = new();
 
-    public void AddObserverEnter(IGimmickObserver observer)
-    {
-        if (!observersOn.Contains(observer))
-            observersOn.Add(observer);
-    }
+    /* ────────── 공통 헬퍼 ────────── */
+    private static void TryAdd(List<IGimmickObserver> list, IGimmickObserver o)
+    { if (o != null && !list.Contains(o)) list.Add(o); }
 
-    public void AddObserverExit(IGimmickObserver observer)
-    {
-        if (!observersOff.Contains(observer))
-            observersOff.Add(observer);
-    }
+    private static void TryRemove(List<IGimmickObserver> list, IGimmickObserver o)
+    { if (o != null) list.Remove(o); }
 
-    public void RemoveObserverEnter(IGimmickObserver observer)
-    {
-        if (observersOn.Contains(observer))
-            observersOn.Remove(observer);
-    }
+    /* ────────── 등록 / 해제 ────────── */
+    public void AddEnterObserver(IGimmickObserver o) => TryAdd(_enterObservers, o);
+    public void RemoveEnterObserver(IGimmickObserver o) => TryRemove(_enterObservers, o);
 
-    public void RemoveObserverExit(IGimmickObserver observer)
-    {
-        if (observersOff.Contains(observer))
-            observersOff.Remove(observer);
-    }
+    public void AddLeaveObserver(IGimmickObserver o) => TryAdd(_leaveObservers, o);
+    public void RemoveLeaveObserver(IGimmickObserver o) => TryRemove(_leaveObservers, o);
 
-    public void Notify(IGimmickObserver caller)
+    public void AddButtonObserver(IGimmickObserver o) => TryAdd(_buttonObservers, o);
+    public void RemoveButtonObserver(IGimmickObserver o) => TryRemove(_buttonObservers, o);
+
+    /* ────────── 이벤트 브로드캐스트 ────────── */
+    public void NotifyEnter() => Dispatch(_enterObservers, obs => obs.OnGimmickEnter());
+    public void NotifyLeave() => Dispatch(_leaveObservers, obs => obs.OnGimmickLeave());
+    public void NotifyButton() => Dispatch(_buttonObservers, obs => obs.ButtonClick());
+
+    /* ────────── 내부: null-세이프 디스패처 ────────── */
+    private static void Dispatch(List<IGimmickObserver> list, System.Action<IGimmickObserver> call)
     {
-        Debug.Log("Notify called by: " + caller.GetType().Name);
-        if (observersOn.Contains(caller))
+        Debug.Log("디스패치 실행");
+        for (int i = list.Count - 1; i >= 0; i--)
         {
-            for(int i = 0; i < observersOn.Count; i++)
-            {
-                if (observersOn[i] == caller)
-                {
-                    Debug.Log("Notify called by: " + caller.GetType().Name);
-                    observersOn[i].OnGimmickTriggered();
-                    observersOn[i].ButtonClick();
-                    return;
-                }
-                else
-                {
-                    Debug.Log("해당 옵저버가 없습니다");
-                    return;
-                }
-            }
-        }
-    }
-
-    public void NotifyExit(IGimmickObserver caller)
-    {
-        for (int i = 0; i < observersOn.Count; i++)
-        {
-            if (observersOn[i] == caller)
-            {
-                Debug.Log("NotifyExit called by: " + caller.GetType().Name);
-                observersOn[i].OnGimmickTriggered();
-                observersOn[i].ButtonClick();
-                return;
-            }
-            else
-            {
-                Debug.Log("해당 옵저버가 없습니다");
-                return;
-            }
+            var obs = list[i];
+            if (obs == null) { list.RemoveAt(i); continue; } // 고스트 참조 청소
+            call(obs);
         }
     }
 }

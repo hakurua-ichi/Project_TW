@@ -2,42 +2,41 @@ using UnityEngine;
 
 public class PlayerPhysicsSetup : MonoBehaviour
 {
-    private Rigidbody rb;
+    [Header("캐릭터 컨트롤러 설정")]
+    [SerializeField] private float skinWidth = 0.08f;
+    [SerializeField] private float slopeLimit = 45f;
+    [SerializeField] private float stepOffset = 0.3f;
+    [SerializeField] private float radius = 0.5f;
+    [SerializeField] private float height = 2f;
+    [SerializeField] private Vector3 center = new Vector3(0, 1f, 0);
+    
+    private CharacterController characterController;
 
     void Start()
     {
-        // Rigidbody 컴포넌트 가져오기
-        rb = GetComponent<Rigidbody>();
+        // CharacterController 컴포넌트 가져오기
+        characterController = GetComponent<CharacterController>();
         
-        // CharacterController 제거 (둘 다 있으면 충돌 발생)
-        CharacterController controller = GetComponent<CharacterController>();
-        if (controller != null)
+        // CharacterController 설정
+        if (characterController == null)
         {
-            Destroy(controller);
+            characterController = gameObject.AddComponent<CharacterController>();
         }
+
+        // CharacterController 물리 특성 조정
+        characterController.skinWidth = skinWidth;
+        characterController.slopeLimit = slopeLimit;
+        characterController.stepOffset = stepOffset;
+        characterController.radius = radius;
+        characterController.height = height;
+        characterController.center = center;
         
-        // Rigidbody 설정
-        if (rb == null)
+        // Rigidbody가 있는 경우 제거 (CharacterController와 호환되지 않음)
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
         {
-            rb = gameObject.AddComponent<Rigidbody>();
+            Debug.Log("CharacterController 사용을 위해 Rigidbody 컴포넌트를 제거합니다.");
+            Destroy(rb);
         }
-        
-        // Rigidbody 물리 특성 조정
-        rb.constraints =RigidbodyConstraints.FreezeRotationX | 
-                        RigidbodyConstraints.FreezeRotationY | 
-                        RigidbodyConstraints.FreezeRotationZ;
-        /*
-                rb.constraints = RigidbodyConstraints.FreezePositionZ | 
-                        RigidbodyConstraints.FreezeRotationX | 
-                        RigidbodyConstraints.FreezeRotationY | 
-                        RigidbodyConstraints.FreezeRotationZ;
-        */
-        
-        // 물리 특성 조정으로 튀는 현상 방지
-        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
-        rb.interpolation = RigidbodyInterpolation.Interpolate;
-        rb.mass = 10f;
-        rb.linearDamping = 1f;
-        rb.useGravity = true;
     }
 }
