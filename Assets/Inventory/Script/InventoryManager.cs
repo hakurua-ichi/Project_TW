@@ -87,6 +87,8 @@ public class InventoryManager : MonoBehaviour
         useButton.interactable = false;
     }
 
+    public void RemoveCurrentItem() => ClearSlot();
+
     public bool HasItem(string id)
     {
         return currentItem != null && currentItem.ItemId == id;

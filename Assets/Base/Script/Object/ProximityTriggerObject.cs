@@ -55,8 +55,10 @@ public class ProximityTriggerObject : MonoBehaviour
     // ▶ 플레이어가 범위 안으로 들어올 때
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("캐릭 진입");
         if (!other.CompareTag("Player") || observer == null) return;
+
+        Debug.Log("캐릭 진입");
+        Debug.Log($"[ProximityTriggerObject] {gameObject.name} Trigger Enter by: {other.gameObject.name}");
 
         // 리스트에 추가
         if (!inRange.Contains(this))
@@ -70,6 +72,7 @@ public class ProximityTriggerObject : MonoBehaviour
 
         subject.AddButtonObserver(observer);
         ui.RequestSelection(this, actionTarget);
+        Debug.Log("리퀘스트 완료");
     }
 
     // ▶ 플레이어가 범위를 벗어날 때
