@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Collider), typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody))]
 public class ItemPickup : MonoBehaviour, IGimmickObserver   // Áß¿ä!
 {
     [SerializeField] private string itemId;   // ¿¹: "Key", "RedGem" ¡¦
