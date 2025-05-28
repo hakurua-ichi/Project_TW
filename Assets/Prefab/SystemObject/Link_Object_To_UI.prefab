@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 26266527996809161}
   - component: {fileID: 823545570923332486}
   m_Layer: 0
-  m_Name: InteractionButtonManager
+  m_Name: Link_Object_To_UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
