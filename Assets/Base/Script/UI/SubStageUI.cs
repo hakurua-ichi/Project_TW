@@ -24,7 +24,7 @@ public class SubStageUI : MonoBehaviour
             int s = stageNum, ss = i;
             btn.GetComponent<Button>().onClick.AddListener(() =>
             {
-                SceneManager.LoadScene($"Stage_{s}_{ss}"); //스테이지 이름 맞추어서 변경해주면 따라감
+                UnityEngine.SceneManagement.SceneManager.LoadScene($"Stage_{s}_{ss}"); //스테이지 이름 맞추어서 변경해주면 따라감
             });
         }
     }

@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - RotatingBlock
+  - FocusObj
+  - Ladders
+  - StatusText
   layers:
   - Default
   - TransparentFX

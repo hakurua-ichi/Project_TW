@@ -6,10 +6,10 @@ public class ProximityTriggerObject : MonoBehaviour
 {
     [Header("동작 할 오브젝트")]
     [SerializeField] private GameObject actionTarget;   // 실제 기믹 오브젝트
-    [SerializeField] private Transform player;
     [SerializeField] private float radius;
     public GameObject ActionTarget => actionTarget;
 
+    private Transform player;
     private IGimmickObserver observer;
     private GimmickSubject subject;
     private InteractionsButtonAction ui;
@@ -50,6 +50,7 @@ public class ProximityTriggerObject : MonoBehaviour
     private void Start()
     {
         ui = InteractionsButtonAction.Instance;
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
     }
 
     // ▶ 플레이어가 범위 안으로 들어올 때
