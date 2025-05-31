@@ -4,7 +4,7 @@ public class PlayerInputHandler : MonoBehaviour
 {
     private float moveDirection = 0f;
     private bool isMoving = false;
-    private Rigidbody rb;
+    private CharacterController controller;
 
     [SerializeField] private JoystickController joystick;
     
@@ -24,8 +24,10 @@ public class PlayerInputHandler : MonoBehaviour
             }
         }
 
-        rb = GetComponent<Rigidbody>();
-    }    void Update()
+        controller = GetComponent<CharacterController>();
+    }
+    
+    void Update()
     {
         // 키 입력 감지 (터치 컨트롤이 활성화된 경우 스킵)
         if (!isTouchControlActive)
@@ -34,30 +36,42 @@ public class PlayerInputHandler : MonoBehaviour
             isMoving = false;
             
             // 조이스틱 입력 감지
-            if (joystick != null && joystick.IsMoving() && !rb.isKinematic)
+            if (joystick != null && joystick.IsMoving())
             {
                 moveDirection = joystick.GetHorizontal();
                 isMoving = true;
             }
             // 키보드 입력 감지
-            else if (!rb.isKinematic)
+            else
             { 
                 // 왼쪽 이동 (A 키)
-                if (Input.GetKey(KeyCode.A) && rb != null)
+                if (Input.GetKey(KeyCode.A))
                 {
                     moveDirection = -1f;
                     isMoving = true;
                 }
                 
                 // 오른쪽 이동 (D 키)
-                if (Input.GetKey(KeyCode.D) && rb != null)
+                if (Input.GetKey(KeyCode.D))
                 {
                     moveDirection = 1f;
                     isMoving = true;
                 }
+                
+                // 점프 처리 (스페이스바)
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    PlayerMovementController movementController = GetComponent<PlayerMovementController>();
+                    if (movementController != null)
+                    {
+                        movementController.Jump();
+                    }
+                }
             }
         }
-    }    public float GetMoveDirection()
+    }
+    
+    public float GetMoveDirection()
     {
         return moveDirection;
     }

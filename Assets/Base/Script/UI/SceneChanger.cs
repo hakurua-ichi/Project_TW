@@ -20,6 +20,12 @@ public class SceneChanger : MonoBehaviour
     public void OnClickLoadScene()
     {
         // 씬 로드
+        // 씬 이름 없을경우 에러 발생.
+        if (string.IsNullOrEmpty(SceneName))
+        {
+            Debug.LogError("씬 이름이 비어있습니다. 씬 이름을 설정해주세요.");
+            return;
+        }
         UnityEngine.SceneManagement.SceneManager.LoadScene(SceneName);
     }
 }
