@@ -4,14 +4,14 @@ public class DoorGimmick : MonoBehaviour, IGimmickObserver
 {
     [SerializeField] private string requiredItemId = "Key";   // 필요 아이템 ID
     [SerializeField] private GimmickSubject TriggerObject;
-
-    public GameObject doorObject;
+    private GameObject doorObject;
     private GimmickContext context;
     private GameObject player;
     private DoorState doorState; // 문 상태 관리
 
     void Start()
     {
+        doorObject = gameObject; // 현재 스크립트가 붙은 게임 오브젝트를 문 오브젝트로 설정
         player = GameObject.FindGameObjectWithTag("Player");
         doorState = new DoorState(player.transform, doorObject.transform);
         context = new GimmickContext();
