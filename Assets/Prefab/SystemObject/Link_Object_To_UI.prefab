@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8016070231268305392}
   - component: {fileID: 26266527996809161}
+  - component: {fileID: 823545570923332486}
   m_Layer: 0
-  m_Name: InteractionButtonManager
+  m_Name: Link_Object_To_UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,3 +46,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiRoot: {fileID: 0}
+--- !u!114 &823545570923332486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8660339048080582176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4301e8b2b088364ab754cd1d88ad5a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotImage: {fileID: 0}
+  useButton: {fileID: 0}
+  player: {fileID: 0}
+  dropForwardDistance: 2
+  dropAboveGround: 1

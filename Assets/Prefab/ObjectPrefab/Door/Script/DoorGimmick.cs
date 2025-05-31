@@ -2,48 +2,76 @@ using UnityEngine;
 
 public class DoorGimmick : MonoBehaviour, IGimmickObserver
 {
+    [SerializeField] private string requiredItemId = "Key";   // 필요 아이템 ID
     [SerializeField] private GimmickSubject TriggerObject;
 
     public GameObject doorObject;
     private GimmickContext context;
-    private bool doorState = false;
+    private GameObject player;
+    private DoorState doorState; // 문 상태 관리
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        doorState = new DoorState(player.transform, doorObject.transform);
         context = new GimmickContext();
-        context.SetAction(new OpenDoorAction(doorObject, GameObject.FindGameObjectWithTag("Player").transform));
+        context.SetAction(new OpenDoorAction(doorObject, doorState, player.transform));
     }
 
     public void OnGimmickEnter()
     {
-        if (!doorState)
+        if (!doorState.IsOpen)
         {
             context.StartAction();    // 문 열기 애니메이션 트리거
-            doorState = true;
+            doorState.IsOpen = true;
         }
     }
 
     public void OnGimmickLeave()
     {
-        if (doorState)
+        if (doorState.IsOpen)
         {
             context.CancelAction();   // 문 닫기 애니메이션 트리거
-            doorState = false;
+            doorState.IsOpen = false;
         }
     }
 
+    //열쇠 없이 문을 여는 버튼 클릭 이벤트
+    //public void ButtonClick()
+    //{
+    //    Debug.Log("DoorGimmick 실행");
+    //    if (!doorState)
+    //    {
+    //        context.StartAction();
+    //        doorState = true;
+    //    }
+    //    else
+    //    {
+    //        context.CancelAction();
+    //        doorState = false;
+    //    }
+    //}
+
+    // 열쇠가 있는지 확인하고 문을 여는 버튼 클릭 이벤트
     public void ButtonClick()
     {
-        Debug.Log("DoorGimmick 실행");
-        if (!doorState)
+        if (!InventoryManager.Instance.HasItem(requiredItemId))
         {
-            context.StartAction();
-            doorState = true;
+            Debug.Log("열쇠가 없어 문이 열리지 않습니다.");
+            return;
+        }
+
+        // 열쇠가 있을 때만 기존 로직 실행
+        if (!doorState.IsOpen)
+        {
+            context.StartAction();   // 문 열기
+
+            // 열쇠를 1회용으로 사용할 경우:
+            //InventoryManager.Instance.RemoveCurrentItem();
         }
         else
         {
-            context.CancelAction();
-            doorState = false;
+            context.CancelAction();  // 문 닫기
         }
     }
 }
