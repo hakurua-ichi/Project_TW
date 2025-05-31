@@ -11,10 +11,14 @@ public class OptionToggleUI : MonoBehaviour
     {
         // 초기에는 옵션창 숨김
         optionsPanel.SetActive(false);
-
+        if (optionButton == null)
+        {
+            // 이 친구는 없으면 진짜 잘못된거임.
+            Debug.LogWarning("옵션 버튼이 설정되지 않았습니다.");
+        }
         // 버튼 클릭 시 Toggle 호출
-        optionButton.onClick.AddListener(ToggleOptionsPanel);
-        optionButton2.onClick.AddListener(ToggleOptionsPanel);
+        if (optionButton != null) { optionButton.onClick.AddListener(ToggleOptionsPanel); }
+        if (optionButton2 != null) { optionButton2.onClick.AddListener(ToggleOptionsPanel); }
     }
 
     void ToggleOptionsPanel()

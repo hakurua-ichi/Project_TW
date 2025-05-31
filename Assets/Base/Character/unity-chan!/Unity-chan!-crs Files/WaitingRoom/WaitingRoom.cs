@@ -50,7 +50,7 @@ public class WaitingRoom : MonoBehaviour
             // White out.
             overlayIntensity = Mathf.Min(1.0f, overlayIntensity + Time.deltaTime / fadeTime);
 //            if (overlayIntensity == 1.0f) Application.LoadLevel(1);
-            if (overlayIntensity == 1.0f) SceneManager.LoadScene(1);
+            if (overlayIntensity == 1.0f) UnityEngine.SceneManagement.SceneManager.LoadScene(1);
 
         }
         else

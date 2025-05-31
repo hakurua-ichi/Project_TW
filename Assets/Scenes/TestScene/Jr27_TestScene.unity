@@ -13585,6 +13585,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 0}
+  cameraDistance: 5
+  cameraHeight: 2
 --- !u!114 &1227744694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14587,11 +14589,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1378284802084290154, guid: 77b88a865b1e89140955b029867b2880, type: 3}
   m_PrefabInstance: {fileID: 1356459473}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1372330092 stripped
+--- !u!4 &1372330092
 Transform:
+  m_ObjectHideFlags: 8
   m_CorrespondingSourceObject: {fileID: 341752126292200237, guid: 5b79a45fc0a13a54a886625ce8c10313, type: 3}
   m_PrefabInstance: {fileID: 527437136}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12.14, y: 1.77, z: -8.29}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1376311018
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23255,8 +23267,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 90
-  leftKeyBinding: <Keyboard>/q
-  rightKeyBinding: <Keyboard>/e
+  leftRotateKey: 113
+  rightRotateKey: 101
   pivotPoint: {fileID: 0}
   showDebugInfo: 1
   childCount: 0

@@ -18,11 +18,11 @@ public class SingleTonTestScript : MonoBehaviour
 
     public void pienna_TestScene_nextScene()
     {
-        SceneManager.LoadScene("pienna_TestScene 1");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("pienna_TestScene 1");
     }
 
     public void pienna_TestScene_1_nextScene()
     {
-        SceneManager.LoadScene("pienna_TestScene");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("pienna_TestScene");
     }
 }
