@@ -130,7 +130,7 @@ public class LoginUIManager : MonoBehaviour
         SetStatus($"환영합니다, {user.DisplayName ?? user.Email}!", false);
         _isProcessing = false; // 로그인 성공 시 처리 중 상태 해제
         // TODO: 로그인 성공 후 다음 씬으로 이동
-        SceneManager.LoadScene("MainMenuScene"); // 다음 씬으로 이동 (씬 이름은 필요에 따라 변경)
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenuScene"); // 다음 씬으로 이동 (씬 이름은 필요에 따라 변경)
         Debug.Log("Login Succeeded. Navigating to next scene...");
     }
 

@@ -17,7 +17,7 @@ public class OptionToggleUI : MonoBehaviour
             Debug.LogWarning("옵션 버튼이 설정되지 않았습니다.");
         }
         // 버튼 클릭 시 Toggle 호출
-            if (optionButton != null) { optionButton.onClick.AddListener(ToggleOptionsPanel); }
+        if (optionButton != null) { optionButton.onClick.AddListener(ToggleOptionsPanel); }
         if (optionButton2 != null) { optionButton2.onClick.AddListener(ToggleOptionsPanel); }
     }
 
