@@ -3,8 +3,8 @@ using UnityEngine;
 public class RotateMap : MonoBehaviour
 {
     [SerializeField] private float rotationSpeed = 90f;
-    [SerializeField] private KeyCode leftRotateKey = KeyCode.Q; // 구버전 입력 시스템 KeyCode 사용
-    [SerializeField] private KeyCode rightRotateKey = KeyCode.E; // 구버전 입력 시스템 KeyCode 사용
+    [SerializeField] private KeyCode leftRotateKey = KeyCode.Q;
+    [SerializeField] private KeyCode rightRotateKey = KeyCode.E;
     [SerializeField] private Transform pivotPoint;
 
     [Header("디버그 정보")]
@@ -20,81 +20,81 @@ public class RotateMap : MonoBehaviour
         if (pivotPoint == null)
         {
             pivotPoint = transform;
-            Debug.Log("[회전 맵] 피봇 포인트가 할당되지 않아 자신으로 설정됨");
+            if (showDebugInfo) Debug.Log("[회전 맵] 피봇 포인트가 할당되지 않아 자신으로 설정됨");
         }
 
-        // 자식 오브젝트 개수 확인
+        // 초기 회전값을 현재 오브젝트의 Y축 회전으로 설정
+        currentRotation = pivotPoint.eulerAngles.y;
+        targetRotation = currentRotation;
+
         childCount = transform.childCount;
         if (showDebugInfo)
         {
             Debug.Log("[회전 맵] 시작 - 자식 오브젝트 수: " + childCount);
-
-            if (childCount == 0)
+            if (childCount == 0 && transform.parent != pivotPoint)
             {
                 Debug.LogWarning("[회전 맵] 경고: 자식 오브젝트가 없습니다. 회전할 블록이 없습니다!");
             }
-
-            for (int i = 0; i < childCount; i++)
-            {
-                //Debug.Log($"[회전 맵] 자식 {i}: {transform.GetChild(i).name}");
-            }
         }
-    }    void Update()
+    }
+
+    void Update()
     {
-        // 키 입력 확인 (구버전 입력 시스템 사용)
-        bool leftKeyDown = Input.GetKeyDown(leftRotateKey);
-        bool rightKeyDown = Input.GetKeyDown(rightRotateKey);
-
-        if (showDebugInfo && (leftKeyDown || rightKeyDown))
-        {
-            Debug.Log("[회전 맵] 키 입력 감지: " + (leftKeyDown ? "왼쪽 회전" : "오른쪽 회전"));
-        }
-
-        // 왼쪽 회전
-        if (leftKeyDown && !isRotating)
-        {
-            targetRotation = currentRotation - 90f;
-            isRotating = true;
-        }
-        // 오른쪽 회전
-        else if (rightKeyDown && !isRotating)
-        {
-            targetRotation = currentRotation + 90f;
-            isRotating = true;
-        }
-
-        // 회전 처리
+        // 회전 처리 (기존 로직 유지)
         if (isRotating)
         {
             float step = rotationSpeed * Time.deltaTime;
-            currentRotation = Mathf.MoveTowards(currentRotation, targetRotation, step);
+            // 기존 currentRotation과 targetRotation이 Y축 회전만을 다룬다고 가정하고 MoveTowardsAngle 사용
+            currentRotation = Mathf.MoveTowardsAngle(currentRotation, targetRotation, step);
 
-            // 회전 적용
-            transform.rotation = Quaternion.Euler(0, currentRotation, 0);
+            // 회전 적용 (pivotPoint 기준)
+            pivotPoint.rotation = Quaternion.Euler(0, currentRotation, 0);
 
             // 회전 완료 확인
             if (Mathf.Approximately(currentRotation, targetRotation))
             {
+                currentRotation = targetRotation; // 정확한 값으로 정렬
                 isRotating = false;
+                if (showDebugInfo) Debug.Log("[회전 맵] 회전 완료. 최종 각도: " + currentRotation);
             }
         }
     }
 
-    // Getters
-    public float GettargetRotation()
+    /// <summary>
+    /// 맵을 왼쪽으로 90도 회전시킵니다.
+    /// GenericInteractionExecutor의 UnityEvent에 연결하여 사용합니다.
+    /// </summary>
+    public void TriggerLeftRotation()
     {
-        return targetRotation;
+        if (isRotating)
+        {
+            if (showDebugInfo) Debug.Log("[회전 맵] 이미 회전 중입니다. 왼쪽 회전 요청 무시.");
+            return;
+        }
+        if (showDebugInfo) Debug.Log("[회전 맵] TriggerLeftRotation() 호출됨.");
+        targetRotation = currentRotation - 90f;
+        isRotating = true;
     }
-    public Transform GetPivotPoint()
+
+    /// <summary>
+    /// 맵을 오른쪽으로 90도 회전시킵니다.
+    /// GenericInteractionExecutor의 UnityEvent에 연결하여 사용합니다.
+    /// </summary>
+    public void TriggerRightRotation()
     {
-        return pivotPoint;
+        if (isRotating)
+        {
+            if (showDebugInfo) Debug.Log("[회전 맵] 이미 회전 중입니다. 오른쪽 회전 요청 무시.");
+            return;
+        }
+        if (showDebugInfo) Debug.Log("[회전 맵] TriggerRightRotation() 호출됨.");
+        targetRotation = currentRotation + 90f;
+        isRotating = true;
     }
-    public float GetrotationSpeed()
-    {
-        return rotationSpeed;
-    }
-    public bool IsRotating()
-    {
-        return isRotating;
-    }
+
+    // Getters (기존 유지)
+    public float GettargetRotation() => targetRotation;
+    public Transform GetPivotPoint() => pivotPoint;
+    public float GetrotationSpeed() => rotationSpeed;
+    public bool IsRotating() => isRotating;
 }
