@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8016070231268305392}
   - component: {fileID: 26266527996809161}
   - component: {fileID: 823545570923332486}
+  - component: {fileID: 6517355264302771765}
   m_Layer: 0
   m_Name: Link_Object_To_UI
   m_TagString: Untagged
@@ -63,3 +64,17 @@ MonoBehaviour:
   player: {fileID: 0}
   dropForwardDistance: 2
   dropAboveGround: 1
+--- !u!114 &6517355264302771765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8660339048080582176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0f7a885b303a8a4ab6be5efc535b134, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statusText: {fileID: 0}
+  displayDuration: 2
