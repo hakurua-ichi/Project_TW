@@ -111,6 +111,6 @@ public class StageDirector : MonoBehaviour
     public void EndPerformance()
     {
         //Application.LoadLevel(0);
-        SceneManager.LoadScene(0);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 }
