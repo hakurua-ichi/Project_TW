@@ -75,7 +75,7 @@ public class TransparentZoneManager
         // 투명 영역 크기 설정 (수정)
         transparentZone.transform.localScale = new Vector3(
             width * widthFactor,             // 너비 (FOV 기반)
-            requiredHeight * heightFactor,   // 높이 (천장 높이 기반)
+            requiredHeight * heightFactor * 20f,   // 높이 (천장 높이 기반)
             playerDistance + distanceOffset  // 길이 (플레이어 거리 + 오프셋으로 수정)
         );
         
