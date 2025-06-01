@@ -9,6 +9,10 @@ public class DoorGimmick : MonoBehaviour, IGimmickObserver
     private GameObject player;
     private DoorState doorState; // 문 상태 관리
 
+    [Header("상태 표시 텍스트 설정")]
+    [SerializeField] private StateText stateText; // 상태 표시용 스크립트
+    [SerializeField] private string stateTextMessage; // 상태 표시 메시지
+
     void Start()
     {
         doorObject = gameObject; // 현재 스크립트가 붙은 게임 오브젝트를 문 오브젝트로 설정
@@ -57,7 +61,7 @@ public class DoorGimmick : MonoBehaviour, IGimmickObserver
     {
         if (!InventoryManager.Instance.HasItem(requiredItemId))
         {
-            Debug.Log("열쇠가 없어 문이 열리지 않습니다.");
+            stateText.SetText(true, stateTextMessage); // 상태 표시 메시지 출력
             return;
         }
 
