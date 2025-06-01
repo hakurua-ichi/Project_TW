@@ -90,12 +90,25 @@ public class SimplePlaneGroupController : MonoBehaviour
             
             if (info.isDetectedByWallDetector && transparentMaterial != null)
             {
-                // WallDetector에 감지되면 투명 머티리얼 적용
+                // 투명 머티리얼 적용 강화
                 info.renderer.material = transparentMaterial;
+                
+                // 추가: 렌더링 속성 강제 설정
+                Material mat = info.renderer.material;
+                mat.renderQueue = 3000; // 투명 렌더링 큐
+                
+                // 알파값 확인
+                if (mat.color.a > 0.5f)
+                {
+                    Color color = mat.color;
+                    color.a = 0.3f; // 투명도 강제 적용
+                    mat.color = color;
+                    Debug.Log($"Plane {info.renderer.gameObject.name}의 알파값 조정: {color.a}");
+                }
             }
             else
             {
-                // 감지되지 않으면 기본 머티리얼 사용
+                // 기존 코드와 동일
                 info.renderer.material = normalMaterial != null ? normalMaterial : info.originalMaterial;
             }
         }

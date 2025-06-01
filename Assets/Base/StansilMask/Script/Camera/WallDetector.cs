@@ -29,33 +29,72 @@ public class WallDetector
 
     public void DetectPlanes(Transform player, Transform cameraTrans)
     {
+        // null 체크
+        if (planeGroups == null || planeGroups.Length == 0)
+        {
+            // 재시도: SimplePlaneGroupController 찾기
+            planeGroups = Object.FindObjectsByType<SimplePlaneGroupController>(FindObjectsSortMode.None);
+            
+            if (planeGroups == null || planeGroups.Length == 0)
+            {
+                Debug.LogWarning("WallDetector: SimplePlaneGroupController를 찾을 수 없습니다.");
+                return;
+            }
+            
+            Debug.Log($"WallDetector: {planeGroups.Length}개의 SimplePlaneGroupController를 찾았습니다.");
+        }
+        
+        // 평면 감지 강화
         foreach (SimplePlaneGroupController planeGroup in planeGroups)
         {
-            // 각 그룹의 모든 Plane Collider 가져오기
+            if (planeGroup == null) continue;
+            
             Collider[] planeColliders = planeGroup.GetAllPlaneColliders();
+            if (planeColliders == null || planeColliders.Length == 0) continue;
             
             foreach (Collider planeCollider in planeColliders)
             {
+                if (planeCollider == null) continue;
+                
                 // 카메라와 플레이어 사이에 plane이 있는지 체크
-                RaycastHit hit;
                 Vector3 direction = player.position - cameraTrans.position;
                 float distance = direction.magnitude;
                 
-                if (Physics.Raycast(cameraTrans.position, direction.normalized, out hit, distance, wallLayers))
+                // 레이캐스트 두 번 실행 (모든 레이어, 그리고 플레인의 레이어만)
+                RaycastHit hit;
+                bool isDetected = false;
+                
+                // 1. 모든 레이어 대상 체크
+                if (Physics.Raycast(cameraTrans.position, direction.normalized, out hit, distance, -1))
                 {
-                    // 히트된 오브젝트가 현재 plane인지 확인
                     if (hit.collider.gameObject == planeCollider.gameObject)
                     {
-                        planeGroup.SetDetectedByWallDetector(planeCollider.gameObject, true);
-                    }
-                    else
-                    {
-                        planeGroup.SetDetectedByWallDetector(planeCollider.gameObject, false);
+                        isDetected = true;
+                        Debug.DrawLine(cameraTrans.position, hit.point, Color.green, 0.1f);
                     }
                 }
-                else
+                
+                // 2. 플레인 레이어만 체크 (더 확실한 감지)
+                if (!isDetected)
                 {
-                    planeGroup.SetDetectedByWallDetector(planeCollider.gameObject, false);
+                    int planeLayer = 1 << planeCollider.gameObject.layer;
+                    if (Physics.Raycast(cameraTrans.position, direction.normalized, out hit, distance, planeLayer))
+                    {
+                        if (hit.collider.gameObject == planeCollider.gameObject)
+                        {
+                            isDetected = true;
+                            Debug.DrawLine(cameraTrans.position, hit.point, Color.blue, 0.1f);
+                        }
+                    }
+                }
+                
+                // 감지 상태 설정 (투명화 적용)
+                planeGroup.SetDetectedByWallDetector(planeCollider.gameObject, isDetected);
+                
+                // 디버그 메시지
+                if (isDetected)
+                {
+                    Debug.Log($"Plane 감지됨: {planeCollider.gameObject.name}, 거리: {hit.distance}");
                 }
             }
         }
