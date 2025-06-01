@@ -6,151 +6,148 @@ using Firebase;
 
 public class EmailPasswordAuthHandler : MonoBehaviour
 {
-    /// <summary>
-    /// 살아-있는 EmailPasswordAuthHandler를 어디서든 얻을 수 있는 싱글톤 참조
-    /// </summary>
-    public static EmailPasswordAuthHandler Instance { get; private set; }
-
     private FirebaseAuth _auth;
-
-    // 이벤트 정의
-    /// <summary>
-    /// 이메일/비밀번호 인증 시도(가입 또는 로그인) 완료 시 발생 (성공 여부, 메시지, 사용자 정보)
-    /// </summary>
     public event Action<bool, string, FirebaseUser> OnAuthOperationCompleted;
-
-    void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            // AuthService 오브젝트 자체에 DontDestroyOnLoad가 이미 들어가 있다면
-            // 여기서는 굳이 또 호출할 필요 없습니다.
-            // DontDestroyOnLoad(gameObject);
-        }
-        else if (Instance != this)
-        {
-            // 중복 생성되면 바로 파괴해 레퍼런스 혼란 방지
-            Destroy(gameObject);
-            return;
-        }
-    }
 
     void Start()
     {
-        // FirebaseAuthenticator가 초기화될 시간을 기다리거나,
-        // FirebaseAuthenticator의 OnInitializationComplete 이벤트를 구독하여 _auth를 설정할 수 있습니다.
-        // 여기서는 간단하게 Instance를 통해 가져옵니다.
         if (FirebaseAuthenticator.Instance != null && FirebaseAuthenticator.Instance.IsInitialized)
         {
-            _auth = FirebaseAuthenticator.Instance.GetFirebaseAuth();
+            InitializeAuth();
         }
         else if (FirebaseAuthenticator.Instance != null)
         {
-            FirebaseAuthenticator.Instance.OnInitializationComplete += HandleFirebaseInitialization;
+            FirebaseAuthenticator.Instance.OnInitializationComplete += HandleFirebaseInitForAuthHandler;
         }
         else
         {
-            Debug.LogError("EmailPasswordAuthHandler: FirebaseAuthenticator instance not found.");
+            Debug.LogError("EmailPasswordAuthHandler: FirebaseAuthenticator instance not found. Cannot initialize.");
+            // OnAuthOperationCompleted?.Invoke(false, "인증 시스템 초기화 실패 (Authenticator 없음)", null); // 필요 시
         }
     }
 
-    private void HandleFirebaseInitialization(bool success, string message)
+    private void HandleFirebaseInitForAuthHandler(bool success, string message)
     {
-        if (success && FirebaseAuthenticator.Instance != null)
+        if (FirebaseAuthenticator.Instance != null)
         {
-            _auth = FirebaseAuthenticator.Instance.GetFirebaseAuth();
-            FirebaseAuthenticator.Instance.OnInitializationComplete -= HandleFirebaseInitialization; // 이벤트 구독 해제
-        }
-        else
-        {
-            Debug.LogError($"EmailPasswordAuthHandler: Firebase initialization failed. Cannot get FirebaseAuth. Message: {message}");
-        }
-    }
-
-    /// <summary>
-    /// 이메일과 비밀번호로 새 사용자를 등록합니다.
-    /// </summary>
-    public async Task SignUpWithEmailAsync(string email, string password)
-    {
-        if (_auth == null)
-        {
-            OnAuthOperationCompleted?.Invoke(false, "Firebase 인증이 초기화되지 않았습니다.", null);
-            return;
-        }
-
-        try
-        {
-            AuthResult authResult = await _auth.CreateUserWithEmailAndPasswordAsync(email, password);
-            FirebaseUser newUser = authResult.User;
-            Debug.Log($"EmailPasswordAuthHandler: User signed up successfully: {newUser.UserId} ({newUser.Email})");
-            OnAuthOperationCompleted?.Invoke(true, "회원가입 성공!", newUser);
-        }
-        catch (Exception e)
-        {
-            string errorMessage = GetFirebaseAuthErrorMessage(e);
-            Debug.LogError($"EmailPasswordAuthHandler: Email sign-up failed: {errorMessage}");
-            OnAuthOperationCompleted?.Invoke(false, $"회원가입 실패: {errorMessage}", null);
-        }
-    }
-
-    /// <summary>
-    /// 이메일과 비밀번호로 기존 사용자를 로그인합니다.
-    /// </summary>
-    public async Task SignInWithEmailAsync(string email, string password)
-    {
-        if (_auth == null)
-        {
-            OnAuthOperationCompleted?.Invoke(false, "Firebase 인증이 초기화되지 않았습니다.", null);
-            return;
-        }
-
-        try
-        {
-            AuthResult authResult = await _auth.SignInWithEmailAndPasswordAsync(email, password);
-            FirebaseUser signedInUser = authResult.User;
-            Debug.Log($"EmailPasswordAuthHandler: User signed in successfully: {signedInUser.UserId} ({signedInUser.Email})");
-            OnAuthOperationCompleted?.Invoke(true, "로그인 성공!", signedInUser);
-        }
-        catch (Exception e)
-        {
-            string errorMessage = GetFirebaseAuthErrorMessage(e);
-            Debug.LogError($"EmailPasswordAuthHandler: Email sign-in failed: {errorMessage}");
-            OnAuthOperationCompleted?.Invoke(false, $"로그인 실패: {errorMessage}", null);
-        }
-    }
-
-    private string GetFirebaseAuthErrorMessage(Exception e)
-    {
-        if (e.GetBaseException() is FirebaseException firebaseEx)
-        {
-            AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
-            // 여기에 자주 발생하는 오류 코드에 대한 한글 메시지 매핑 추가 가능
-            switch (errorCode)
+            FirebaseAuthenticator.Instance.OnInitializationComplete -= HandleFirebaseInitForAuthHandler;
+            if (success)
             {
-                case AuthError.WrongPassword:
-                    return "잘못된 비밀번호입니다.";
-                case AuthError.UserNotFound:
-                    return "등록되지 않은 이메일입니다.";
-                case AuthError.InvalidEmail:
-                    return "유효하지 않은 이메일 형식입니다.";
-                case AuthError.EmailAlreadyInUse:
-                    return "이미 사용 중인 이메일입니다.";
-                case AuthError.WeakPassword:
-                    return "비밀번호는 6자 이상이어야 합니다.";
-                // 기타 필요한 오류 메시지들...
-                default:
-                    return $"오류 코드: {errorCode}"; // 기본 Firebase 오류 메시지 대신 코드만 표시
+                InitializeAuth();
+            }
+            else
+            {
+                Debug.LogError($"EmailPasswordAuthHandler: Firebase initialization failed. Message: {message}");
+                // OnAuthOperationCompleted?.Invoke(false, "인증 시스템 초기화 실패 (Firebase 실패)", null); // 필요 시
             }
         }
-        return e.Message; // 일반 예외 메시지
+    }
+
+    private void InitializeAuth()
+    {
+        _auth = FirebaseAuthenticator.Instance.GetFirebaseAuth();
+        if (_auth == null)
+        {
+            Debug.LogError("EmailPasswordAuthHandler: Failed to get FirebaseAuth instance after initialization.");
+            // OnAuthOperationCompleted?.Invoke(false, "인증 시스템 초기화 실패 (Auth 객체 없음)", null); // 필요 시
+        }
+        else
+        {
+            Debug.Log("EmailPasswordAuthHandler: FirebaseAuth initialized successfully.");
+        }
+    }
+
+
+    public async Task AttemptSignUpOrSignInAsync(string email, string password)
+    {
+        if (_auth == null)
+        {
+            Debug.LogError("EmailPasswordAuthHandler: FirebaseAuth is not ready for auth attempt.");
+            OnAuthOperationCompleted?.Invoke(false, "인증 시스템이 준비되지 않았습니다. 잠시 후 다시 시도해주세요.", null);
+            return;
+        }
+
+        try
+        {
+            Debug.Log($"Attempting to create user: {email}");
+            // 회원가입 성공 시, Firebase의 StateChanged 이벤트가 OnUserSignedIn을 호출하여
+            // LoginUIManager의 HandleUserSignedIn이 실행될 것입니다.
+            // 여기서는 OnAuthOperationCompleted를 호출하여 _isProcessing 해제 등을 돕습니다.
+            AuthResult signUpResult = await _auth.CreateUserWithEmailAndPasswordAsync(email, password);
+            // 명시적으로 성공 이벤트를 여기서 보낼 수도 있지만, StateChanged에 의존하는 것이 더 일관적일 수 있음
+            // OnAuthOperationCompleted?.Invoke(true, "회원가입 성공! 로그인됩니다.", signUpResult.User);
+            // --> 성공 시에는 StateChanged가 OnUserSignedIn을 호출하므로, UI매니저는 그쪽에서 최종 처리를 함.
+            // --> 여기서는 작업 시도 자체에 대한 피드백이 필요하다면 고려. (현재는 예외 처리에서만 실패 이벤트 호출)
+            // --> 혹은, 성공/실패 관계없이 작업 완료만 알리는 이벤트를 추가할 수도 있음. (예: OnAttemptFinished)
+        }
+        catch (Exception signUpException)
+        {
+            if (signUpException.GetBaseException() is FirebaseException signUpFbEx)
+            {
+                AuthError errorCode = (AuthError)signUpFbEx.ErrorCode;
+                if (errorCode == AuthError.EmailAlreadyInUse)
+                {
+                    Debug.Log($"Email {email} already in use. Attempting to sign in...");
+                    try
+                    {
+                        AuthResult signInResult = await _auth.SignInWithEmailAndPasswordAsync(email, password);
+                        // 성공 시 StateChanged가 OnUserSignedIn을 호출
+                        // OnAuthOperationCompleted?.Invoke(true, "로그인 성공!", signInResult.User);
+                    }
+                    catch (Exception signInException)
+                    {
+                        string finalErrorMessage = "중복된 이메일로 가입을 시도했거나, 비밀번호가 틀렸습니다.";
+                        if (signInException.GetBaseException() is FirebaseException signInFbEx_inner) {
+                             Debug.LogError($"Sign-in failed for {email} (handler): {GetFirebaseAuthErrorMessage(signInFbEx_inner)} (Original: {signInFbEx_inner.Message})");
+                        } else {
+                             Debug.LogError($"Sign-in failed for {email} (handler) with non-Firebase exception: {signInException.Message}");
+                        }
+                        OnAuthOperationCompleted?.Invoke(false, finalErrorMessage, null);
+                    }
+                }
+                else
+                {
+                    string errorMessage = GetFirebaseAuthErrorMessage(signUpFbEx);
+                    Debug.LogError($"Sign-up failed for {email} (handler): {errorMessage} (Original: {signUpFbEx.Message})");
+                    OnAuthOperationCompleted?.Invoke(false, $"회원가입 실패: {errorMessage}", null);
+                }
+            }
+            else
+            {
+                string errorMessage = $"예상치 못한 오류 발생: {signUpException.Message}";
+                Debug.LogError($"An unexpected error occurred for {email} (handler): {signUpException.ToString()}");
+                OnAuthOperationCompleted?.Invoke(false, errorMessage, null);
+            }
+        }
+    }
+
+    private string GetFirebaseAuthErrorMessage(FirebaseException firebaseEx)
+    {
+        AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
+        string message;
+        switch (errorCode)
+        {
+            case AuthError.Cancelled: message = "인증이 취소되었습니다."; break;
+            case AuthError.InvalidEmail: message = "유효하지 않은 이메일 형식입니다."; break;
+            case AuthError.WrongPassword: message = "이메일 또는 비밀번호가 일치하지 않습니다."; break;
+            case AuthError.UserNotFound: message = "등록되지 않은 이메일입니다."; break;
+            case AuthError.EmailAlreadyInUse: message = "이미 사용 중인 이메일입니다."; break;
+            case AuthError.WeakPassword: message = "비밀번호는 6자 이상이어야 합니다."; break;
+            case AuthError.NetworkRequestFailed: message = "네트워크 연결을 확인해주세요."; break;
+            case AuthError.TooManyRequests: message = "요청 한도를 초과했습니다. 잠시 후 다시 시도해주세요."; break;
+            case AuthError.UserDisabled: message = "사용 중지된 계정입니다."; break;
+            default:
+                Debug.LogWarning($"Unhandled Firebase AuthError in GetFirebaseAuthErrorMessage: {errorCode} (Original: {firebaseEx.Message})");
+                message = $"인증 중 오류가 발생했습니다. (코드: {errorCode})"; break;
+        }
+        return message;
     }
 
     void OnDestroy()
     {
         if (FirebaseAuthenticator.Instance != null)
         {
-            FirebaseAuthenticator.Instance.OnInitializationComplete -= HandleFirebaseInitialization;
+            FirebaseAuthenticator.Instance.OnInitializationComplete -= HandleFirebaseInitForAuthHandler;
         }
     }
 }
