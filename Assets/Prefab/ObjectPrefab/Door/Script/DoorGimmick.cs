@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class DoorGimmick : MonoBehaviour, IGimmickObserver
 {
+    [SerializeField] private bool isKeyMode = false; // 열쇠 모드 여부
     [SerializeField] private string requiredItemId = "Key";   // 필요 아이템 ID
     [SerializeField] private GimmickSubject TriggerObject;
     private GameObject doorObject;
@@ -40,42 +41,41 @@ public class DoorGimmick : MonoBehaviour, IGimmickObserver
         }
     }
 
-    //열쇠 없이 문을 여는 버튼 클릭 이벤트
-    //public void ButtonClick()
-    //{
-    //    Debug.Log("DoorGimmick 실행");
-    //    if (!doorState)
-    //    {
-    //        context.StartAction();
-    //        doorState = true;
-    //    }
-    //    else
-    //    {
-    //        context.CancelAction();
-    //        doorState = false;
-    //    }
-    //}
-
     // 열쇠가 있는지 확인하고 문을 여는 버튼 클릭 이벤트
     public void ButtonClick()
     {
-        if (!InventoryManager.Instance.HasItem(requiredItemId))
+        if(isKeyMode)
         {
-            stateText.SetText(true, stateTextMessage); // 상태 표시 메시지 출력
-            return;
+            if (!InventoryManager.Instance.HasItem(requiredItemId))
+            {
+                stateText.SetText(true, stateTextMessage); // 상태 표시 메시지 출력
+                return;
+            }
+
+            // 열쇠가 있을 때만 기존 로직 실행
+            if (!doorState.IsOpen)
+            {
+                context.StartAction();   // 문 열기
+
+                // 열쇠를 1회용으로 사용할 경우:
+                //InventoryManager.Instance.RemoveCurrentItem();
+            }
+            else
+            {
+                context.CancelAction();  // 문 닫기
+            }
         }
 
-        // 열쇠가 있을 때만 기존 로직 실행
-        if (!doorState.IsOpen)
-        {
-            context.StartAction();   // 문 열기
-
-            // 열쇠를 1회용으로 사용할 경우:
-            //InventoryManager.Instance.RemoveCurrentItem();
-        }
         else
         {
-            context.CancelAction();  // 문 닫기
+            if(doorState.IsOpen)
+            {
+                context.CancelAction();  // 문 닫기
+            }
+            else
+            {
+                context.StartAction();    // 문 열기
+            }
         }
     }
 }
