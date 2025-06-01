@@ -202,7 +202,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionTarget: {fileID: 2277899924883981680}
-  player: {fileID: 0}
   radius: 1.5
 --- !u!114 &7284869080315872630
 MonoBehaviour:
@@ -216,5 +215,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a1f017fbee25a3419280db3f15db9df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TriggerObject: {fileID: 7918340067292123995}
-  StatusText: {fileID: 0}
+  stateText: {fileID: 0}
+  stateTextMessage: 
+  screenFader: {fileID: 0}
