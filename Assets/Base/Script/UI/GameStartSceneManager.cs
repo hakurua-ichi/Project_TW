@@ -13,4 +13,9 @@ public class GameStartSceneManager : MonoBehaviour
         Application.Quit();
         Debug.Log("게임 종료"); // 에디터에서는 종료되지 않지만, 빌드 시 종료됨
     }
+
+    public void LogOut()
+    {
+        SceneManager.LoadScene("LoginUiScene"); // 로그인 화면으로 이동
+    }
 }
