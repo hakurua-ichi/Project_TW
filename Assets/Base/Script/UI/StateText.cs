@@ -40,6 +40,17 @@ public class StateText : MonoBehaviour
     {
         textVisible = Visible; // 상태 텍스트 표시 여부 설정
         statusText.text = text; // 상태 텍스트 설정
+
+        if(Visible)
+        {
+            textTimer = 0f;
+            statusText.gameObject.SetActive(true);
+        }
+        else
+        {
+            statusText.gameObject.SetActive(false);
+            textTimer = 0f;
+        }
     }
 
     public void UnVisible()
