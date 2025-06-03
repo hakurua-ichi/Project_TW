@@ -30052,7 +30052,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 308612401550151573, guid: d05aeba0b211661458a2bbe81fc9a3b7, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000038146973
+      value: 0.000022888184
       objectReference: {fileID: 0}
     - target: {fileID: 394497764642092208, guid: d05aeba0b211661458a2bbe81fc9a3b7, type: 3}
       propertyPath: SceneName
@@ -35541,7 +35541,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3422128508089039771, guid: 2f40cf59829fcf94aac0ff683ee5133e, type: 3}
       propertyPath: radius
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -51288,7 +51288,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3422128508089039771, guid: 2f40cf59829fcf94aac0ff683ee5133e, type: 3}
       propertyPath: radius
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -68872,7 +68872,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3422128508089039771, guid: 2f40cf59829fcf94aac0ff683ee5133e, type: 3}
       propertyPath: radius
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -69934,7 +69934,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3422128508089039771, guid: 2f40cf59829fcf94aac0ff683ee5133e, type: 3}
       propertyPath: radius
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
