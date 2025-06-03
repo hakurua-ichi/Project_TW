@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1074704719073183458}
   - component: {fileID: 5909636970933610486}
   - component: {fileID: 7657962903002708755}
-  - component: {fileID: 228762895377187296}
+  - component: {fileID: 252437099309476682}
   m_Layer: 3
   m_Name: Outline(Z)
   m_TagString: RotatingBlock
@@ -87,8 +87,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &228762895377187296
-BoxCollider:
+--- !u!64 &252437099309476682
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -105,6 +105,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 5, y: 5, z: 5}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5495902117074765545, guid: 508aa906016cd1f42a2fc8e56af25a24, type: 3}
