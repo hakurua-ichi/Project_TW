@@ -26,7 +26,7 @@ public class LaddersGimmick : MonoBehaviour, IGimmickObserver
         //TriggerObject = GetComponent<GimmickSubject>(); // GimmickSubject 컴포넌트 가져오기
         laddersState = new LaddersState(); // 현재 사다리 상태 초기화
         context = new GimmickContext(); // 현재 사다리 상태를 관리하는 컨텍스트 생성
-        context.SetAction(new LaddersAction(laddersState)); // 사다리 타기 애니메이션 설정
+        context.SetAction(new LaddersAction(laddersState, this));  // this == MonoBehaviour
         BoxCollider boxCollider = GetComponent<BoxCollider>(); // 박스 콜라이더 컴포넌트 가져오기
         boxCollider.isTrigger = true; // 트리거로 설정
         Rigidbody rigidbody = GetComponent<Rigidbody>(); // Rigidbody 컴포넌트 가져오기

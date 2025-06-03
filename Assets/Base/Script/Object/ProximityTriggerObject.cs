@@ -147,6 +147,18 @@ public class ProximityTriggerObject : MonoBehaviour
         return closest;
     }
 
+    // ProximityTriggerObject.cs 가장 아래쪽
+    public static void NotifyPlayerTeleported()
+    {
+        // inRange 리스트 전부 다시 검사
+        inRange.RemoveAll(t => t == null ||
+            (t.transform.position - GameObject.FindGameObjectWithTag("Player").transform.position)
+                .sqrMagnitude > t.radius * t.radius);
+
+        // UI 매니저에게도 갱신 요청
+        InteractionsButtonAction.Instance?.RequestSelection(null, null);
+    }
+
     void OnDrawGizmosSelected()
     {
         var col = GetComponent<SphereCollider>();
