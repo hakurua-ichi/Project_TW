@@ -324,6 +324,7 @@ GameObject:
   - component: {fileID: 4503210720685920805}
   - component: {fileID: 8929981847732407936}
   - component: {fileID: 2738331080548751683}
+  - component: {fileID: 394497764642092208}
   m_Layer: 5
   m_Name: Restart_Button
   m_TagString: Untagged
@@ -452,6 +453,20 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &394497764642092208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198382742648257906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dff4731b08a642347a7d9fd70dd2e09b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 8929981847732407936}
+  SceneName: 
 --- !u!1 &1412125888148851033
 GameObject:
   m_ObjectHideFlags: 0
@@ -2311,6 +2326,7 @@ GameObject:
   - component: {fileID: 6627212607102220164}
   - component: {fileID: 6945516870875864362}
   - component: {fileID: 1285800497396034645}
+  - component: {fileID: 9037520465695063915}
   m_Layer: 5
   m_Name: quit_Button
   m_TagString: Untagged
@@ -2439,6 +2455,20 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &9037520465695063915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6706010143354558886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dff4731b08a642347a7d9fd70dd2e09b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 6945516870875864362}
+  SceneName: StageSelectScene
 --- !u!1 &6725994897167513167
 GameObject:
   m_ObjectHideFlags: 0
@@ -3005,8 +3035,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 640845304324570973}
   m_HandleRect: {fileID: 6335063171743392200}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.6000001
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
