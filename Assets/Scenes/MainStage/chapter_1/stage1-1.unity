@@ -4835,7 +4835,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4303552846814868604, guid: 44f675ddfafa1c34b8607d6058a082ef, type: 3}
       propertyPath: zoneDistanceOffset
-      value: -5
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 6853306085648697547, guid: 44f675ddfafa1c34b8607d6058a082ef, type: 3}
       propertyPath: m_Name
