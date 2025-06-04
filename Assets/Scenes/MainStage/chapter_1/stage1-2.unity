@@ -6721,6 +6721,10 @@ PrefabInstance:
       propertyPath: visualizeZone
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4303552846814868604, guid: 44f675ddfafa1c34b8607d6058a082ef, type: 3}
+      propertyPath: zoneDistanceOffset
+      value: -10
+      objectReference: {fileID: 0}
     - target: {fileID: 6853306085648697547, guid: 44f675ddfafa1c34b8607d6058a082ef, type: 3}
       propertyPath: m_Name
       value: Main Camera
@@ -10999,7 +11003,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 308612401550151573, guid: d05aeba0b211661458a2bbe81fc9a3b7, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000034332275
+      value: -0.000045776367
       objectReference: {fileID: 0}
     - target: {fileID: 394497764642092208, guid: d05aeba0b211661458a2bbe81fc9a3b7, type: 3}
       propertyPath: SceneName
@@ -18279,7 +18283,7 @@ PrefabInstance:
       objectReference: {fileID: 442681044}
     - target: {fileID: 5921441027484317870, guid: c7267b1750787c049b9684fb642137cc, type: 3}
       propertyPath: m_Name
-      value: MapTable
+      value: Map
       objectReference: {fileID: 0}
     - target: {fileID: 6442117316628980244, guid: c7267b1750787c049b9684fb642137cc, type: 3}
       propertyPath: m_LocalScale.x
@@ -43379,7 +43383,7 @@ PrefabInstance:
       objectReference: {fileID: 1028587644}
     - target: {fileID: 5921441027484317870, guid: c7267b1750787c049b9684fb642137cc, type: 3}
       propertyPath: m_Name
-      value: MapTable
+      value: Map
       objectReference: {fileID: 0}
     - target: {fileID: 6442117316628980244, guid: c7267b1750787c049b9684fb642137cc, type: 3}
       propertyPath: m_LocalPosition.x

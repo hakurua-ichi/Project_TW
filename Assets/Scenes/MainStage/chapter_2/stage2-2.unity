@@ -5132,6 +5132,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4303552846814868604, guid: 44f675ddfafa1c34b8607d6058a082ef, type: 3}
+      propertyPath: zoneDistanceOffset
+      value: -10
+      objectReference: {fileID: 0}
     - target: {fileID: 6853306085648697547, guid: 44f675ddfafa1c34b8607d6058a082ef, type: 3}
       propertyPath: m_Name
       value: Main Camera
@@ -30052,7 +30056,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 308612401550151573, guid: d05aeba0b211661458a2bbe81fc9a3b7, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000022888184
+      value: -0.00004196167
       objectReference: {fileID: 0}
     - target: {fileID: 394497764642092208, guid: d05aeba0b211661458a2bbe81fc9a3b7, type: 3}
       propertyPath: SceneName
@@ -35537,7 +35541,7 @@ PrefabInstance:
       objectReference: {fileID: 84195520}
     - target: {fileID: 2874198809945739092, guid: 2f40cf59829fcf94aac0ff683ee5133e, type: 3}
       propertyPath: m_Name
-      value: PasswordPad 4
+      value: Key 4
       objectReference: {fileID: 0}
     - target: {fileID: 3422128508089039771, guid: 2f40cf59829fcf94aac0ff683ee5133e, type: 3}
       propertyPath: radius
@@ -51284,7 +51288,7 @@ PrefabInstance:
       objectReference: {fileID: 84195520}
     - target: {fileID: 2874198809945739092, guid: 2f40cf59829fcf94aac0ff683ee5133e, type: 3}
       propertyPath: m_Name
-      value: PasswordPad 3
+      value: Key 3
       objectReference: {fileID: 0}
     - target: {fileID: 3422128508089039771, guid: 2f40cf59829fcf94aac0ff683ee5133e, type: 3}
       propertyPath: radius
@@ -55122,7 +55126,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5809040134127361120, guid: 54f7a1028de543f4599dfbb60ae2cbdd, type: 3}
       propertyPath: m_Name
-      value: Door (3)
+      value: Door
       objectReference: {fileID: 0}
     - target: {fileID: 7520722418693332034, guid: 54f7a1028de543f4599dfbb60ae2cbdd, type: 3}
       propertyPath: stateText
@@ -68868,7 +68872,7 @@ PrefabInstance:
       objectReference: {fileID: 84195520}
     - target: {fileID: 2874198809945739092, guid: 2f40cf59829fcf94aac0ff683ee5133e, type: 3}
       propertyPath: m_Name
-      value: PasswordPad 2
+      value: Key 2
       objectReference: {fileID: 0}
     - target: {fileID: 3422128508089039771, guid: 2f40cf59829fcf94aac0ff683ee5133e, type: 3}
       propertyPath: radius
@@ -69930,7 +69934,7 @@ PrefabInstance:
       objectReference: {fileID: 84195520}
     - target: {fileID: 2874198809945739092, guid: 2f40cf59829fcf94aac0ff683ee5133e, type: 3}
       propertyPath: m_Name
-      value: PasswordPad 1
+      value: Key 1
       objectReference: {fileID: 0}
     - target: {fileID: 3422128508089039771, guid: 2f40cf59829fcf94aac0ff683ee5133e, type: 3}
       propertyPath: radius

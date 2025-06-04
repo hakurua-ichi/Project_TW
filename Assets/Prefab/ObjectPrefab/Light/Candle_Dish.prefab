@@ -309,8 +309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionTarget: {fileID: 0}
-  player: {fileID: 0}
-  radius: 0
+  radius: 0.8
 --- !u!135 &5688823251819639909
 SphereCollider:
   m_ObjectHideFlags: 0

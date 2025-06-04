@@ -4833,6 +4833,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4303552846814868604, guid: 44f675ddfafa1c34b8607d6058a082ef, type: 3}
+      propertyPath: zoneDistanceOffset
+      value: -5
+      objectReference: {fileID: 0}
     - target: {fileID: 6853306085648697547, guid: 44f675ddfafa1c34b8607d6058a082ef, type: 3}
       propertyPath: m_Name
       value: Main Camera
@@ -22519,7 +22523,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 308612401550151573, guid: d05aeba0b211661458a2bbe81fc9a3b7, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000034332275
+      value: -0.00004196167
       objectReference: {fileID: 0}
     - target: {fileID: 394497764642092208, guid: d05aeba0b211661458a2bbe81fc9a3b7, type: 3}
       propertyPath: SceneName
@@ -41290,6 +41294,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5633015443932966439, guid: 8a7b2d8fdfe2a1945ad007c0c27be66f, type: 3}
+      propertyPath: radius
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5633015443932966439, guid: 8a7b2d8fdfe2a1945ad007c0c27be66f, type: 3}
       propertyPath: button_UI
       value: 
       objectReference: {fileID: 0}
@@ -55365,12 +55373,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 1471324818}
     m_Modifications:
     - target: {fileID: 1670921367966698802, guid: 3ce3f387175db264bbf9a32ae684f01d, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1670921367966698802, guid: 3ce3f387175db264bbf9a32ae684f01d, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1670921367966698802, guid: 3ce3f387175db264bbf9a32ae684f01d, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1923398869170200545, guid: 3ce3f387175db264bbf9a32ae684f01d, type: 3}
+      propertyPath: m_Convex
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1923398869170200545, guid: 3ce3f387175db264bbf9a32ae684f01d, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1923398869170200545, guid: 3ce3f387175db264bbf9a32ae684f01d, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4347799927997892326, guid: 3ce3f387175db264bbf9a32ae684f01d, type: 3}
       propertyPath: m_Layer
