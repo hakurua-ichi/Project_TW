@@ -3,7 +3,7 @@
 # 팀 구성
 - **팀장** : 김현탁 - (UI 개발)
 - **팀원1** : 윤진환 - (오브젝트 스크립트 작성)
-- **팀원2** : 정상현 *(1달간 임시 부팀장,리포지토리 관리자)* - (핵심 스크립트 작성)
+- **팀원2** : 정상현 *(부팀장,리포지토리 관리자)* - (핵심 스크립트 작성)
 - **팀원3** : 조정래 - (데이터베이스 연동 및 맵 제작)
 
 # 게임 소개
@@ -176,3 +176,180 @@
 2024-06-07 정상현 올림.
 
 ---
+
+# Project_TW
+---
+# Team Members
+- **Team Leader**: Kim Hyuntak - (UI Development)
+- **Member 1**: Yoon Jinhwan - (Object Scripting)
+- **Member 2**: Jung Sanghyun *( Sub-leader & Repository Manager)* - (Core Scripting)
+- **Member 3**: Cho Jungrae - (Database Integration & Map Creation)
+
+# Game Introduction
+This game tells the story of Unity-chan, who falls into a 2D world and embarks on a journey to explore her identity.
+You explore the world from a 2D perspective on a 3D map, utilizing gimmicks such as **camera rotation** and **map rotation**.
+Experience the **axis of the world**, and the **dreams and self** left behind on that axis.
+
+# Development Log
+
+> **Project Duration**: March 18, 2025 ~ June 7, 2025  
+> **Final Presentation**: June 5  
+> **Project Closure & Archiving**: June 7 (ver. 0.0.1b)  
+> **Tech Stack**: Unity (6000.0.42f1), Firebase  
+
+---
+
+## March
+<details>
+  <summary>Show Work Log</summary>
+
+### March 18–25
+- **Planning**: Game design document created (Kim Hyuntak, Jung Sanghyun, Yoon Jinhwan, Cho Jungrae)
+
+### March 25
+- **System**: Temporary repository created (Kim Hyuntak)
+
+### March 31
+- **System**: Unity project created (Jung Sanghyun)
+
+</details>
+
+---
+
+## April
+
+<details>
+  <summary>Show Work Log</summary>
+
+### April 1
+- **Character**: Character created (Jung Sanghyun)
+- **Map/Stage**: Test map created (Jung Sanghyun)
+- **System**: Implemented map rotation feature (Jung Sanghyun)
+
+### April 2
+- **UI**: Joystick UI created (Jung Sanghyun)
+- **UI**: UI camera created (Jung Sanghyun)
+
+### April 3
+- **UI**: Stage selection scene created (Yoon Jinhwan)
+
+### April 4
+- **System**: Merged into main repository
+
+### April 8
+- **Character**: Basic movement script implemented (Jung Sanghyun)
+
+### April 14
+- **System**: Camera wall transparency script implemented (Jung Sanghyun)
+
+### April 16
+- **System**: Camera rotation script implemented (Jung Sanghyun)
+
+### April 17
+- **Map/Stage**: Stage 1 completed (Cho Jungrae)
+- **System**: Fixed some bugs after PR (Jung Sanghyun)
+- **Object**: Base code for object creation completed (Yoon Jinhwan)
+- **UI**: Temporary main screen completed (Kim Hyuntak)
+
+### April 18
+- **Map/Stage**: Test scene added (Yoon Jinhwan)
+
+</details>
+
+---
+
+## May
+
+<details>
+  <summary>Show Work Log</summary>
+
+### May 6
+- **System**: Options system added (Jung Sanghyun)
+
+### May 7
+- **UI**: Options UI completed (Kim Hyuntak)
+- **Object**: Elevator and door objects added (Yoon Jinhwan)
+
+### May 8
+- **System**: Joystick and Firebase DB integration added (Cho Jungrae)
+
+### May 11
+- **System**: Camera rotation script refactored (Jung Sanghyun)
+
+### May 12
+- **UI**: Options UI and login UI added, some UI size adjustments (Kim Hyuntak)
+- **System**: Login system completed and in-game UI added (Cho Jungrae)
+
+### May 13
+- **Object**: Interaction button partially completed and added (Yoon Jinhwan)
+- **System**: Camera rotation guide added (Jung Sanghyun)
+- **Object**: Some objects added (Yoon Jinhwan)
+- **UI**: Main UI updated and added (Kim Hyuntak)
+- **System**: Changed joystick to movement button (Jung Sanghyun)
+
+### May 14
+- **System**: Connected login UI and functionality (Cho Jungrae)
+- **System**: Fixed some issues (Jung Sanghyun)
+- **UI**: Korean font added (Cho Jungrae)
+- **Object**: Object issue resolved (Yoon Jinhwan)
+
+### May 16
+- **System**: Bug fixes and Android build test started (Jung Sanghyun)
+
+### May 17
+- **System**: Login/logout issue resolved (Yoon Jinhwan)
+
+### May 22
+- **UI**: Adjusted in-game UI positions (Kim Hyuntak)
+
+### May 25–26
+- **Object**: Fully reviewed and rewrote related scripts (Yoon Jinhwan)
+
+### May 26
+- **Character**: Character movement logic reviewed and rewritten (Jung Sanghyun)
+
+### May 28
+- **UI**: Reviewed and changed main/login/options UI (Kim Hyuntak)
+
+### May 31
+- **Object**: Inventory functionality completed (Yoon Jinhwan)
+- **UI**: UI buttons added and rearranged (Kim Hyuntak)
+- **Object**: Ladder object for moving between floors created (Yoon Jinhwan)
+
+</details>
+
+---
+
+## June
+
+<details>
+  <summary>Show Work Log</summary>
+
+### June 1
+- **Map/Stage**: Chapters 1 & 2 stages completed (Cho Jungrae)
+- **System**: Fixed transparency script for camera (Jung Sanghyun)
+
+### June 2
+- **System**: Password system added (Yoon Jinhwan)
+
+### June 3
+- **Object**: Ladder functionality issue resolved (Yoon Jinhwan)
+- **UI**: Button mapping and some bug fixes (Cho Jungrae)
+
+### June 5
+- **System**: Final project presentation (Kim Hyuntak, Jung Sanghyun, Yoon Jinhwan, Cho Jungrae)
+
+### June 7
+- **System**: Project closed (Jung Sanghyun)
+
+</details>
+
+---
+
+# Additional Notes & License
+- Once this `README.md` is completed on the **main branch**, the repository will be **made public**.
+- We hope this project will **help our team members’ portfolios**, even if just a little.
+- Anyone who wishes to **refer to or extend this project** is welcome to do so **freely via FORK**.
+- This project was **partially created with the help of AI tools**, such as ChatGPT and GitHub Copilot.
+
+June 7, 2024 — Written by Jung Sanghyun.
