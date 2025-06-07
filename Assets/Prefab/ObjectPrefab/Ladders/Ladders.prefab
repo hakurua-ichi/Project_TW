@@ -26,15 +26,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7b24006c5385cfd41bccc6809b9d4450, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.43
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7b24006c5385cfd41bccc6809b9d4450, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.05
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7b24006c5385cfd41bccc6809b9d4450, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.59
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7b24006c5385cfd41bccc6809b9d4450, type: 3}
       propertyPath: m_LocalRotation.w
@@ -78,7 +78,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7b24006c5385cfd41bccc6809b9d4450, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 4294967295
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -139,7 +139,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.7321236, y: 5.9, z: 0.08921819}
+  m_Size: {x: 0.75, y: 6, z: 0.2}
   m_Center: {x: -0.015049074, y: 1.4509945, z: 0.014106833}
 --- !u!54 &551316686784023167
 Rigidbody:
@@ -202,7 +202,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionTarget: {fileID: 2277899924883981680}
-  player: {fileID: 0}
   radius: 1.5
 --- !u!114 &7284869080315872630
 MonoBehaviour:
@@ -216,5 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a1f017fbee25a3419280db3f15db9df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TriggerObject: {fileID: 7918340067292123995}
-  StatusText: {fileID: 0}
+  stateText: {fileID: 0}
+  stateTextMessage: "\uC0AC\uB2E4\uB9AC\uAC00 \uC5F0\uACB0\uB418\uC5B4\uC788\uC9C0
+    \uC54A\uC740 \uB4EF\uD558\uB2E4..."
+  screenFader: {fileID: 0}

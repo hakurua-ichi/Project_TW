@@ -133,8 +133,7 @@ MonoBehaviour:
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
-  m_Cameras:
-  - {fileID: 0}
+  m_Cameras: []
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
@@ -187,7 +186,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 0}
-  cameraDistance: 10
+  cameraDistance: 20
+  cameraHeight: 2
 --- !u!114 &5532306117451328815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,11 +272,11 @@ MonoBehaviour:
   cameraTrans: {fileID: 7582080671214801571}
   wallLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 4294967295
   transparentMaterial: {fileID: 2100000, guid: 795fb0de8e737c643b1780df0f63baf7, type: 2}
   transparentZonePrefab: {fileID: 2098980915132036065, guid: 7d2452e94150f664f82ec72d52c8739c, type: 3}
-  zoneDistanceOffset: -10
-  zoneHeightFactor: 0.25
+  zoneDistanceOffset: -7
+  zoneHeightFactor: 0.5
   zoneWidthFactor: 1.2
   visualizeZone: 0
   zoneColor: {r: 1, g: 0, b: 0, a: 0.5}
