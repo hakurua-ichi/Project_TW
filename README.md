@@ -182,7 +182,7 @@
 # Team Members
 - **Team Leader**: Kim Hyuntak - (UI Development)
 - **Member 1**: Yoon Jinhwan - (Object Scripting)
-- **Member 2**: Jung Sanghyun *( Sub-leader & Repository Manager)* - (Core Scripting)
+- **Member 2**: Jeong Sanghyeon *( Sub-leader & Repository Manager)* - (Core Scripting)
 - **Member 3**: Cho Jungrae - (Database Integration & Map Creation)
 
 # Game Introduction
@@ -352,4 +352,4 @@ Experience the **axis of the world**, and the **dreams and self** left behind on
 - Anyone who wishes to **refer to or extend this project** is welcome to do so **freely via FORK**.
 - This project was **partially created with the help of AI tools**, such as ChatGPT and GitHub Copilot.
 
-June 7, 2024 — Written by Jung Sanghyun.
+June 7, 2024 — Written by Jeong Sanghyeon.
